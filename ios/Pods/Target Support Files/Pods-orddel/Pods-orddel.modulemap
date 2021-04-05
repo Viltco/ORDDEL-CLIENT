@@ -1,0 +1,6 @@
+module Pods_orddel {
+  umbrella header "Pods-orddel-umbrella.h"
+
+  export *
+  module * { export * }
+}
