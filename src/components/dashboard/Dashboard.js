@@ -139,7 +139,7 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
         setDeliveryPerson(responseJson.client_dashboard.preferred_delivery_person)
         setDeliveryPersonName(responseJson.client_dashboard.preferred_delivery_person_name)
         setDeliveryPersonAddress(responseJson.client_dashboard.preferred_delivery_person_address)
-
+ 
         //   //console.log(json);
         // }
       })
@@ -157,6 +157,14 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
         setOrderBoxId(responseJson.order_box);
         if(responseJson.order_box!=""){
           dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
+          fetch(URL + "/order/get_po_number/" + responseJson.order_box + "/")
+        // fetch(URL+'/client_app/clients_list/33/')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
+          // state.PoNumber=responseJson.po_number;
+          // console.log("PO number:",responseJson.po_number);
+        });
 
         }
         
@@ -260,7 +268,14 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
           setStatusCode(response.status)
           if (response.status == 201) {
               setResMessage("")
-
+              fetch(URL + "/order/get_po_number/" + data.cart.id + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
+                // state.PoNumber=responseJson.po_number;
+                // console.log("PO number:",responseJson.po_number);
+              });
             //state.OrderId=data.cart.id;
             // AsyncStorage.clear();
             // console.log("data.cart.id",data.cart.id);

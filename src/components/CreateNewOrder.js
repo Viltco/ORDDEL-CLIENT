@@ -584,17 +584,17 @@ function CreateNewOrder({ navigation ,route }) {
       .catch((e) => {
         alert(e);
       });
-    if (OrderId != "" || OrderId != null) {
-      fetch(URL + "/order/get_po_number/" + OrderId + "/")
-        // fetch(URL+'/client_app/clients_list/33/')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
-          // state.PoNumber=responseJson.po_number;
-          // console.log("PO number:",responseJson.po_number);
-        });
-      // .catch((error) => console.error("be careful",error));
-    }
+    // if (OrderId != "" || OrderId != null) {
+    //   fetch(URL + "/order/get_po_number/" + OrderId + "/")
+    //     // fetch(URL+'/client_app/clients_list/33/')
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
+    //       // state.PoNumber=responseJson.po_number;
+    //       // console.log("PO number:",responseJson.po_number);
+    //     });
+    //   // .catch((error) => console.error("be careful",error));
+    // }
 
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);

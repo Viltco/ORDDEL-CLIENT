@@ -84,7 +84,7 @@ function RejectedOrdersStatus({ navigation, route }) {
   const ClientId = useSelector((state) => state.ApiData.ClientId);
   const ClientName = useSelector((state) => state.ApiData.ClientName);
   const ClientImage = useSelector((state) => state.ApiData.ClientImage);
-
+  
   //   const PoNumber = useSelector((state) => state.ApiData.PoNumber);
   //   const OrderId = useSelector((state) => state.ApiData.OrderId);
   //   console.log("PoNumber", PoNumber);
@@ -492,7 +492,7 @@ function RejectedOrdersStatus({ navigation, route }) {
           <Content>
             
             <View style={styles.footer}>
-      <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} successColor={Colors.themeColor} containerStyle={{width:"80%"}} />
+      {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} successColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
 
               <View
                 style={{
@@ -1153,6 +1153,7 @@ function RejectedOrdersStatus({ navigation, route }) {
                 borderRadius: 10,
                 width: "80%",
                 marginTop:30,
+                marginBottom:30,
                 height: 40,
                 backgroundColor: Colors.themeColor,
               }}

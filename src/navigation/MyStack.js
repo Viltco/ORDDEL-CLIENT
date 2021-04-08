@@ -61,6 +61,7 @@ import Packages from "../components/Packages";
 import RejectedOrdersStatus from "../components/RejectedOrderStatus";
 import PaymentMethods from "../components/PaymentMethods"
 import TermCondition from '../components/TermsConditions';
+import ReOrder from '../components/ReOrder';
 const Stack = createStackNavigator();
 function MyStack() {
   const dispatch=useDispatch();
@@ -683,6 +684,31 @@ function MyStack() {
         <Stack.Screen
           name="RejectedOrdersStatus"
           component={RejectedOrdersStatus}
+          options={{
+            headerShown: true,
+            title: "ORDER STATUS",
+            headerTitleStyle: {
+              color: "white",
+              alignSelf: "center",
+            },
+            headerStyle: {
+              backgroundColor: Colors.themeColor,
+            },
+            headerTintColor: "#ffffff",
+            headerRight: () => (
+              <Image
+                source={require("../assets/colorLogo.png")}
+                style={{
+                  width: Platform.OS == "ios" ? 40 : 50,
+                  height: Platform.OS == "ios" ? 40 : 50,
+                }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="ReOrder"
+          component={ReOrder}
           options={{
             headerShown: true,
             title: "ORDER STATUS",

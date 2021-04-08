@@ -41,15 +41,18 @@ import URL from "../api/ApiURL";
 import { useSelector, useDispatch } from "react-redux";
 import * as ApiAction from "../store/actions/ApiData";
 import MyHeader from "../components/MyHeader";
-import OrderCartItem from "../components/OrderCardItem";
+import ReorderCartItem from "../components/ReorderCartItem";
+import * as ApiDataAction from "../store/actions/ApiData";
 import { BottomSheet } from "react-native-btr";
 import { Platform } from "react-native";
+
 function OrdersStatus({ navigation, route }) {
+  const dispatch=useDispatch();
   const { OrderBox, OrderId, Packages, Quantity } = route.params;
   const packages = Packages;
   const [boxData, setBoxData] = useState("");
   const ClientImage = useSelector((state) => state.ApiData.ClientImage);
-
+  const ClientId = useSelector((state) => state.ApiData.ClientId);
   const [boxDetail, setBoxDetail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState("");
@@ -57,6 +60,9 @@ function OrdersStatus({ navigation, route }) {
   const [note, setNote] = useState("");
   const [disvisible, setDisvisible] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [orderBoxId,setOrderBoxId]=useState("");
+  const [buttonLoading,setButtonLoading]=useState(false);
+  const [orderBoxIdd,setOrderBoxIdd]=useState("");
   const toggleBottomNavigationView = () => {
     //Toggling the visibility state of the bottom sheet
     setVisible(!visible);
@@ -73,6 +79,111 @@ function OrdersStatus({ navigation, route }) {
 
     // }
   };
+
+
+
+
+  const reorder=()=>{
+setButtonLoading(true);
+    if(orderBoxIdd==""){
+      fetch(URL + "/order/create_order_box/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          client_id: ClientId,
+        }),
+      })
+        .then(async (response) => {
+          let data = await response.json();
+  
+          console.log(response)
+          console.log("Create",data )
+          // console.log("status code",response.status)
+          // console.log("status data",data)
+          // setStatusCode(response.status)
+          if (response.status == 201) {
+              // setResMessage("")
+              dispatch(ApiDataAction.SetOrderBoxId(data.cart.id));
+              navigation.navigate("ReOrder", {
+                OID: OId,
+                orderBoxId: OrderBoxId,
+                Quantity: totalQuantity,
+                id:boxData.delivery_person,
+                name:boxData.delivery_person_name,
+                address:"142-Allama Iqbal Road"
+              })
+              setButtonLoading(false);
+              
+          } else {
+            console.log("execption: ",data.message);
+            alert(data.message);
+            setButtonLoading(false);
+            // Toast.show(data.message, Toast.LONG);
+            // setResMessage(data.message)
+         
+          }
+        
+  
+          // code that can access both here
+        })
+        .catch((error) => console.log("Something went wrong", error));
+    }
+    else{
+      navigation.navigate("ReOrder", {
+        OID: OId,
+        orderBoxId: OrderBoxId,
+        Quantity: totalQuantity,
+        id:boxData.delivery_person,
+        name:boxData.delivery_person_name,
+        address:boxData.delivery_person_address
+      })
+      setButtonLoading(false);
+    }
+   
+
+
+    // fetch(URL + "/order/get_order_box/" + ClientId + "/")
+    //   // fetch(URL+'/client_app/clients_list/33/')
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     // console.log(
+    //     //   "Dashboard:",
+    //     //   responseJson
+    //     // );
+    //     console.log("OrderBoxId:", responseJson);
+    //     setOrderBoxId(responseJson.order_box);
+    //     if(responseJson.order_box!=""){
+    //       fetch(URL + "/order/get_po_number/" + responseJson.order_box + "/")
+    //       // fetch(URL+'/client_app/clients_list/33/')
+    //       .then((response) => response.json())
+    //       .then((responseJson) => {
+    //         dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
+    //         // state.PoNumber=responseJson.po_number;
+    //         // setPoNumber(responseJson.po_number);
+    //         navigation.navigate("ReOrder", {
+    //           OID: OId,
+    //           orderBoxId: OrderBoxId,
+    //           Quantity: totalQuantity,
+    //           id:boxData.delivery_person,
+    //           name:boxData.delivery_person_name,
+    //           address:"142-Allama Iqbal Road"
+    //         })
+    //         console.log("PO number:",responseJson.po_number);
+    //       });
+    //       dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
+
+    //     }
+        
+        
+    //   })
+    //   .catch((error) => console.error(error));
+  }
+
+
+
 
   const accept = () => {
     setIsLoading(true);
@@ -141,6 +252,29 @@ function OrdersStatus({ navigation, route }) {
     //   console.log("hi---------------")
     // console.log(PoNumber,"-----");
     // console.log(OrderId,"------")
+    if(ClientId!=0){
+      fetch(URL + "/order/get_order_box/" + ClientId + "/")
+      // fetch(URL+'/client_app/clients_list/33/')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(
+        //   "Dashboard:",
+        //   responseJson
+        // );
+        console.log("OrderBoxId:", responseJson);
+        setOrderBoxIdd(responseJson.order_box);
+        if(responseJson.order_box!=""){
+          dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
+
+        }
+        
+      })
+      .catch((error) => console.error(error));
+    }
+    
+
+
+
     setIsLoading(true);
     fetch(URL + "/order/list_order/" + OrderBoxId + "/")
       // fetch(URL+'/client_app/clients_list/33/')
@@ -296,56 +430,12 @@ function OrdersStatus({ navigation, route }) {
               </View>
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 30,
-                alignSelf: "center",
-                width: "90%",
-                justifyContent: "space-around",
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 105,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                }}
-              >
-                Product
-              </Text>
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 65,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                
-                }}
-              >
-                Unit
-              </Text>
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 90,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                }}
-              >
-                Quantity
-              </Text>
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                }}
-              >
-                Price Per Unit
-              </Text>
-            </View>
+            <View style={{flexDirection:'row',marginTop:30,justifyContent:'space-around'}}>
+        <Text style={{color:Colors.themeColor,width:120,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Product</Text>
+        <Text style={{color:Colors.themeColor,width:65,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Unit</Text>
+        <Text style={{color:Colors.themeColor,width:72,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Quantity</Text>
+        <Text style={{color:Colors.themeColor,fontSize:17,fontWeight:'bold',marginRight:20,width:100,textAlign:'center'}}>Price Per Unit</Text>
+    </View>
 
             <View
               style={{
@@ -358,7 +448,7 @@ function OrdersStatus({ navigation, route }) {
                 data={boxDetail}
                 keyExtractor={(item) => item.product_id}
                 renderItem={(itemData) => (
-                  <OrderCartItem
+                  <ReorderCartItem
                     id={itemData.item.product_id}
                     quantity={itemData.item.quantity}
                     total_amount={itemData.item.total_amount}
@@ -380,7 +470,7 @@ function OrdersStatus({ navigation, route }) {
                 <Text
                   style={{
                     color: Colors.themeColor,
-                    width: "15%",
+                    width: "20%",
                     textAlign: "center",
                     marginLeft: "5%",
                     fontWeight:'bold'
@@ -391,9 +481,9 @@ function OrdersStatus({ navigation, route }) {
                 <Text
                   style={{
                     color: Colors.themeColor,
-                    width: "55%",
+                    width: "65%",
                     textAlign: "center",
-                    paddingLeft: "15%",
+                    // paddingLeft: "15%",
                     fontWeight:'bold'
                   }}
                 >
@@ -410,7 +500,16 @@ function OrdersStatus({ navigation, route }) {
                   {totalQuantity}
                 </Text>
               </View> */}
+
+              
             </View>
+            {boxData.status=="in progress"?
+            <TouchableOpacity onPress={reorder} style={styles.button}>
+              {buttonLoading ? (
+                <Spinner color={"white"} />
+              ) : (
+            <Text style={styles.buttonText}>Resend Order</Text>)}
+            </TouchableOpacity>:null}
           </Content>
         )}
 
@@ -511,6 +610,7 @@ const styles = StyleSheet.create({
     width: 300,
     backgroundColor: Colors.themeColor,
     justifyContent: "center",
+    alignSelf:'center',
     borderRadius: 25,
     marginVertical: 20,
   },

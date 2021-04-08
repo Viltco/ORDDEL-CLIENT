@@ -30,7 +30,7 @@ import {
 } from "native-base";
 import { Picker } from "@react-native-picker/picker";
 // import * as DeliveryNoteAction from '../store/actions/DeliveryNote';
-
+import * as ApiDataAction from "../store/actions/ApiData";
 //import ViewShot from "react-native-view-shot";
 import Colors from "../ColorCodes/Colors";
 import URL from "../api/ApiURL";
@@ -40,11 +40,13 @@ import InvoiceItem from "../components/InvoiceItem";
 function CompletedOrderInvoice({ navigation, route }) {
   const dispatch = useDispatch();
   const clientImage = useSelector((state) => state.ApiData.ClientImage);
-
+  const ClientId = useSelector((state) => state.ApiData.ClientId);
   const [isLoading, setIsLoading] = useState(false);
   const { OID, orderBoxId } = route.params;
   // const packages=Packages;
   const [invoiceData, setInvoiceData] = useState("");
+  const [buttonLoading,setButtonLoading]=useState(false);
+  const [orderBoxIdd,setOrderBoxIdd]=useState("");
   const [invoiceNo, setInvoiceNo] = useState("");
   const [orderList, setOrderList] = useState("");
   const [order, setOrder] = useState("");
@@ -125,8 +127,119 @@ function CompletedOrderInvoice({ navigation, route }) {
   // );
 
   // }
+  
   // );
 
+
+  const reorder=()=>{
+    setButtonLoading(true);
+        if(orderBoxIdd==""){
+          fetch(URL + "/order/create_order_box/", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              client_id: ClientId,
+            }),
+          })
+            .then(async (response) => {
+              let data = await response.json();
+      
+              console.log(response)
+              console.log("Create",data )
+              // console.log("status code",response.status)
+              // console.log("status data",data)
+              // setStatusCode(response.status)
+              if (response.status == 201) {
+                  // setResMessage("")
+                  dispatch(ApiDataAction.SetOrderBoxId(data.cart.id));
+                  navigation.navigate("ReOrder", {
+                    OID: orderId,
+                    orderBoxId: d_orderBoxId,
+                    Quantity: invoiceData.total_qty,
+                    id:invoiceData.delivery_person_id,
+                    name:invoiceData.delivery_person_name,
+                    address:invoiceData.delivery_person_address
+                  })
+                  setButtonLoading(false);
+                  
+              } else {
+                console.log("execption: ",data.message);
+                alert(data.message);
+                setButtonLoading(false);
+                // Toast.show(data.message, Toast.LONG);
+                // setResMessage(data.message)
+             
+              }
+            
+      
+              // code that can access both here
+            })
+            .catch((error) => console.log("Something went wrong", error));
+        }
+        else{
+          navigation.navigate("ReOrder", {
+            OID: orderId,
+            orderBoxId: d_orderBoxId,
+            Quantity: invoiceData.total_qty,
+            id:invoiceData.delivery_person_id,
+            name:invoiceData.delivery_person_name,
+            address:invoiceData.delivery_person_address
+          })
+          setButtonLoading(false);
+        }
+       
+    
+    
+    
+      }
+
+
+
+
+
+
+  // const reorder=()=>{
+  //   fetch(URL + "/order/get_order_box/" + ClientId + "/")
+  //     // fetch(URL+'/client_app/clients_list/33/')
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       // console.log(
+  //       //   "Dashboard:",
+  //       //   responseJson
+  //       // );
+  //       console.log("OrderBoxId:", responseJson);
+  //       setOrderBoxId(responseJson.order_box);
+  //       if(responseJson.order_box!=""){
+  //         fetch(URL + "/order/get_po_number/" + responseJson.po_number + "/")
+  //         // fetch(URL+'/client_app/clients_list/33/')
+  //         .then((response) => response.json())
+  //         .then((responseJson) => {
+
+  //           dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
+  //           // state.PoNumber=responseJson.po_number;
+  //           navigation.navigate("ReOrder", {
+  //             OID: orderId,
+  //             orderBoxId: d_orderBoxId,
+  //             Quantity: invoiceData.total_qty,
+  //             id:invoiceData.delivery_person_id,
+  //             name:invoiceData.delivery_person_name,
+  //             address:invoiceData.delivery_person_address
+  //           })
+  //           setPoNumber(responseJson.po_number);
+  //           console.log("PO number:",responseJson.po_number);
+  //         });
+  //       // .catch((error) => console.error("be careful",error));
+  //         dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
+
+  //       }
+       
+        
+  //     })
+  //     .catch((error) => console.error(error));
+  // }
 
 
   const getClientImage=(id)=>{
@@ -162,7 +275,7 @@ function CompletedOrderInvoice({ navigation, route }) {
         // fetch(URL+'/client_app/clients_list/33/')
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log("Show Invoic", responseJson);
+          console.log("Show Invoic", responseJson.order.order_products);
           setInvoiceNo(responseJson.order.inv_number);
           setOrderList(responseJson.order.order_products);
           setInvoiceData(responseJson.order);
@@ -172,6 +285,26 @@ function CompletedOrderInvoice({ navigation, route }) {
           // setIsLoading(false);
         })
         .catch((error) => console.error(error));
+    }
+
+    if(ClientId!=0){
+      fetch(URL + "/order/get_order_box/" + ClientId + "/")
+      // fetch(URL+'/client_app/clients_list/33/')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(
+        //   "Dashboard:",
+        //   responseJson
+        // );
+        console.log("OrderBoxId:", responseJson);
+        setOrderBoxIdd(responseJson.order_box);
+        if(responseJson.order_box!=""){
+          dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
+
+        }
+        
+      })
+      .catch((error) => console.error(error));
     }
 
     // if(d_orderBoxId!=""){
@@ -523,6 +656,14 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                 </Text>
               </View>
             </View>
+            <View style={{alignSelf:'center'}}>
+            <TouchableOpacity onPress={reorder} style={styles.button}>
+            {buttonLoading ? (
+                <Spinner color={"white"} />
+              ) : (
+            <Text style={styles.buttonText}>Resend Order</Text>)}
+            </TouchableOpacity>
+        </View>
           </Content>
         )}
       </ScrollView>
