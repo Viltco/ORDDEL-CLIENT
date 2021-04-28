@@ -5,14 +5,40 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
-  TextInput
+  TextInput,
+  BackHandler
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Colors from "../ColorCodes/Colors";
 import { useSelector, useDispatch } from 'react-redux';
 import * as cartActions from "../store/actions/OrderBox";
-const CartItem = (props) => {
+import { useRoute, useFocusEffect } from "@react-navigation/native";
+const CartItem = (props,{route}) => {
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const backAction = () => {
+        updateQuantity();
+        // Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        //   {
+        //     text: "Cancel",
+        //     onPress: () => null,
+        //     style: "cancel"
+        //   },
+        //   { text: "YES", onPress: () => BackHandler.exitApp() }
+        // ]);
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
+    }, [route])
+  );
   const dispatch=useDispatch();
   const [qtty,setQtty]=useState("");
   const MyIcon1 = <FontAwesome name="minus" size={15} color="#EE0202" solid />;
@@ -104,19 +130,29 @@ keyboardType="numeric"
 maxLength={2}
 placeholderTextColor={Colors.productGrey}
 value={qtty}
+
 // required={true}
 onChangeText={(value) => {
     
   setQtty(value);
+  
 //   setCheck(true);
    
 }}
-
-//onEndEditin={bobo}
-// onEndEditing= {updateQuantity}
-// onSubmitEditing={updateQuantity}
+// onPressOut={updateQuantity}
+// disableFullscreenUI={true}
+// onChange={updateQuantity}
+// clearTextOnFocus={true}
+selectTextOnFocus={true}
+// onPressOut={updateQuantity}
 onKeyPress={updateQuantity}
-// initialValue=""
+//onEndEditin={bobo}
+onEndEditing= {updateQuantity}
+// onTouchMove={updateQuantity}
+// onTouchStart={updateQuantity}
+onSubmitEditing={updateQuantity}
+// onKeyPress={updateQuantity}
+initialValue=""
 />
 </View>
 

@@ -221,6 +221,7 @@ const BuisnessDetail = ({ navigation,route }) => {
             <View style={{ marginTop: 10 }}>
               <FlatList
                 data={data}
+                inverted={true}
                 showsVerticalScrollIndicator={false}
                 style={{ alignSelf: "center", padding: 10 }}
                 // keyExtractor={item => item.index_id.toString()}

@@ -76,8 +76,7 @@ function CompletedOrderInvoice({ navigation, route }) {
   };
 
   const sendInvoice = () => {
-    fetch(
-      "http://ec2-3-129-128-169.us-east-2.compute.amazonaws.com:8000/payment/create_list_invoice/",
+    fetch(URL+"/payment/create_list_invoice/",
       {
         method: "POST",
         headers: {

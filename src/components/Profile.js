@@ -191,7 +191,7 @@ const Profile = ({ navigation,route }) => {
         }
         else if (newPass.length < 8) {
           // setToastMessage("Password limit should be Greater than 6 Digits");
-          alert("Password limit should be Greater than 8 Digits");
+          alert("Password limit should be Greater than 7 Digits");
         }
         else{
           fetch(URL + "/api/change-password/", {

@@ -84,7 +84,7 @@ function CreateNewOrder({ navigation ,route }) {
   {
     const transformedCartItems = [];
     for (const key in state.OrderBox.items) {
-      transformedCartItems.push({
+      transformedCartItems.unshift({
         id: key,
         // id:items[key],
         quantity: state.OrderBox.items[key].quantity,
@@ -94,9 +94,9 @@ function CreateNewOrder({ navigation ,route }) {
         price: state.OrderBox.items[key].price,
       });
     }
-    return transformedCartItems
+    return [...transformedCartItems]
   });
-  // const R_cartItems=cartItems.reverse();
+  
   var Count = 0;
 
   const dispatch = useDispatch();

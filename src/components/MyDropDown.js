@@ -98,7 +98,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import URL from '../api/ApiURL';
 //import Autocomplete component
 import Autocomplete from 'react-native-autocomplete-input';
 
@@ -108,7 +108,7 @@ const MyDropDown = () => {
   const [selectedValue, setSelectedValue] = useState({});
 
   useEffect(() => {
-    fetch('http://ec2-3-129-128-169.us-east-2.compute.amazonaws.com:8000/product/product_list/')
+    fetch(URL+'/product/product_list/')
     .then((response) => response.json())
     .then((responseJson) => {
        // const {results: films} = json;

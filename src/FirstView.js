@@ -33,7 +33,7 @@ import styles from "./FirstView.style";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import * as ApiDataActions from "../src/store/actions/ApiData";
-
+import URL from './api/ApiURL';
 import Colors from "../src/ColorCodes/Colors";
 const FirstView = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -63,8 +63,7 @@ const FirstView = ({ navigation }) => {
       if(datal&&dataR){
       setLoading(true)
 
-        fetch(
-          "http://ec2-3-129-128-169.us-east-2.compute.amazonaws.com:8000/client_app/client_login/",
+        fetch(URL+"/client_app/client_login/",
           {
             method: "POST",
             headers: {
@@ -126,7 +125,7 @@ const FirstView = ({ navigation }) => {
   useEffect(() => {
     getToken();
 
-    fetch(URL + "/version_control/?apk_version=1.2")
+    fetch(URL + "/version_control/?apk_version=1.3")
     // fetch(URL+'/client_app/clients_list/33/')
     .then( async (response) => {
         let data = await response.json();

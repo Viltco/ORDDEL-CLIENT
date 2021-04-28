@@ -167,8 +167,7 @@ const Login = ({ navigation,route }) => {
       return false;
     } else {
       setLoading(true);
-      fetch(
-        "http://ec2-3-129-128-169.us-east-2.compute.amazonaws.com:8000/client_app/client_login/",
+      fetch(URL+"/client_app/client_login/",
         {
           method: "POST",
           headers: {
@@ -733,7 +732,7 @@ const Login = ({ navigation,route }) => {
           ) : null}
            
 
-          <TouchableOpacity disabled={email==""||password==""?true:false} style={styles.button} onPress={check}>
+          <TouchableOpacity style={styles.button} onPress={check}>
             {loading ? (
               <Spinner color={"white"} />
             ) : (

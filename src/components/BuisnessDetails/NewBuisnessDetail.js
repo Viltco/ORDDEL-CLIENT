@@ -66,10 +66,74 @@ const NewBuisnessDetail = ({ navigation }) => {
   const [BusinessNameMsg, setBusinessNameMsg] = useState(false);
   const [BusinessNatureMsg, setBusinessNatureMsg] = useState(false);
   const [BusinessTypeMsg, setBusinessTypeMsg] = useState(false);
+
+  const [BusinessNameMsg1, setBusinessNameMsg1] = useState(false);
+  const [BusinessNatureMsg1, setBusinessNatureMsg1] = useState(false);
+  const [BusinessTypeMsg1, setBusinessTypeMsg1] = useState(false);
+  var reg1=/^[a-zA-Z ]*$/;
+
   const [addressMsg, setAddressMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [buttonCheck,setButtonCheck]=useState(false);
   const [tokken, setTokken] = useState("");
+
+
+  const checkName=()=>{
+    if(BusinessName!=""){
+      if (reg1.test(BusinessName) === false) {
+        // setToastMessage("Email is Not Correct");
+        // alert("Invalid Business Name");
+        setBusinessNameMsg1(true);
+        setBusinessName("");
+        // setButtonCheck(false);
+        // setAccountNumberMsg1(true);
+        // setLoading(false);
+        return false;
+      }
+      else{
+        setBusinessNameMsg1(false);
+      }
+    }
+  }
+
+  const checkNature=()=>{
+    if(BusinessNature!=""){
+      if (reg1.test(BusinessNature) === false) {
+        // setToastMessage("Email is Not Correct");
+        // alert("Invalid Business Nature");
+        setBusinessNatureMsg1(true);
+        setBusinessNature("");
+        // setButtonCheck(false);
+        // setAccountNumberMsg1(true);
+        // setLoading(false);
+        return false;
+      }
+      else{
+        setBusinessNatureMsg1(false);
+      }
+      
+    }
+  }
+
+  const checkType=()=>{
+    if(BusinessType!=""){
+      if (reg1.test(BusinessType) === false) {
+        // setToastMessage("Email is Not Correct");
+        // alert("Invalid Business Type");
+        setBusinessTypeMsg1(true);
+        setBusinessType("");
+        // setButtonCheck(false);
+        // setAccountNumberMsg1(true);
+        // setLoading(false);
+        return false;
+      }
+      else{
+        setBusinessTypeMsg1(false);
+      }
+    }
+  }
+
+
 
   const postDetail = () => {
     setLoading(true);
@@ -106,7 +170,53 @@ const NewBuisnessDetail = ({ navigation }) => {
       setAddressMsg(false);
       setLoading(false);
     }
+    if(BusinessType!=""){
+      if (reg1.test(BusinessType) === false) {
+        // setToastMessage("Email is Not Correct");
+        // alert("Invalid Business Type");
+        setBusinessTypeMsg1(true);
+        setBusinessType("");
+        // setButtonCheck(false);
+        // setAccountNumberMsg1(true);
+        // setLoading(false);
+        return false;
+      }
+      else{
+        setBusinessTypeMsg1(false);
+      }
+    }
+    if(BusinessNature!=""){
+      if (reg1.test(BusinessNature) === false) {
+        // setToastMessage("Email is Not Correct");
+        // alert("Invalid Business Nature");
+        setBusinessNatureMsg1(true);
+        setBusinessNature("");
+        // setButtonCheck(false);
+        // setAccountNumberMsg1(true);
+        // setLoading(false);
+        return false;
+      }
+      else{
+        setBusinessNatureMsg1(false);
+      }
+      
+    }
 
+    // if(BusinessName!=""){
+    //   if (reg1.test(BusinessName) === false) {
+    //     // setToastMessage("Email is Not Correct");
+    //     // alert("Invalid Business Name");
+    //     setBusinessNameMsg1(true);
+    //     setBusinessName("");
+    //     // setButtonCheck(false);
+    //     // setAccountNumberMsg1(true);
+    //     // setLoading(false);
+    //     return false;
+    //   }
+    //   else{
+    //     setBusinessNameMsg1(false);
+    //   }
+    // }
     if(BusinessName==""&&BusinessNature==""&&BusinessType==""&&address==""){
       // alert("Nothing to Change");
       setLoading(false);
@@ -355,7 +465,9 @@ const NewBuisnessDetail = ({ navigation }) => {
                 onChangeText={(value) => {
                   setBusinessNatureMsg(false);
                   setBusinessNature(value);
+                  setBusinessNatureMsg1(false);
                 }}
+                onEndEditing={checkNature}
                 initialValue=""
               />
               {BusinessNatureMsg && (
@@ -365,6 +477,15 @@ const NewBuisnessDetail = ({ navigation }) => {
                   </Text>
                 </Animatable.View>
               )}
+               {BusinessNatureMsg1 && (
+                <Animatable.View animation="fadeInLeft" duration={500}>
+                  <Text style={{ color: "#DC143C", marginLeft: 20 }}>
+                   Invalid Busines Nature
+                  </Text>
+                </Animatable.View>
+              )}
+
+
               <TextInput
                 style={styles.inputArea}
                 placeholder="Business Type"
@@ -376,13 +497,22 @@ const NewBuisnessDetail = ({ navigation }) => {
                 onChangeText={(value) => {
                   setBusinessTypeMsg(false);
                   setBusinessType(value);
+                  setBusinessTypeMsg1(false);
                 }}
+                onEndEditing={checkType}
                 initialValue=""
               />
               {BusinessTypeMsg && (
                 <Animatable.View animation="fadeInLeft" duration={500}>
                   <Text style={{ color: "#DC143C", marginLeft: 20 }}>
                     Please Enter Business Type
+                  </Text>
+                </Animatable.View>
+              )}
+              {BusinessTypeMsg1 && (
+                <Animatable.View animation="fadeInLeft" duration={500}>
+                  <Text style={{ color: "#DC143C", marginLeft: 20 }}>
+                    Invalid Business Type
                   </Text>
                 </Animatable.View>
               )}

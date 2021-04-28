@@ -128,12 +128,12 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
           responseJson.first_login
         );
         if(responseJson.first_login==true){
-          Alert.alert("Congratulations!", "You have been awarded with UNLIMITED INVOICE on your first signup.", [
-            // {
-            //   text: "Cancel",
-            //   onPress: () => null,
-            //   style: "cancel"
-            // },
+          Alert.alert("Congratulations", "You have been awarded with UNLIMITED INVOICE on your first signup.", [
+            {
+              text: "Okay",
+              onPress: () => null,
+              style: "cancel"
+            },
             // { text: "YES", onPress: () => BackHandler.exitApp() }
           ]);
           // alert("After Admin Approval, You have been awarded with UNLIMITED INVOICE on your first signup.");

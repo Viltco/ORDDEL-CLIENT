@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 const ChangeForgotPassword = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const [isLoading,setIsLoading]=useState(false);
   const ClientEmail = useSelector((state) => state.ApiData.ClientEmail);
   const [securePass , setSecurePass] = useState(true);
   const [secureConfirmPass , setSecureConfirmPass] = useState(true);
