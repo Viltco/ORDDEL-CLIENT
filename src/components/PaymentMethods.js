@@ -401,7 +401,10 @@ Enter Your Bank Card Details
 
 <View style={{ height: "60%",justifyContent:"center" }}>
 {/* <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}> */}
-<ScrollView style={{marginTop:'10%'}}>
+<KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+       
+<ScrollView style={{marginTop:'10%'}} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
 
 {/* <View style={styles.inputArea}>
 <TextInput
@@ -551,6 +554,7 @@ SUBMIT
 </TouchableOpacity>
 {/* </KeyboardAvoidingView> */}
 </ScrollView>
+</KeyboardAvoidingView>
 </View>
 </>}
 </View>

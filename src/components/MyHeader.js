@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, Text, Image, TouchableOpacity } from "react-native";
+import { View, Button, Text, Image, TouchableOpacity,Platform } from "react-native";
 import Colors from "../ColorCodes/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,7 +14,7 @@ function MyHeader(props) {
         height: "10%",
         backgroundColor: Colors.themeColor,
         flexDirection: "row",
-        marginTop: 20,
+        marginTop:Platform.OS=="android"?20:0,
         paddingTop: 18,
         width: "100%",
       }}
@@ -25,6 +25,7 @@ function MyHeader(props) {
           width: "15%",
           justifyContent: "center",
           paddingLeft: "5%",
+          marginTop:Platform.OS=="android"?null:"2%"
         }}
       >
         <TouchableOpacity onPress={() => {dispatch(cartActions.allClear(1));
@@ -38,7 +39,10 @@ function MyHeader(props) {
           height: "100%",
           width: "65%",
           justifyContent: "center",
-          paddingLeft: 10,
+          paddingLeft: Platform.OS=="android"?10:null,
+          marginTop:Platform.OS=="android"?null:"2%",
+          marginLeft:Platform.OS=="android"?null:"10%"
+          
         }}
       >
         <Text
@@ -53,13 +57,14 @@ function MyHeader(props) {
           {props.name}
         </Text>
       </View>
-      <View style={{ height: "100%", width: "20%", justifyContent: "center",paddingLeft:20 }}>
+      <View style={{ height: "100%", width: "20%", justifyContent: "center",paddingLeft:Platform.OS=="android"?20:0 }}>
         <Image
           source={require("../assets/colorLogo.png")}
           style={{
             width: Platform.OS == "ios" ? 40 : 50,
             height: Platform.OS == "ios" ? 40 : 50,
-            marginBottom: 5,
+            marginBottom:Platform.OS=="android"?5:0,
+            marginTop:Platform.OS=="android"?0:10
             
           }}
         />

@@ -485,7 +485,7 @@ function MyStack() {
           component={BuisnessDetail}
           options={{
             headerShown: true,
-            title: "BUSINESS DETAIL",
+            title: "BUSINESS DETAILS",
             headerTitleStyle: {
               color: "white",
               alignSelf: "center",
@@ -685,50 +685,16 @@ function MyStack() {
           name="RejectedOrdersStatus"
           component={RejectedOrdersStatus}
           options={{
-            headerShown: true,
-            title: "ORDER STATUS",
-            headerTitleStyle: {
-              color: "white",
-              alignSelf: "center",
-            },
-            headerStyle: {
-              backgroundColor: Colors.themeColor,
-            },
-            headerTintColor: "#ffffff",
-            headerRight: () => (
-              <Image
-                source={require("../assets/colorLogo.png")}
-                style={{
-                  width: Platform.OS == "ios" ? 40 : 50,
-                  height: Platform.OS == "ios" ? 40 : 50,
-                }}
-              />
-            ),
+            headerShown: false,
+            
           }}
         />
         <Stack.Screen
           name="ReOrder"
           component={ReOrder}
           options={{
-            headerShown: true,
-            title: "ORDER STATUS",
-            headerTitleStyle: {
-              color: "white",
-              alignSelf: "center",
-            },
-            headerStyle: {
-              backgroundColor: Colors.themeColor,
-            },
-            headerTintColor: "#ffffff",
-            headerRight: () => (
-              <Image
-                source={require("../assets/colorLogo.png")}
-                style={{
-                  width: Platform.OS == "ios" ? 40 : 50,
-                  height: Platform.OS == "ios" ? 40 : 50,
-                }}
-              />
-            ),
+            headerShown: false,
+           
           }}
         />
         <Stack.Screen

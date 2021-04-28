@@ -29,7 +29,9 @@ const LandingScreen = ({ navigation }) => {
     >
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("FirstView")}
+        onPress={() => {
+          navigation.navigate("FirstView");
+        }}
       >
         {/* <Text style={styles.buttonText}>And Kindly click on verification link we have sent on your email</Text> */}
         <Text style={styles.buttonText}>OK</Text>

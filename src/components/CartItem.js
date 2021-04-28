@@ -1,28 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
+  TextInput
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Colors from "../ColorCodes/Colors";
-
+import { useSelector, useDispatch } from 'react-redux';
+import * as cartActions from "../store/actions/OrderBox";
 const CartItem = (props) => {
+  const dispatch=useDispatch();
+  const [qtty,setQtty]=useState("");
   const MyIcon1 = <FontAwesome name="minus" size={15} color="#EE0202" solid />;
   const MyIcon2 = <FontAwesome name="plus" size={15} color="#EE0202" solid />;
+  let reg = /^\d+$/;
 
-  //const mealId = useSelector(state => state.cart.items.id);
 
-  //const availableMeals=useSelector(state=>state.mealReducer.selectedMeal);
-  //const availableMeals=useSelector(state=>state.selectedMeal);
-  //console.log(availableMeals,'  selected')
-  //const selectedMeal = MEALS.find(meal => meal.id === mealId);
-  //const dispatch = useDispatch();
-  //const mealId = props.navigation.getParam('mealId');
-  //console.log(mealId,"  mealID  ")
+
+
+
+
+  const updateQuantity=()=>{
+    
+    
+
+    if(qtty!=""){
+     
+        if (qtty == "") {
+            // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
+
+            alert("Please Enter Quantity.");
+          }
+          else if(reg.test(qtty) === false) {
+
+            alert("Invalid Quantity");
+            setQtty("");
+              return false;
+          }
+          else if(qtty==0) {
+
+            alert("Invalid Quantity");
+            setQtty("");
+          }
+          else {
+            dispatch(
+              cartActions.updateQtty(props.id, qtty)
+            )
+       
+            }
+        
+    }
+    }
+  
 
   return (
     <View
@@ -47,9 +80,9 @@ const CartItem = (props) => {
       <View style={{ width: "30%", justifyContent: "center" }}>
         <Text
           style={{
-            marginLeft: 5,
+            marginLeft: 2,
             color: Colors.productGrey,
-            textAlign: "center",
+            textAlign: 'left',
           }}
         >
           {props.name}
@@ -60,22 +93,46 @@ const CartItem = (props) => {
           {props.unit}
         </Text>
       </View>
-      <View style={{ width: "20%", justifyContent: "center" }}>
-        <Text style={{ color: Colors.productGrey, textAlign: "center" }}>
-          {props.quantity}
-        </Text>
-      </View>
+      <View style={{width:'20%',alignSelf:"center"}}>
 
-      <View style={{ width: "20%", justifyContent: "center" }}>
-        <Text style={{ color: Colors.textGreyColor, textAlign: "center" }}>
-          £ {props.price.toFixed(2)}
-        </Text>
+<TextInput
+style={{alignSelf:"center",color:Colors.productGrey,paddingBottom:0,textAlign:'right',}}
+// hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
+placeholder={props.quantity.toString()}
+autoCapitalize="none"
+keyboardType="numeric"
+maxLength={2}
+placeholderTextColor={Colors.productGrey}
+value={qtty}
+// required={true}
+onChangeText={(value) => {
+    
+  setQtty(value);
+//   setCheck(true);
+   
+}}
+
+//onEndEditin={bobo}
+// onEndEditing= {updateQuantity}
+// onSubmitEditing={updateQuantity}
+onKeyPress={updateQuantity}
+// initialValue=""
+/>
+</View>
+
+      <View style={{ width: "22%", justifyContent: "center", }}>
+        {props.price==0?<Text style={{ color: Colors.textGreyColor, textAlign: "right",marginRight:8 }}>
+          £ {props.price}
+        </Text>:<Text style={{ color: Colors.textGreyColor, textAlign: "right",marginRight:8 }}>
+          £ {parseFloat(props.price).toFixed(2)}
+        </Text>}
       </View>
 
       {/* {props.addable && ( */}
       <TouchableOpacity
         onPress={props.onDelete}
         style={{ alignItems: "center", justifyContent: "center" }}
+        // hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
         // style={styles.deleteButton}
       >
         <Ionicons

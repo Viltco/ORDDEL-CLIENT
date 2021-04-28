@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 import {
   Image,
   ScrollView,
@@ -29,14 +29,15 @@ import {
 } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import { useSelector, useDispatch } from "react-redux";
 //import ViewShot from "react-native-view-shot";
 import Colors from "../ColorCodes/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import URL from "../api/ApiURL";
-import { useSelector, useDispatch } from "react-redux";
+
+import * as cartActions from "../store/actions/OrderBox";
 import MyHeader from "../components/MyHeader";
 // import { useIsFocused } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
@@ -44,6 +45,7 @@ import { useIsFocused } from "@react-navigation/native";
 // import * as ApiAction from "../store/actions/ApiData";
 
 const RejectedOrders = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   //   const isFocused = useIsFocused();
   const {Id, name ,address} = route.params
   const RiderId=Id;
@@ -61,6 +63,36 @@ const RejectedOrders = ({ navigation, route }) => {
   const [id, setId] = useState();
 
   const [orderBoxId, setOrderBoxId] = useState();
+
+  const forward=()=>{
+    console.log("OrderBoxId:",orderBoxId)
+    // fetch(URL + "/order/list_order/" + orderBoxId + "/")
+    //           // fetch(URL+'/client_app/clients_list/33/')
+    //           .then((response) => response.json())
+    //           .then((responseJson) => {
+    //             console.log("OrderBoxDetail:", responseJson.order);
+    //             // setBoxData(responseJson.order);
+                
+    //             dispatch(
+    //               cartActions.resend(responseJson.order.order_products)
+    //             )
+    //             navigation.navigate("RejectedOrdersStatus", {
+    //               OID: id,
+    //               orderBoxId: orderBoxId,
+    //               // Quantity: item.total_quantity,
+    //               id:RiderId,
+    //               name:RiderName,
+    //               address:RiderAddress
+    //             })
+    //             // setButtonLoading(false);
+    //             // setIsLoading(false);
+    //             // setDataStatus(responseJson.order.status);
+    //             // console.log(boxDetail, "-------");
+    //             // setIsLoading(false);
+    //           })
+    //           .catch((error) => console.error(error));
+  }
+
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -167,6 +199,7 @@ const RejectedOrders = ({ navigation, route }) => {
             ) : (
               <FlatList
                 data={data.response}
+                inverted
                 style={{ alignSelf: "center" }}
                 showsVerticalScrollIndicator={false}
                 // keyExtractor={item => item.index_id.toString()}
@@ -174,16 +207,34 @@ const RejectedOrders = ({ navigation, route }) => {
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={{ marginTop: 5, marginBottom: 5 }}
-                    onPress={() =>
-                      navigation.navigate("RejectedOrdersStatus", {
-                        OID: id,
-                        orderBoxId: orderBoxId,
-                        Quantity: item.total_quantity,
-                        id:RiderId,
-                        name:RiderName,
-                        address:RiderAddress
-                      })
-                    }
+                    onPress={()=>{
+                      console.log("hello",item.order_box);
+                      fetch(URL + "/order/list_order/" + item.order_box + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                console.log("OrderBoxDetail:", responseJson.order);
+                // setBoxData(responseJson.order);
+                
+                dispatch(
+                  cartActions.resend(responseJson.order.order_products)
+                )
+                navigation.navigate("RejectedOrdersStatus", {
+                  OID: item.id,
+                  orderBoxId: item.order_box,
+                  // Quantity: item.total_quantity,
+                  id:RiderId,
+                  name:RiderName,
+                  address:RiderAddress
+                })
+                // setButtonLoading(false);
+                // setIsLoading(false);
+                // setDataStatus(responseJson.order.status);
+                // console.log(boxDetail, "-------");
+                // setIsLoading(false);
+              })
+              .catch((error) => console.error(error));
+                    }}
 
                     // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
                     //   onPress={() =>

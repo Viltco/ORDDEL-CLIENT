@@ -116,6 +116,11 @@ const NewBuisnessDetail = ({ navigation }) => {
       setLoading(false);
     }
     else{
+      console.log("BusinessName",BusinessName);
+      console.log("BusinessNature",BusinessNature);
+      console.log("BusinessType",BusinessType);
+      console.log("ClientId",ClientId);
+      console.log("address",address);
       const res = fetch(URL + "/client_app/insert_business/", {
         method: "POST",
         headers: {
@@ -126,7 +131,6 @@ const NewBuisnessDetail = ({ navigation }) => {
           name: BusinessName,
           nature: BusinessNature,
           type: BusinessType,
-          logo: "",
           client: ClientId,
           address: address,
         }),
@@ -242,7 +246,9 @@ const NewBuisnessDetail = ({ navigation }) => {
 
   return (
     <>
-    <ScrollView keyboardShouldPersistTaps={true} style={{backgroundColor:'white'}}>
+     <KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+    <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor:'white'}}>
     <View style={styles.container}>
       
       
@@ -472,6 +478,7 @@ const NewBuisnessDetail = ({ navigation }) => {
      
     </View>
     </ScrollView>
+    </KeyboardAvoidingView>
     </>
     
    

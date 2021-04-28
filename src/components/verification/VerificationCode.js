@@ -29,6 +29,7 @@ const VerificationCode = ({navigation,route}) => {
   const [response , setResponse] = useState('');
   const [counter, setCounter] = useState(0);
   const [loading,setLoading]=useState(false);
+  const [isLoading,setIsLoading]=useState(false);
 
  
 //Resend Code

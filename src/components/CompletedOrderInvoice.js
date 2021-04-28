@@ -34,6 +34,7 @@ import * as ApiDataAction from "../store/actions/ApiData";
 //import ViewShot from "react-native-view-shot";
 import Colors from "../ColorCodes/Colors";
 import URL from "../api/ApiURL";
+import * as cartActions from "../store/actions/OrderBox";
 import { useSelector, useDispatch } from "react-redux";
 import MyHeader from "../components/MyHeader";
 import InvoiceItem from "../components/InvoiceItem";
@@ -155,15 +156,41 @@ function CompletedOrderInvoice({ navigation, route }) {
               if (response.status == 201) {
                   // setResMessage("")
                   dispatch(ApiDataAction.SetOrderBoxId(data.cart.id));
-                  navigation.navigate("ReOrder", {
-                    OID: orderId,
-                    orderBoxId: d_orderBoxId,
-                    Quantity: invoiceData.total_qty,
-                    id:invoiceData.delivery_person_id,
-                    name:invoiceData.delivery_person_name,
-                    address:invoiceData.delivery_person_address
-                  })
-                  setButtonLoading(false);
+                  console.log("OrderrrrrrrIdddddddddddd: ",d_orderBoxId);
+                  fetch(URL + "/order/list_order/" + d_orderBoxId + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                console.log("OrderBoxDetail:", responseJson.order);
+                // setBoxData(responseJson.order);
+                
+                dispatch(
+                  cartActions.reorder(responseJson.order.order_products)
+                )
+                navigation.navigate("ReOrder", {
+                  OID: orderId,
+                  orderBoxId: d_orderBoxId,
+                  Quantity: invoiceData.total_qty,
+                  id:invoiceData.delivery_person_id,
+                  name:invoiceData.delivery_person_name,
+                  address:invoiceData.delivery_person_address
+                })
+                setButtonLoading(false);
+                // setIsLoading(false);
+                // setDataStatus(responseJson.order.status);
+                // console.log(boxDetail, "-------");
+                // setIsLoading(false);
+              })
+              .catch((error) => console.error(error));
+                  // navigation.navigate("ReOrder", {
+                  //   OID: orderId,
+                  //   orderBoxId: d_orderBoxId,
+                  //   Quantity: invoiceData.total_qty,
+                  //   id:invoiceData.delivery_person_id,
+                  //   name:invoiceData.delivery_person_name,
+                  //   address:invoiceData.delivery_person_address
+                  // })
+                  // setButtonLoading(false);
                   
               } else {
                 console.log("execption: ",data.message);
@@ -180,15 +207,41 @@ function CompletedOrderInvoice({ navigation, route }) {
             .catch((error) => console.log("Something went wrong", error));
         }
         else{
-          navigation.navigate("ReOrder", {
-            OID: orderId,
-            orderBoxId: d_orderBoxId,
-            Quantity: invoiceData.total_qty,
-            id:invoiceData.delivery_person_id,
-            name:invoiceData.delivery_person_name,
-            address:invoiceData.delivery_person_address
-          })
-          setButtonLoading(false);
+          console.log("OrderrrrrrrIdddddddddddd: ",d_orderBoxId);
+          fetch(URL + "/order/list_order/" + d_orderBoxId + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                console.log("OrderBoxDetail:", responseJson.order);
+                // setBoxData(responseJson.order);
+                
+                dispatch(
+                  cartActions.reorder(responseJson.order.order_products)
+                )
+                navigation.navigate("ReOrder", {
+                  OID: orderId,
+                  orderBoxId: d_orderBoxId,
+                  Quantity: invoiceData.total_qty,
+                  id:invoiceData.delivery_person_id,
+                  name:invoiceData.delivery_person_name,
+                  address:invoiceData.delivery_person_address
+                })
+                setButtonLoading(false);
+                // setIsLoading(false);
+                // setDataStatus(responseJson.order.status);
+                // console.log(boxDetail, "-------");
+                // setIsLoading(false);
+              })
+              .catch((error) => console.error(error));
+          // navigation.navigate("ReOrder", {
+          //   OID: orderId,
+          //   orderBoxId: d_orderBoxId,
+          //   Quantity: invoiceData.total_qty,
+          //   id:invoiceData.delivery_person_id,
+          //   name:invoiceData.delivery_person_name,
+          //   address:invoiceData.delivery_person_address
+          // })
+          // setButtonLoading(false);
         }
        
     
@@ -454,71 +507,16 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
               </View>
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                marginTop: 30,
-                justifyContent: "space-around",
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 100,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Product
-              </Text>
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 70,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  marginRight: 10,
-                }}
-              >
-                Quantity
-              </Text>
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 50,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Unit Price
-              </Text>
+            <View style={{flexDirection:'row',marginTop:30,}}>
+        <Text style={{color:Colors.themeColor,width:"20%",fontSize:17,fontWeight:'bold',textAlign:"left"}}>Product</Text>
+        {/* <Text style={{color:Colors.themeColor,width:35,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Unit</Text> */}
+        <Text style={{color:Colors.themeColor,width:"23%",fontSize:17,fontWeight:'bold',textAlign:'center'}}>Quantity</Text>
+        <Text style={{color:Colors.themeColor,width:"20%",fontSize:17,fontWeight:'bold',textAlign:'center'}}>Unit Price</Text>
 
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  width: 70,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                VAT
-              </Text>
+        <Text style={{color:Colors.themeColor,width:"16%",fontSize:17,fontWeight:'bold',textAlign:'center'}}>VAT</Text>
 
-              <Text
-                style={{
-                  color: Colors.themeColor,
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  marginRight: 20,
-                }}
-              >
-                Amount
-              </Text>
-            </View>
+        <Text style={{color:Colors.themeColor,fontSize:17,fontWeight:'bold',width:"20%",textAlign:"right"}}>Amount</Text>
+    </View>
 
             <View style={{ marginBottom: 10 }}>
               <FlatList
@@ -537,57 +535,16 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                   />
                 )}
               />
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: "100%",
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: "grey",
-                  marginTop: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    color: Colors.themeColor,
-                    width: "10%",
-                    textAlign: "center",
-                    marginLeft: "5%",
-                  }}
-                >
-                  Total
-                </Text>
-                <Text
-                  style={{
-                    color: Colors.themeColor,
-                    width: "25%",
-                    textAlign: "center",
-                    paddingLeft: "15%",
-                  }}
-                >
-                  {invoiceData.total_qty}
-                </Text>
-                <Text
-                  style={{
-                    color: Colors.themeColor,
-                    width: "35%",
-                    textAlign: "center",
-                    paddingLeft: "25%",
-                  }}
-                >
-                  £ {invoiceData.total_vat}
-                </Text>
+              <View style={{flexDirection:'row',borderBottomWidth:0.5,borderBottomColor:'grey',marginTop:10}}>
 
-                <Text
-                  style={{
-                    color: Colors.themeColor,
-                    width: "30%",
-                    textAlign: "center",
-                    paddingRight: "5%",
-                  }}
-                >
-                  £ {invoiceData.total_amount}
-                </Text>
-              </View>
+<Text style={{color:Colors.themeColor,width:"22%",textAlign:'left',fontWeight:'bold',}}>Total</Text>
+<Text style={{color:Colors.themeColor,width:Platform.OS=="android"?"20%":"20%",fontWeight:'bold',fontSize:14,textAlign:"center"}}>{invoiceData.total_qty}</Text>
+{invoiceData.total_vat==0?<Text style={{color:Colors.themeColor,width:"33%",fontWeight:'bold',textAlign:"right",fontSize:14,}}>£ {invoiceData.total_vat}</Text>:<Text style={{color:Colors.themeColor,width:"33%",fontWeight:'bold',textAlign:"right",fontSize:14,}}>£ {parseFloat(invoiceData.total_vat).toFixed(2)}</Text>}
+
+<Text style={{color:Colors.themeColor,width:"24%",fontWeight:'bold',textAlign:"right",fontSize:14}}>£ {parseFloat(invoiceData.total_amount).toFixed(2)}</Text>
+
+</View>
+             
             </View>
 
             <View style={{ padding: 10 }}></View>

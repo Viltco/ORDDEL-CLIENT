@@ -161,6 +161,7 @@ const CompletedOrderList = ({ navigation, route }) => {
             ) : (
               <FlatList
                 data={data.response}
+                inverted
                 style={{ alignSelf: "center" }}
                 showsVerticalScrollIndicator={false}
                 // keyExtractor={item => item.index_id.toString()}

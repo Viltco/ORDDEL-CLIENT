@@ -218,7 +218,9 @@ const EditBuisnessDetail = ({ navigation, route }) => {
 
   return (
     <>
-    <ScrollView keyboardShouldPersistTaps={true} style={{backgroundColor:'white'}}>
+     <KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+    <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor:'white'}}>
     <View style={styles.container}>
       {/* <View style={styles.spinnerv}> */}
       {/* {
@@ -437,6 +439,7 @@ const EditBuisnessDetail = ({ navigation, route }) => {
       </View>
     </View>
     </ScrollView>
+    </KeyboardAvoidingView>
     </>
   );
 };

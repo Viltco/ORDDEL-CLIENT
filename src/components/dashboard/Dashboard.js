@@ -118,6 +118,48 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
     // console.log(PoNumber,"-----");
     // console.log(OrderId,"------")
     if(ClientId!=0){
+
+      fetch(URL + "/client_app/check_first_login/" + ClientId + "/")
+      // fetch(URL+'/client_app/clients_list/33/')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(
+          "First Loginnnnnnnnnnnnnnn:",
+          responseJson.first_login
+        );
+        if(responseJson.first_login==true){
+          Alert.alert("Congratulations!", "You have been awarded with UNLIMITED INVOICE on your first signup.", [
+            // {
+            //   text: "Cancel",
+            //   onPress: () => null,
+            //   style: "cancel"
+            // },
+            // { text: "YES", onPress: () => BackHandler.exitApp() }
+          ]);
+          // alert("After Admin Approval, You have been awarded with UNLIMITED INVOICE on your first signup.");
+        }
+        // console.log("Dashboard:", responseJson);
+        // console.log("Dashboard:",responseJson.client_dashboard.client_name);
+        //console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
+        // if (json["response"] == "Record does not exist or not found") {
+        //   setLoading(true);
+        // } else {
+        // console.log("=======",)
+        // dispatch(ApiDataAction.SetListData(responseJson));
+        // dataa = responseJson;
+        // setData(responseJson);
+        // setDeliveryPerson(responseJson.client_dashboard.preferred_delivery_person)
+        // setDeliveryPersonName(responseJson.client_dashboard.preferred_delivery_person_name)
+        // setDeliveryPersonAddress(responseJson.client_dashboard.preferred_delivery_person_address)
+ 
+        //   //console.log(json);
+        // }
+      })
+      .catch((error) => console.error(error));
+
+
+
+
       fetch(URL + "/client_app/client_dashboard/" + ClientId + "/")
       // fetch(URL+'/client_app/clients_list/33/')
       .then((response) => response.json())

@@ -39,6 +39,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import URL from "../api/ApiURL";
 import { useSelector, useDispatch } from "react-redux";
+import * as cartActions from "../store/actions/OrderBox";
 import * as ApiAction from "../store/actions/ApiData";
 import MyHeader from "../components/MyHeader";
 import ReorderCartItem from "../components/ReorderCartItem";
@@ -106,16 +107,42 @@ setButtonLoading(true);
           // setStatusCode(response.status)
           if (response.status == 201) {
               // setResMessage("")
+              
               dispatch(ApiDataAction.SetOrderBoxId(data.cart.id));
-              navigation.navigate("ReOrder", {
-                OID: OId,
-                orderBoxId: OrderBoxId,
-                Quantity: totalQuantity,
-                id:boxData.delivery_person,
-                name:boxData.delivery_person_name,
-                address:"142-Allama Iqbal Road"
+              fetch(URL + "/order/list_order/" + OrderBoxId + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                console.log("OrderBoxDetail:", responseJson.order);
+                // setBoxData(responseJson.order);
+                
+                dispatch(
+                  cartActions.resend(responseJson.order.order_products)
+                )
+                navigation.navigate("ReOrder", {
+                  OID: OId,
+                  orderBoxId: OrderBoxId,
+                  Quantity: totalQuantity,
+                  id:boxData.delivery_person,
+                  name:boxData.delivery_person_name,
+                  address:boxData.delivery_person_address
+                })
+                setButtonLoading(false);
+                // setIsLoading(false);
+                // setDataStatus(responseJson.order.status);
+                // console.log(boxDetail, "-------");
+                // setIsLoading(false);
               })
-              setButtonLoading(false);
+              .catch((error) => console.error(error));
+              // navigation.navigate("ReOrder", {
+              //   OID: OId,
+              //   orderBoxId: OrderBoxId,
+              //   Quantity: totalQuantity,
+              //   id:boxData.delivery_person,
+              //   name:boxData.delivery_person_name,
+              //   address:"142-Allama Iqbal Road"
+              // })
+              // setButtonLoading(false);
               
           } else {
             console.log("execption: ",data.message);
@@ -132,15 +159,40 @@ setButtonLoading(true);
         .catch((error) => console.log("Something went wrong", error));
     }
     else{
-      navigation.navigate("ReOrder", {
-        OID: OId,
-        orderBoxId: OrderBoxId,
-        Quantity: totalQuantity,
-        id:boxData.delivery_person,
-        name:boxData.delivery_person_name,
-        address:boxData.delivery_person_address
-      })
-      setButtonLoading(false);
+      fetch(URL + "/order/list_order/" + OrderBoxId + "/")
+              // fetch(URL+'/client_app/clients_list/33/')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                console.log("OrderBoxDetail:", responseJson.order);
+                // setBoxData(responseJson.order);
+                
+                dispatch(
+                  cartActions.resend(responseJson.order.order_products)
+                )
+                navigation.navigate("ReOrder", {
+                  OID: OId,
+                  orderBoxId: OrderBoxId,
+                  Quantity: totalQuantity,
+                  id:boxData.delivery_person,
+                  name:boxData.delivery_person_name,
+                  address:boxData.delivery_person_address
+                })
+                setButtonLoading(false);
+                // setIsLoading(false);
+                // setDataStatus(responseJson.order.status);
+                // console.log(boxDetail, "-------");
+                // setIsLoading(false);
+              })
+              .catch((error) => console.error(error));
+      // navigation.navigate("ReOrder", {
+      //   OID: OId,
+      //   orderBoxId: OrderBoxId,
+      //   Quantity: totalQuantity,
+      //   id:boxData.delivery_person,
+      //   name:boxData.delivery_person_name,
+      //   address:boxData.delivery_person_address
+      // })
+      // setButtonLoading(false);
     }
    
 
@@ -310,6 +362,7 @@ setButtonLoading(true);
   return (
     <View style={{ flex: 1 }}>
       {/* <MyHeader name="ORDERS STATUS" nav={navigation} /> */}
+      
       <ScrollView>
         {isLoading ? (
           <Spinner color={Colors.themeColor} />
@@ -430,11 +483,11 @@ setButtonLoading(true);
               </View>
             </View>
 
-            <View style={{flexDirection:'row',marginTop:30,justifyContent:'space-around'}}>
-        <Text style={{color:Colors.themeColor,width:120,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Product</Text>
-        <Text style={{color:Colors.themeColor,width:65,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Unit</Text>
-        <Text style={{color:Colors.themeColor,width:72,fontSize:17,fontWeight:'bold',textAlign:'center'}}>Quantity</Text>
-        <Text style={{color:Colors.themeColor,fontSize:17,fontWeight:'bold',marginRight:20,width:100,textAlign:'center'}}>Price Per Unit</Text>
+            <View style={{flexDirection:'row',marginTop:30,}}>
+        <Text style={{color:Colors.themeColor,width:"30%",fontSize:17,fontWeight:'bold',textAlign:"left",marginLeft:"1%"}}>Product</Text>
+        <Text style={{color:Colors.themeColor,width:"20%",fontSize:17,fontWeight:'bold',textAlign:'center'}}>Unit</Text>
+        <Text style={{color:Colors.themeColor,width:"20%",fontSize:17,fontWeight:'bold',textAlign:'center'}}>Quantity</Text>
+        <Text style={{color:Colors.themeColor,fontSize:17,fontWeight:'bold',marginRight:20,width:"25%",textAlign:"right"}}>Last month Avg.Price</Text>
     </View>
 
             <View
@@ -470,9 +523,9 @@ setButtonLoading(true);
                 <Text
                   style={{
                     color: Colors.themeColor,
-                    width: "20%",
-                    textAlign: "center",
-                    marginLeft: "5%",
+                    width: "22.5%",
+                    textAlign: "left",
+                    marginLeft: "1%",
                     fontWeight:'bold'
                   }}
                 >
@@ -481,7 +534,7 @@ setButtonLoading(true);
                 <Text
                   style={{
                     color: Colors.themeColor,
-                    width: "65%",
+                    width: "75%",
                     textAlign: "center",
                     // paddingLeft: "15%",
                     fontWeight:'bold'

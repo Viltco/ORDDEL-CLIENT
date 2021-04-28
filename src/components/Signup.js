@@ -294,7 +294,7 @@ const Signup = ({navigation}) => {
             password: password,
             riderId: riderId,
             gender:selectedValue=="key"?"male":"female",
-            packageId:packageId
+            packageId:45
              })
             //  setEmail('');
             //  setFormattedValue('');
@@ -413,9 +413,9 @@ const Signup = ({navigation}) => {
           else if(riderAddress==""){
             setToastMessage("Please Select Delivery Person");
           }
-          else if(packageId==""){
-            setToastMessage("Please Select Package");
-          }
+          // else if(packageId==""){
+          //   setToastMessage("Please Select Package");
+          // }
           else if(formattedValue==""){
             setToastMessage("Please Enter Phone Number");
           }
@@ -427,7 +427,7 @@ const Signup = ({navigation}) => {
   
           }
           else if(password.length < 8) {
-            setToastMessage("Password limit should be Greater than 8 Digits");
+            setToastMessage("Password limit should be Greater than 7 Digits");
   
           }
           else{
@@ -526,7 +526,9 @@ const Signup = ({navigation}) => {
            behavior="padding"
            keyboardVerticalOffset={50}
         > */}
-        <ScrollView showsVerticalScrollIndicator={false}>
+         <KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+        <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
           
           {/* <FormSignup type="SignUp"/> */}
           <View style={{flexDirection:'row',alignSelf:'center'}}>
@@ -851,7 +853,7 @@ const Signup = ({navigation}) => {
 </BottomSheet>
 </View>
 
-<View style = {{padding:10 }}>
+{/* <View style = {{padding:10 }}>
 
 <Card
   style={{
@@ -875,9 +877,7 @@ const Signup = ({navigation}) => {
     <Text style={{ fontSize: 16, fontWeight: "bold" }}>
       {packageName}
     </Text>
-    {/* <Text style={{ fontSize: 12, color: "#666666" }}>
-      {riderAddress}
-    </Text> */}
+    
   </TouchableOpacity>
 </Card>
 <BottomSheet
@@ -964,7 +964,7 @@ const Signup = ({navigation}) => {
     )}
   </View>
 </BottomSheet>
-</View>
+</View> */}
 
 
 
@@ -1043,6 +1043,7 @@ const Signup = ({navigation}) => {
                 
     </View>
         </ScrollView>
+        </KeyboardAvoidingView>
         {/* </KeyboardAvoidingView> */}
       
       

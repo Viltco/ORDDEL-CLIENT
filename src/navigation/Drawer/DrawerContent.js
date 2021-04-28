@@ -37,6 +37,43 @@ const DrawerContent = (props) => {
   const ClientName = useSelector((state) => state.ApiData.ClientName);
   const ClientImage = useSelector((state) => state.ApiData.ClientImage);
   const ClientId = useSelector((state) => state.ApiData.ClientId);
+  const [checkRemember,setCheckRemember]=useState(false);
+
+  var getToken = async () => {
+    console.log("Hi Shaheer Welcome to Hell");
+
+    try {
+      let check = await AsyncStorage.getItem("remember");
+      let datal = JSON.parse(check);
+      console.log("remember11111:",datal)
+//               if(checkRemember){
+//                 AsyncStorage.removeItem("loginCheck");
+//               }
+//               else{
+//                 AsyncStorage.clear();
+// //  AsyncStorage.removeItem("userData");
+// //               AsyncStorage.removeItem("passData");
+// //               AsyncStorage.removeItem("loginCheck");
+//               }
+     
+      if(datal){
+      // setLoading(true)
+      AsyncStorage.removeItem("loginCheck");
+      }
+      else{
+        console.log("from Else jajajajaj")
+//  AsyncStorage.removeItem("userData");
+//               AsyncStorage.removeItem("passData");
+//               AsyncStorage.removeItem("loginCheck");
+              AsyncStorage.clear();
+      }
+      
+      
+     
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  };
   // const route = props
   //   const [companyInfo,     setCompanyInfo] = useState([route.initialParams['params']['Company_Data'][0][0]])
   //   const [personInfo,       setPersonInfo] = useState([route.initialParams['params']['Company_Data'][1]]);
@@ -145,7 +182,7 @@ const DrawerContent = (props) => {
           </TouchableOpacity>
         </View>
 
-        <View style={{ marginTop:20,marginLeft:15,borderBottomColor:Colors.bottomLine,borderBottomWidth:1,width:240}}>
+        {/* <View style={{ marginTop:20,marginLeft:15,borderBottomColor:Colors.bottomLine,borderBottomWidth:1,width:240}}>
         
         <TouchableOpacity onPress={()=>props.navigation.navigate("Packages")} style={{flexDirection:'row',marginBottom:10}}>
             <Image source={require("../../assets/d_package.png")} style={{width:25,height:25,marginLeft:3}} />
@@ -154,7 +191,7 @@ const DrawerContent = (props) => {
         <MaterialIcons name="navigate-next" color = {Colors.textBlack} size={Platform.OS=='android'?20:20} style={{marginLeft:105}} />
         </TouchableOpacity>
         
-        </View>
+        </View> */} 
 
         {/* <View style={{ marginTop:20,marginLeft:15,borderBottomColor:Colors.bottomLine,borderBottomWidth:1,width:240}}>
         
@@ -202,13 +239,14 @@ const DrawerContent = (props) => {
         <View style={{ marginTop: 20, marginLeft: 15, width: 240 }}>
           <TouchableOpacity
             onPress={() => {
-              dispatch(ApiDataAction.Clear_All(1)),
-              // AsyncStorage.removeItem("userData");
-              // AsyncStorage.removeItem("passData");
+              dispatch(ApiDataAction.Clear_All(1));
+              getToken();
+              // let check = AsyncStorage.getItem("remember");
+              // let datal = JSON.parse(check);
+             
+             
 
-              // AsyncStorage.removeItem("loginCheck");
-
-            AsyncStorage.clear();
+            // AsyncStorage.clear();
                props.navigation.navigate("Login");
             }}
             style={{ flexDirection: "row", marginBottom: 10 }}
@@ -233,157 +271,9 @@ const DrawerContent = (props) => {
           </TouchableOpacity>
         </View>
 
-        {/* <View style={{ marginTop:20,marginLeft:15,borderBottomColor:"black",borderBottomWidth:1,width:240}}>
-        
-        <TouchableOpacity style={{flexDirection:'row',marginBottom:10}}>
-        <MaterialCommunityIcons name="home" color = 'black' size={Platform.OS=='android'?30:70} />
-        <Text style={{marginLeft:20,fontSize:20}}>Bank Details</Text>
-        <MaterialIcons name="navigate-next" color = 'black' size={Platform.OS=='android'?35:70} style={{marginLeft:55}} />
-        </TouchableOpacity>
-        
-        </View> */}
-        {/* <DrawerItem
-       icon = {({color,size}) => (
-           <Icon
-           name = "home"
-        //    color = "white"
-           size = {34}
-           />
-        
-       )}
-       labelStyle = {{fontSize:20}}
-       label = "Home"
        
-    //    icon = {({color,size}) => (
-    //     <Icon
-    //     name = "home"
-    //  //    color = "white"
-    //     size = {34}
-    //     />
-     
-    // )}
-       onPress = {() => {props.navigation.navigate("Dashboard")}}
-       /> */}
-
-        {/* <View>
-        <MaterialIcons name="navigate-next" color = 'black' size={Platform.OS=='android'?30:70} />
-        </View> */}
-
-        {/* <View>
-        <DrawerItem
-       icon = {({color,size}) => (
-           <Icon
-           name = "person"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Profile"
-       onPress = {() => {props.navigation.navigate("Profile", { CompanyData : companyInfo , PersonData : personInfo , ContactData : contactPerson , AccountData : accountInfo})}}
-       />
-        </View> */}
-        {/* <View>
-        <DrawerItem
-      
-       icon = {({color,size}) => (
-           <Icon
-           name = "group-add"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Add Contact Person"
-       onPress = {() => {props.navigation.navigate("AddPersonInfo" , { Login : login } )}}
-       />
-        </View> */}
-
-        {/* <View>
-        <DrawerItem
-       icon = {({color,size}) => (
-           <Icon
-           name = "add-location"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Add Company Addresses"
-       onPress = {() => {props.navigation.navigate("AddAccountInfo" , { Login : login } )}}
-       
-       />
-        </View> */}
-
-        {/* <View>
-        <DrawerItem
-       icon = {({color,size}) => (
-           <Icon
-           name = "lock"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Change Password"
-       onPress = {() => {props.navigation.navigate("ChangePassword" , { Login : login , Password : password})}}
-       />
-        </View> */}
-
-        {/* <View>
-        <DrawerItem
-       icon = {({color,size}) => (
-           <Icon
-           name = "help"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Help & Feedback"
-       onPress = {() => {props.navigation.navigate("Help")}}
-       />
-        </View> */}
-
-        {/* <View>
-       <DrawerItem
-       
-       icon = {({color,size}) => (
-           <Icon
-           name = "power-settings-new"
-           color = "white"
-           size = {size}
-           />
-        
-       )}
-       labelStyle = {{color:'white',fontSize:14}}
-       label = "Sign out"
-       onPress = {() => 
-        {
-
-            
-                AsyncStorage.clear();
-
-                let userPass = AsyncStorage.getItem("passData");
-      
-            
-                console.log("Logout" ,JSON.parse(JSON.stringify(userPass)))
-                
-            props.navigation.navigate("Login")}}
-       />
-      </View> */}
       </DrawerContentScrollView>
-      {/* <View style = {{justifyContent:'center'}}>
-       <Image
-    source={require('../../assets/conceptBlue.jpg')} 
-    style={styles.logo}
-    />
-      </View> */}
+     
     </View>
   );
 };

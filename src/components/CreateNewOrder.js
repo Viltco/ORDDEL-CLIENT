@@ -15,7 +15,9 @@ import {
   Platform,
   BackHandler,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  Modal,
+  Pressable
 } from "react-native";
 import {
   Container,
@@ -36,7 +38,7 @@ import {
 } from "native-base";
 // import { Icon } from 'react-native-elements';
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { SearchBar } from 'react-native-elements';
 import { useSelector, useDispatch } from "react-redux";
 import * as ApiDataAction from "../store/actions/ApiData";
 //mport shortid from "shortid";
@@ -61,6 +63,7 @@ import * as cartActions from "../store/actions/OrderBox";
 import { connect } from "react-redux";
 import { BottomSheet } from "react-native-btr";
 import MyHeader from "../components/MyHeader";
+import PreviewCart from '../components/PreviewCart';
 // import useStateWithCallback from "../components/DatePickerHelper";
 // import { tr } from "date-fns/locale";
 // import Toast from 'react-native-simple-toast'
@@ -76,7 +79,9 @@ function CreateNewOrder({ navigation ,route }) {
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
   const CheckId = useSelector((state) => state.OrderBox.items);
-  const cartItems = useSelector((state) => {
+  
+  const cartItems = useSelector((state) => 
+  {
     const transformedCartItems = [];
     for (const key in state.OrderBox.items) {
       transformedCartItems.push({
@@ -89,8 +94,9 @@ function CreateNewOrder({ navigation ,route }) {
         price: state.OrderBox.items[key].price,
       });
     }
-    return transformedCartItems.sort((a, b) => (a.id > b.id ? 1 : -1));
+    return transformedCartItems
   });
+  // const R_cartItems=cartItems.reverse();
   var Count = 0;
 
   const dispatch = useDispatch();
@@ -99,7 +105,7 @@ function CreateNewOrder({ navigation ,route }) {
 
   const PoNumber = useSelector((state) => state.ApiData.PoNumber);
   const OrderId = useSelector((state) => state.ApiData.OrderId);
-  console.log("PoNumber", PoNumber);
+  console.log("cartItems  ", cartItems);
   console.log("OrderId", OrderId);
   const [pickUpDate, setPickUpDate] = useState("");
   const [MyOrderBoxId, setMyOrderBoxId] = useState("");
@@ -137,6 +143,9 @@ function CreateNewOrder({ navigation ,route }) {
   const [sendButtonCheck, setSendButtonCheck] = useState(false);
   const [todayDate,setTodayDate]=useState("");
   const [todayTime,setTodayTime]=useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+ 
   // const [sendButtonCheck, setSendButtonCheck] = useState("");
   
 
@@ -296,8 +305,11 @@ function CreateNewOrder({ navigation ,route }) {
   };
 
   const addOrderBox=()=>{
+    setLoading(true);
+    console.log("before Order box", OrderId);
     Count = Count + 1;
     setSendButtonCheck(true);
+    setModalVisible(!modalVisible);
     fetch(URL + "/order/add_to_order_box/", {
       method: "POST",
       headers: {
@@ -307,14 +319,7 @@ function CreateNewOrder({ navigation ,route }) {
       body: JSON.stringify({
         order_box: OrderId,
         order_products: cartItems,
-        // [
-        // {
-        // id: selectedValue.id,
-        // quantity : qtty,
-        // total_amount : qtty*selectedValue.avg_price
-        // },
-
-        // ]
+        
       }),
     })
       .then(async (response) => {
@@ -324,12 +329,13 @@ function CreateNewOrder({ navigation ,route }) {
         if (response.status == 201) {
           // console.log("data",data)
           // dispatch(ApiDataAction.CreateOrder(1));
-
+          
           CreateOrder();
           console.log("(Oreder is added to order box)");
           // dispatch(ApiDataActions.SetLoginData(data));
           // navigation.navigate("MyDrawer");
         }else{
+    setSendButtonCheck(false);
           alert(data.message)
         //  Toast.show(data.message, Toast.LONG);
           
@@ -386,6 +392,7 @@ function CreateNewOrder({ navigation ,route }) {
           setQtty("");
           setFormattedDate("");
           // AsyncStorage.clear();
+          
           navigation.navigate("Dashboard");
 
           setSendButtonCheck(false);
@@ -441,6 +448,7 @@ function CreateNewOrder({ navigation ,route }) {
 
       }
       else{
+        setModalVisible(!modalVisible)
         // if (formattedDate == "") {
         //   setFormattedDate(
         //     date.getDate() +
@@ -457,46 +465,8 @@ function CreateNewOrder({ navigation ,route }) {
          
         // } else {
           
-            console.log("before Order box", OrderId);
-            Count = Count + 1;
-            setSendButtonCheck(true);
-            fetch(URL + "/order/add_to_order_box/", {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                order_box: OrderId,
-                order_products: cartItems,
-                
-              }),
-            })
-              .then(async (response) => {
-                let data = await response.json();
-                // console.log("status code",response.status)
-                // console.log("Order Detail",data.order_box.order_products)
-                if (response.status == 201) {
-                  // console.log("data",data)
-                  // dispatch(ApiDataAction.CreateOrder(1));
-
-                  CreateOrder();
-                  console.log("(Oreder is added to order box)");
-                  // dispatch(ApiDataActions.SetLoginData(data));
-                  // navigation.navigate("MyDrawer");
-                }else{
-            setSendButtonCheck(false);
-                  alert(data.message)
-                //  Toast.show(data.message, Toast.LONG);
-                  
-                }
-
-                // code that can access both here
-              })
-              .catch((error) => {
-                setSendButtonCheck(false);
-                console.log("Something went wrong from add to orderBox", error);
-              });
+         
+            
           
 
           // console.log("before create",OrderId);
@@ -572,7 +542,7 @@ function CreateNewOrder({ navigation ,route }) {
     // getToken();
     // console.log("yup",OrderId)
 
-    fetch(URL + "/product/product_list/")
+    fetch(URL + "/product/product_list/?client_id="+ClientId)
       .then((response) => response.json())
       .then((responseJson) => {
         // const {results: films} = json;
@@ -652,9 +622,16 @@ function CreateNewOrder({ navigation ,route }) {
       // .catch((error) => console.error(error));
 
 
-
-    datee = new Date().getDate(); //Current Date
-    monthh = new Date().getMonth() + 1; //Current Month
+      
+    datee = ("0" + new Date().getDate()).slice(-2); //Current Date
+    // if(datee<10){
+    //   datee="0"+datee;
+    // }
+    monthh = ("0" + (new Date().getMonth() + 1)).slice(-2)//Current Month
+    // if(monthh<10){
+    //   monthh="0"+monthh;
+    // }
+    console.log("Monthhhhhhhhhhhhhhhhhhhhh :",date)
     yearr = new Date().getFullYear(); //Current Year
     hourss = new Date().getHours(); //Current Hours
     minn = new Date().getMinutes(); //Current Minutes
@@ -672,13 +649,12 @@ function CreateNewOrder({ navigation ,route }) {
   return (
     <>
     
-
-    
     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
       {/* <FlashMessage position="top" /> */}
       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
       <MyHeader name="CREATE NEW ORDER" nav={navigation} />
-
+      <KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
       <ScrollView
         style={{ padding: 0 }}
         nestedScrollEnabled={true}
@@ -760,7 +736,7 @@ function CreateNewOrder({ navigation ,route }) {
                     <FlatList
                       // nestedScrollEnabled={true}
                       data={riderData}
-                      style={{ padding: 10 }}
+                      style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
                       showsVerticalScrollIndicator={false}
                       // keyExtractor={item => item.index_id.toString()}
                       keyExtractor={({ id }, index) => id}
@@ -770,6 +746,7 @@ function CreateNewOrder({ navigation ,route }) {
                             width: "95%",
                             marginBottom: 15,
                             alignSelf: "center",
+                            
                           }}
                           onPress={() =>{
                             rider(
@@ -942,7 +919,7 @@ function CreateNewOrder({ navigation ,route }) {
                     <FlatList
                       nestedScrollEnabled={true}
                       data={businessData}
-                      style={{ padding: 10 }}
+                      style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
                       showsVerticalScrollIndicator={false}
                       // keyExtractor={item => item.index_id.toString()}
                       keyExtractor={({ id }, index) => id}
@@ -1049,8 +1026,281 @@ function CreateNewOrder({ navigation ,route }) {
                   )}
                 </View>
               </BottomSheet>
+
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
             </View>
           </View>
+          <Modal
+        animationType="slide"
+        
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+        //   Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView2}>
+          <View style={styles.modalView2}>
+          <View style = {{width:"95%",height:Platform.OS=="android"?"95%":"90%",backgroundColor:'white',alignSelf:"center",borderRadius:10,flexDirection:'row',
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          }}>
+            {/* <Card style={{borderRadius:10,width:"90%",height:"90%",alignItems:'center',backgroundColor:"white"}}> */}
+              <ScrollView keyboardShouldPersistTaps="always"  showsVerticalScrollIndicator={false} style={{padding:10}}>
+            <View style={{alignSelf:"center",padding:"3%",paddingBottom:"2%",marginRight:10}}>
+              <Text style={{color:Colors.themeColor,fontSize:24,fontWeight:"bold",textAlign:"center"}}>PREVIEW</Text>
+            </View>
+            <View style={{ flexDirection: "row",padding:5,alignSelf:"center" }}>
+            <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10
+          }}>
+            
+            {/* <Card
+                style={{
+                  padding: 10,
+                  width: "48%",
+                  backgroundColor: "#e6e6e6",
+                  elevation: 0,
+                }}
+              > */}
+                
+                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                    Delivery Person:
+                  </Text>
+                  {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                    {name}
+                  </Text>:
+                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {riderName}
+                </Text>}
+                 {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
+                    {address}
+                  </Text>:
+                  <Text style={{ fontSize: 12, color: "#666666" }}>
+                    {riderAddress}
+                  </Text>}
+                
+              </View>
+              <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10,
+          marginLeft:5
+          }}>
+                
+                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                    Delivery Address:
+                  </Text>
+                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                    {businessName}
+                  </Text>
+                  <Text style={{ fontSize: 12, color: "#666666" }}>
+                    {AddressName}
+                  </Text>
+                
+              </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  padding: 5,
+                  paddingTop:0
+                }}
+              >
+                
+
+                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10,
+          
+          }}>
+                  <View style={{ padding: 5 }}>
+                    
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Date:
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getDate()).slice(-2) +
+                          "-" +
+                          ("0" + (date.getMonth() + 1)).slice(-2)+
+                          "-" +
+                          date.getFullYear()}
+                      </Text>
+                    
+                  </View>
+                </View>
+
+                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10,
+          marginLeft:5
+          }}>
+                  <View style={{ padding: 5 }}>
+                    
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Time:
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                      </Text>
+                    
+                  </View>
+                </View>
+              </View>
+
+              
+              <View style={{flexDirection:'row',marginTop:10}}>
+        <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
+        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
+        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"24%"}}>Quantity</Text>
+        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"right",width:"26%"}}>Last month Avg.Price</Text>
+    </View>
+    <View style={{padding:2}}>
+              <FlatList
+                          nestedScrollEnabled
+                          data={cartItems}
+                          // sort={true}
+                          // inverted={true}
+                          keyExtractor={(item) => item.id}
+                          renderItem={(itemData) => (
+                            <PreviewCart
+                              id={itemData.item.id}
+                              quantity={itemData.item.quantity}
+                              total_amount={itemData.item.total_amount}
+                              name={itemData.item.name}
+                              unit={itemData.item.unit}
+                              price={itemData.item.price}
+                              // addable
+                              onAddPress={() => {
+                                dispatch(
+                                  cartActions.addToQtty(itemData.item.id)
+                                );
+                              }}
+                              // deletable
+                              onRemove={() => {
+                                dispatch(
+                                  cartActions.removeFromCart(itemData.item.id)
+                                );
+                              }}
+                              // removeable
+                              onDelete={() => {
+                                dispatch(
+                                  cartActions.deleteProduct(itemData.item.id)
+                                );
+                              }}
+                            />
+                          )}
+                        />
+              </View>
+              <View style={{ flexDirection: "row", }}>
+                    <Text
+                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
+                    >
+                      Total:
+                    </Text>
+                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%",textAlign:"center" }}>
+                      {cartTotalPackages}
+                    </Text>
+                    {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+                    £ {cartTotalAmount}
+                    </Text>:
+                    <Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+                    £ {parseFloat(cartTotalAmount).toFixed(2)}
+                    </Text>}
+                  </View>
+
+
+                  {note==""?null:
+                <View style={{alignSelf:"center",paddingTop:"20%"}}>
+                  <Text>Note: {note}</Text>
+                </View>}
+
+
+          <View style={{marginTop:"10%",alignSelf:"center"}}>
+            <Pressable
+               style={styles.signupButton1}
+               activeOpacity={0.7}
+              onPress={addOrderBox}
+            >
+              {loading ? (
+                <Spinner color={"white"} size={20} />
+              ) : (
+              <Text style={styles.signupButtonText1}>CONFIRM</Text>)}
+            </Pressable>
+            <Pressable
+               style={{...styles.bu_signupButton1,borderWidth:1,marginBottom:"10%"}}
+               activeOpacity={0.7}
+              onPress={()=>
+                setModalVisible(!modalVisible)
+                }
+            >
+              <Text style={styles.bu_signupButtonText1}>CANCEL</Text>
+            </Pressable>
+            </View>
+            </ScrollView>
+           </View>
+        
+ 
+            
+          </View>
+        </View>
+      </Modal>
 
           <View style={{ height: "70%", marginTop: 40}}>
             <Card
@@ -1134,9 +1384,9 @@ function CreateNewOrder({ navigation ,route }) {
                           textAlign: "center",
                         }}
                       >
-                        {date.getDate() +
+                        {("0" + date.getDate()).slice(-2) +
                           "-" +
-                          (date.getMonth() + 1) +
+                          ("0" + (date.getMonth() + 1)).slice(-2)+
                           "-" +
                           date.getFullYear()}
                       </Text>
@@ -1198,7 +1448,7 @@ function CreateNewOrder({ navigation ,route }) {
                           textAlign: "center",
                         }}
                       >
-                        {date.getHours() + ":" + date.getMinutes()}
+                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -1223,7 +1473,7 @@ function CreateNewOrder({ navigation ,route }) {
                   width: "100%",
                 }}
               >
-                <View
+               <View
                   style={{
                     width: Platform.OS == "android" ? "30%" : "30%",
                     
@@ -1233,17 +1483,23 @@ function CreateNewOrder({ navigation ,route }) {
                     // onFocus={() => {scrollView.props.scrollToEnd({animated: true})}}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    flatListProps={{ nestedScrollEnabled: true }}
+                    flatListProps={{ nestedScrollEnabled: true}}
                     // containerStyle={{}}
+                   
                     listContainerStyle={{
                       backgroundColor: "#e6e6e6",
                       width: 250,
-                      // height: Platform.OS == "android" ? 150 :150,
+                      left: 0,
+                      position: 'absolute',
+                      right: 0,
+                      top: 50,
+                    zIndex: 1,
+                      // height: Platform.OS == "android" ? 150 :150
 
                     }}
                     listStyle={{
                       borderColor: "#e6e6e6",
-                      height: Platform.OS == "android" ? 150 :null,
+                      height: Platform.OS == "android" ? 150 :150,
                     }}
                     style={{
                       // backgroundColor: "#e6e6e6",
@@ -1274,7 +1530,7 @@ function CreateNewOrder({ navigation ,route }) {
                     placeholder="Add Item"
                     placeholderTextColor="black"
                     renderItem={({ item }) => (
-                      <ScrollView>
+                      <ScrollView keyboardShouldPersistTaps="always">
                         <TouchableOpacity
                           // style={{paddingHorizontal:10}}
 
@@ -1347,16 +1603,17 @@ function CreateNewOrder({ navigation ,route }) {
                     </Text>
                   </View>
                 ) : (
-                  <View style={{ width: "40%", paddingTop: 5 }}>
+                  <View style={{ width: "40%", paddingTop: 0 }}>
                     <Text
                       style={{
                         color: Colors.textGreyColor,
                         padding: 10,
+                        paddingTop:0,
                         marginLeft: 1,
                         paddingBottom: 12.5,
                       }}
                     >
-                      Price Per Unit
+                    Last month Avg.Price
                     </Text>
                   </View>
                 )}
@@ -1438,46 +1695,16 @@ function CreateNewOrder({ navigation ,route }) {
                   marginTop: 20,
                 }}
               >
-                {/* <View style={{flexDirection:'row',alignSelf:'center',padding:10}}>
-            <Card style={{padding:10,width:'50%',marginRight:"4%"}}>
                 
-                    <Text style={{color:Colors.themeColor,fontSize:12}}>Order Date:</Text>
-                    {/* {var formattedDate = format(date, "MMMM do, yyyy H:mma")} */}
-                {/* <Text style={{marginBottom:5,fontSize:14}}>{currentDate}</Text> */}
-
-                {/* </Card> */}
-                {/* <Card style={{padding:10,marginLeft:5,width:'50%'}}> */}
-
-                {/* </Card>  */}
-                {/* {show && (
-        <DatePicker
-            defaultDate={new Date(year, month, date)}
-            minimumDate={new Date(year, month, date)}
-            maximumDate={new Date(2021, 12, 31)}
-            // formatChosenDate={(date) => {
-            //   return moment(date).format("YYYY-MM-DD");
-            // }}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
-            onDateChange={(itemValue, itemIndex) => {
-              setPickUpDate(itemValue);
-            }}
-            disabled={false}
-          />
-    )}  */}
-                {/* </View> */}
-                <Card
-                  style={{
-                    height: "60%",
-                    elevation: 0,
-                    backgroundColor: "#F2F2F2",
-                  }}
-                >
+                <View style = {{height:"60%",backgroundColor:'#F2F2F2',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10,
+          // marginLeft:5
+          }}>
                   <View>
                     <View
                       style={{
@@ -1523,13 +1750,13 @@ function CreateNewOrder({ navigation ,route }) {
                       <Text
                         style={{
                           color: Colors.textGreyColor,
-                          width: "20%",
+                          width: "28%",
 
                           fontSize: 14,
-                          textAlign: "center",
+                          textAlign:"center",
                         }}
                       >
-                        Price Per Unit
+                        Last month Avg.Price
                       </Text>
 
                       {/* <SafeAreaView> */}
@@ -1539,14 +1766,50 @@ function CreateNewOrder({ navigation ,route }) {
                       {/* </SafeAreaView> */}
                     </View>
                     <View style={{}}>
-                      {checkRow ? (
+                      {/* <ScrollView nestedScrollEnabled > */}
+                     {checkRow ?  (
+                        // R_cartItems.map((item, index) => (
+                        //   // <View style={{flexDirection:"column-reverse"}}>
+                        //   <CartItem
+                        //   id={item.id}
+                        //   quantity={item.quantity}
+                        //   total_amount={item.total_amount}
+                        //   name={item.name}
+                        //   unit={item.unit}
+                        //   price={item.price}
+                          
+                         
+                        //   onAddPress={() => {
+                        //     dispatch(
+                        //       cartActions.addToQtty(item.id)
+                        //     );
+                        //   }}
+                         
+                        //   onRemove={() => {
+                        //     dispatch(
+                        //       cartActions.removeFromCart(item.id)
+                        //     );
+                        //   }}
+                        
+                        //   onDelete={() => {
+                        //     dispatch(
+                        //       cartActions.deleteProduct(item.id)
+                        //     );
+                        //   }}
+                        // />
+                        // // </View>
+                        // ))
                         <FlatList
                           nestedScrollEnabled
+                          // inverted
+                          // style={{flexDirection:"column-reverse"}}
                           data={cartItems}
                           // sort={true}
                           // inverted={true}
                           keyExtractor={(item) => item.id}
                           renderItem={(itemData) => (
+                            // <Text style={{fontSize:30,backgroundColor:"green",flex:1}}>{JSON.stringify(itemData)}</Text>
+                            // <View style={{flexDirection:"column-reverse"}}>
                             <CartItem
                               id={itemData.item.id}
                               quantity={itemData.item.quantity}
@@ -1554,6 +1817,7 @@ function CreateNewOrder({ navigation ,route }) {
                               name={itemData.item.name}
                               unit={itemData.item.unit}
                               price={itemData.item.price}
+                              
                               // addable
                               onAddPress={() => {
                                 dispatch(
@@ -1573,70 +1837,42 @@ function CreateNewOrder({ navigation ,route }) {
                                 );
                               }}
                             />
+                            // </View>
                           )}
                         />
-                      ) : null}
-                    </View>
-
-                    {/* {
-                       newArray
-                   } */}
-                  </View>
-
-                  <View style={{ flexDirection: "row", paddingTop: 70 }}>
+                      ) : null
+                      }
+                      {/* </ScrollView> */}
+                      <View style={{ flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
                     <Text
-                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"50%",marginLeft:"8%"}}
+                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
                     >
                       Total:
                     </Text>
-                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%" }}>
+                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"16%",textAlign:"center" }}>
                       {cartTotalPackages}
                     </Text>
-                    <Text style={{ color: Colors.textGreyColor,width:"27%" }}>
-                    £ {cartTotalAmount.toFixed(2)}
-                    </Text>
+                    {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
+                    £ {cartTotalAmount}
+            
+                    </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
+                    £ {parseFloat(cartTotalAmount).toFixed(2)}
+            
+                    </Text>}
+                    
                   </View>
-                </Card>
+                    </View>
+
+                    
+                  </View>
+
+                  
+                </View>
+                
               </View>
 
-              {/* <TouchableOpacity onPress={()=>setShow(true)}
-            style = {{alignSelf:'center',marginTop:5,marginBottom:10}}
-            >
-             <View style={{flexDirection:'column'}}>
-            <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
-            <Text style={{alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{pickUpDate}</Text>
-            
-           
-            
-            </View>
-            </TouchableOpacity> */}
-              {/* {show && ( */}
-
-              {/* <View>
-        <DatePicker
-            defaultDate={""}
-            minimumDate={new Date(year, month, date)}
-            maximumDate={new Date(2021, 12, 31)}
-            
-            // formatChosenDate={(date) => {
-            //   return moment(date).format("YYYY-MM-DD");
-            // }}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            textStyle={{ color: Colors.themeColor,fontWeight:'bold',alignSelf:'center' }}
-            placeHolderTextStyle={{ color: Colors.themeColor }}
-            onDateChange={(itemValue, itemIndex) => {
-              setPickUpDate(itemValue);
-              // setShow(false);
-            }}
-            disabled={false}
-          />
-          </View> */}
-              {/* ) */}
-              {/* }  */}
+              
+             
             </Card>
           </View>
           <View style={{ height: "4%", bottom: 40, }}>
@@ -1670,6 +1906,7 @@ function CreateNewOrder({ navigation ,route }) {
           </View>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </View>
     </>
   );
@@ -1715,7 +1952,7 @@ const styles = StyleSheet.create({
   },
   AddButton: {
     // marginTop: 10,
-    // marginBottom: 70,
+    marginBottom:Platform.OS=="android"?0 :110,
     height: 30,
     width: 40,
     backgroundColor: Colors.themeColor,
@@ -1908,6 +2145,70 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: "20%",
   },
+  centeredView2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // marginTop: 60,
+    
+
+  },
+  modalView2: {
+    margin: 20,
+    // height:"100%",
+    height:'100%',
+    width:"100%",
+    backgroundColor: 'rgba(0,0,0,0.3)',
+   // borderRadius: 20,
+    // padding: 35,
+    alignItems: "center",
+    justifyContent:'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  signupButtonText1:{
+    fontSize: 20,
+  color: "white",
+  fontWeight: '700',
+  textAlign: 'center',
+  },
+  bu_signupButtonText1:{
+      fontSize: 20,
+    color: Colors.themeColor,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    },
+    signupButton1: {
+      marginTop:5,
+    height: 30,
+  width: 150,
+backgroundColor: Colors.themeColor,
+justifyContent:"center",
+alignSelf:'center',
+borderRadius: 25,
+// marginVertical: 20,
+  },
+  bu_signupButton1: {
+    marginTop:10,
+  height: 30,
+width: 150,
+backgroundColor: 'white',
+borderColor:Colors.themeColor,
+borderWidth:2,
+justifyContent:"center",
+alignSelf:'center',
+borderRadius: 25,
+// marginVertical: 20,
+},
+
+
+
 });
 
 const mapStateToProps = (state) => {
@@ -1925,1026 +2226,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewOrder);
 
-// import React,{useState,useEffect} from 'react'
-// import { StyleSheet, View,ImageBackground , TouchableOpacity,Image, ScrollView,LogBox,FlatList ,StatusBar,SafeAreaView,Animated,TextInput, Platform} from 'react-native'
-// import { Container,CardItem,Header,Content,Left,Footer ,Body, Right, Button, Title,Text ,DatePicker, Item,Input } from 'native-base';
-// // import { Icon } from 'react-native-elements';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-
-// import { useSelector, useDispatch } from 'react-redux';
-// import * as ApiDataAction from '../store/actions/ApiData';
-// //mport shortid from "shortid";
-// import Autocomplete from 'react-native-autocomplete-input';
-// import Colors from '../ColorCodes/Colors';
-// import URL from '../api/ApiURL';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import AntDesign from 'react-native-vector-icons/AntDesign';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Card from '../components/Card';
-// //import { format } from "date-fns";
-// //import MyDropDown from './MyDropDown';
-// import AsyncStorage from '@react-native-community/async-storage';
-// import CartItem from '../components/CartItem';
-// import * as cartActions from '../store/actions/OrderBox';
-// import { connect } from 'react-redux';
-// import { BottomSheet } from 'react-native-btr';
-// import MyHeader from '../components/MyHeader';
-// import { tr } from 'date-fns/locale';
-
-// //import AddNewRow from '../components/AddNewRow';
-
-// function CreateNewOrder({navigation}) {
-
-//     const cartTotalAmount = useSelector(state => state.OrderBox.totalAmount);
-//     const count = useSelector(state => state.OrderBox.count);
-//     const CheckId=useSelector(state => state.OrderBox.items);
-//   const cartItems = useSelector(state => {
-//     const transformedCartItems = [];
-//     for (const key in state.OrderBox.items) {
-//       transformedCartItems.push({
-//         id: key,
-//         // id:items[key],
-//         quantity: state.OrderBox.items[key].quantity,
-//         total_amount: state.OrderBox.items[key].total_amount,
-//         name: state.OrderBox.items[key].name,
-//         unit: state.OrderBox.items[key].unit,
-//         price: state.OrderBox.items[key].price,
-
-//       });
-//     }
-//     return transformedCartItems.sort((a, b) =>
-//       a.id > b.id ? 1 : -1
-//     );
-
-//   }
-//   );
-
-//     const dispatch = useDispatch();
-//     const ClientId=useSelector(state=>state.ApiData.ClientId);
-
-//     const PoNumber=useSelector(state=>state.ApiData.PoNumber);
-//     const OrderId=useSelector(state=>state.ApiData.OrderId);
-//     console.log("PoNumber",PoNumber);
-//     console.log("OrderId",OrderId);
-//     const [pickUpDate,setPickUpDate]=useState("");
-//     const [MyOrderBoxId,setMyOrderBoxId]=useState("");
-//     const [currentDate, setCurrentDate] = useState('');
-//     const [note,setNote]=useState("");
-//     const [qtty,setQtty]=useState(0);
-//     // const autocompletes = [...Array(10).keys()];
-//     const [products, setProducts] = useState([]);
-//     const [filteredProducts, setFilteredProducts] = useState([]);
-//     const [selectedValue, setSelectedValue] = useState([{}]);
-
-//     const [units, setUnits] = useState([]);
-//     const [totalAmount,setTotalAmount]=useState("");
-//     const [filteredUnits, setFilteredUnits] = useState([]);
-//     const [selectedUnits, setSelectedUnits] = useState({});
-//     const [checkRow, setCheckRow]=useState(false);
-//     const [unitCheck,setUnitCheck]=useState(false);
-//     const [riderData,setRiderData]=useState("");
-//     const [riderName,setRiderName]=useState("");
-//     const [riderAddress,setRiderAddress]=useState("");
-//     const [riderId,setRiderId]=useState("");
-//     //const [dateData, setDateData] = useState("");
-//   //const [mode, setMode] = useState('date');
-//   //const [show, setShow] = useState(false);
-// //var date = new Date().getDate();
-//   // var month = new Date().getMonth();
-//   // var year = new Date().getFullYear();
-//   const [date, setDate] = useState(new Date(1598051730000));
-//   const [mode, setMode] = useState('date');
-//   const [show, setShow] = useState(false);
-
-//   const onChange = (event, selectedDate) => {
-//     const currentDate = selectedDate || date;
-//     setShow(Platform.OS === 'android');
-//     setDate(currentDate);
-//     console.log("date",currentDate.toDateString())
-//   };
-
-//   const showMode = (currentMode) => {
-//     setShow(true);
-//     setMode(currentMode);
-//   };
-
-//   const showDatepicker = () => {
-//     showMode('date');
-//   };
-
-//   const showTimepicker = () => {
-//     showMode('time');
-//   };
-
-// const [visible, setVisible] = useState(false);
-//     const toggleBottomNavigationView = () => {
-//       //Toggling the visibility state of the bottom sheet
-//       setVisible(!visible);
-//     };
-
-//   const CreateOrder=()=>{
-//     fetch(URL+'/order/create_order/', {
-//       method: 'POST',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json'
-//       },
-//       body:JSON.stringify({
-
-//               order_box:OrderId,
-//               purchase_order_no:PoNumber,
-//               order_title:'Grocery',
-//               delivery_person:riderId,
-//               order_delivery_datetime:"2021-01-25",
-//               shipment_address:1,
-//               delivery_notes: note,
-//               comment:"note",
-//               distance:"2km",
-//               status:"Pending",
-//               payment_type:"cash_on_delivery"
-
-//     })
-//   })
-//     .then( async (response) => {
-//       let data = await response.json();
-//         // console.log("status code",response.status)
-//         // console.log("status code",data)
-//         if(response.status==201)
-//         {
-//             // console.log("Create response",data.order.order_products)
-//             alert("Thanks,Your Order is Placed,")
-//             dispatch(cartActions.allClear(1));
-//       dispatch(ApiDataAction.Clear(1));
-//       setSelectedValue([{}]);
-//       setNote("")
-//       setUnitCheck(false);
-//       setQtty(0);
-//       AsyncStorage.clear();
-//       navigation.navigate("Dashboard");
-//           // dispatch(ApiDataActions.SetLoginData(data));
-//           // navigation.navigate("MyDrawer");
-//         }
-//         else{
-//           alert("Unable to Create Order");
-//         }
-
-//           // code that can access both here
-
-//     })
-//     .catch ((error)=>
-//       console.log("Something went wrong at create Order Box", error)
-//     )
-//   }
-
-// const sendOrder=()=>{
-//   // AsyncStorage.clear();
-//     // dispatch(ApiDataAction.SetOrderBoxId(1));
-//     // console.log("value",selectedValue.id);
-//     if(riderId=="")
-//     {
-//       alert("Please Select Delivery Person")
-//     }
-//     else{
-//       console.log("before Order box",OrderId);
-//     fetch(URL+'/order/add_to_order_box/', {
-//         method: 'POST',
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json'
-//         },
-//         body:JSON.stringify({
-
-//             order_box : OrderId,
-//             order_products : cartItems
-//                 // [
-//                 //     {
-//                 //         id: selectedValue.id,
-//                 //         quantity : qtty,
-//                 //         total_amount : qtty*selectedValue.avg_price
-//                 //     },
-
-//                 // ]
-//            })
-
-//       })
-//       .then( async (response) => {
-//         let data = await response.json();
-//           console.log("status code",response.status)
-//           // console.log("Order Detail",data.order_box.order_products)
-//           if(response.status==201)
-//           {
-//               // console.log("data",data)
-//               // dispatch(ApiDataAction.CreateOrder(1));
-//               CreateOrder();
-//              console.log("(Oreder is added to order box)")
-//             // dispatch(ApiDataActions.SetLoginData(data));
-//             // navigation.navigate("MyDrawer");
-//           }
-
-//             // code that can access both here
-
-//       })
-//       .catch ((error)=>
-//         console.log("Something went wrong", error)
-//       )
-//     console.log("before create",OrderId);
-//     }
-
-//       // alert("Thanks,Your Order is Placed,")
-
-//     }
-
-//     const findName = (query) => {
-//         //method called everytime when we change the value of the input
-//         if (query) {
-//           //making a case insensitive regular expression to get similar value from the film json
-//           const regex = new RegExp(`${query.trim()}`, 'i');
-//           //setting the filtered film array according the query from the input
-//           setFilteredProducts(products.filter((product) => product.name.search(regex) >= 0));
-//         } else {
-//           //if the query is null then return blank
-//           setFilteredProducts([]);
-//         }
-//       };
-//       const findUnit = (query) => {
-//         //method called everytime when we change the value of the input
-//         if (query) {
-//           //making a case insensitive regular expression to get similar value from the film json
-//           const regex = new RegExp(`${query.trim()}`, 'i');
-//           //setting the filtered film array according the query from the input
-//           setFilteredUnits(units.filter((uni) => uni.unit.search(regex) >= 0));
-//         } else {
-//           //if the query is null then return blank
-//           setFilteredUnits([]);
-//         }
-//       };
-
-//       const postorder=()=>{
-//         fetch(URL+'/order/create_order_box/', {
-//             method: 'POST',
-//             headers: {
-//               Accept: 'application/json',
-//               'Content-Type': 'application/json'
-//             },
-//             body:JSON.stringify({
-
-//               "username": email,
-//               "password": password
-
-//            })
-
-//           })
-//           .then( async (response) => {
-//             let data = await response.json();
-//               console.log("status code",response.status)
-//               // console.log("status code",data)
-//               if(response.status==200)
-//               {
-//                 dispatch(ApiDataActions.SetLoginData(data));
-//                 navigation.navigate("MyDrawer");
-//               }
-//               else{
-//                   alert("Invalid Username or Password")
-//               }
-//                 // code that can access both here
-
-//           })
-//           .catch ((error)=>
-//             console.log("Something went wrong", error)
-//           )
-//       }
-//     // const apiUrl = "https://5b927fd14c818e001456e967.mockapi.io/branches";
-
-//     // const {scrollToInput, onDropdownClose, onDropdownShow} = this.props;
-//     // const handleSelectItem=(item, index)=> {
-//     //     const {onDropdownClose} = props;
-//     //     onDropdownClose();
-//     //     console.log(item);
-//     //   }
-//     //   const func=(orderId)=>{
-//     //     fetch(URL+'/order/get_po_number/'+orderId+'/')
-//     //     .then((response) => response.json())
-//     //     .then((responseJson) => {
-//     //        // const {results: films} = json;
-//     //        console.log("PO Number",responseJson)
-//     //         // setProducts(responseJson);
-//     //         // setUnits(responseJson)
-//     //         //setting the data in the films state
-//     //       })
-//     //       .catch((e) => {
-//         const rider=(name,address,id)=>{
-//             setRiderName(name);
-//             setRiderAddress(address);
-//             setRiderId(id);
-//             toggleBottomNavigationView();
-//         }
-//     //         alert(e);
-//     //       });
-
-//     useEffect(() => {
-
-//       //  console.log("Effect PoNumber",PoNumber)
-//       //  console.log("Effect OrderId",OrderId)
-//     //    getToken();
-//         // console.log("yup",OrderId)
-
-//         fetch(URL+'/product/product_list/')
-//               .then((response) => response.json())
-//               .then((responseJson) => {
-//                  // const {results: films} = json;
-//                 //  console.log("product_list",responseJson)
-//                   setProducts(responseJson);
-//                   setUnits(responseJson)
-//                   //setting the data in the films state
-//                 })
-//                 .catch((e) => {
-//                   alert(e);
-//                 });
-//             if(OrderId!=""||OrderId!=null)
-//                 {
-//                   fetch(URL+'/order/get_po_number/'+OrderId+'/')
-//                   // fetch(URL+'/client_app/clients_list/33/')
-//                   .then((response) => response.json())
-//                   .then((responseJson) => {
-//                     dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
-//                   // state.PoNumber=responseJson.po_number;
-//                   console.log("PO number:",responseJson.po_number);
-//                 })
-//                 // .catch((error) => console.error("be careful",error));
-//                 }
-
-//         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-//         LogBox.ignoreLogs(['Possible Unhandled Promise Rejection']);
-//         LogBox.ignoreLogs(['Failed child context type']);
-//         fetch(URL+'/delivery_person/delivery_person_list/')
-//         // fetch(URL+'/client_app/clients_list/33/')
-//         .then((response) => response.json())
-//         .then((responseJson) => {
-
-//               // console.log("Rider Data:",responseJson);
-//               setRiderData(responseJson.delivery_person);
-
-//             //   console.log("Dashboard:",responseJson.client_dashboard.client_name);
-//               //console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-//             // if (json["response"] == "Record does not exist or not found") {
-//             //   setLoading(true);
-//             // } else {
-//             //   dispatch(ApiDataAction.SetListData(responseJson));
-//             //   dataa=responseJson;
-//             //   setData(responseJson);
-//             //   //console.log(json);
-
-//             // }
-//           })
-//           .catch((error) => console.error(error))
-//         var datee = new Date().getDate(); //Current Date
-//         var monthh = new Date().getMonth() + 1; //Current Month
-//         var yearr = new Date().getFullYear(); //Current Year
-//         var hours = new Date().getHours(); //Current Hours
-//         var min = new Date().getMinutes(); //Current Minutes
-//         var sec = new Date().getSeconds(); //Current Seconds
-//         setCurrentDate(
-//           datee + '/' + monthh + '/' + yearr
-//         );
-
-//     }, [checkRow,count,OrderId]);
-
-//     return (
-//         <View style={{ flex: 1 , backgroundColor:'white', height:'100%'}}>
-//       <MyHeader name="CREATE NEW ORDER" nav={navigation} />
-
-//               <ScrollView
-//               style =
-//               {{padding:5}}
-//               nestedScrollEnabled={true}
-//               keyboardShouldPersistTaps="always"
-//               listViewDisplayed={false}>
-
-//     <View >
-//       <View style = {{height:'17%',padding:5}}>
-
-//         <Card style={{marginBottom:10,marginTop:5,elevation:0,shadowRadius:0,backgroundColor:'white'}}>
-//         <Text style={{alignSelf:'center',flexDirection:'row',fontSize:16,fontWeight:'bold'}}>{PoNumber}</Text>
-//         </Card>
-//         <View style={{flexDirection:'row',alignSelf:'center',padding:10}}>
-
-//             <Card style={{padding:10,width:'50%',backgroundColor:'#e6e6e6',elevation:0}}>
-//             <TouchableOpacity onPress={toggleBottomNavigationView}>
-//                 <Text style={{color:Colors.themeColor,fontSize:12}}>Delivery Person:</Text>
-//                 <Text style={{fontSize:16,fontWeight:'bold'}}>{riderName}</Text>
-//                 <Text style={{width:150,fontSize:12,color:'#666666'}}>{riderAddress}</Text>
-//                 </TouchableOpacity>
-//             </Card>
-//             <BottomSheet
-//           visible={visible}
-//           //setting the visibility state of the bottom shee
-//           onBackButtonPress={toggleBottomNavigationView}
-//           //Toggling the visibility state on the click of the back botton
-//           onBackdropPress={toggleBottomNavigationView}
-//           //Toggling the visibility state on the clicking out side of the sheet
-//         >
-//           {/*Bottom Sheet inner View*/}
-//           <View style={styles.bottomNavigationView}>
-//           <FlatList
-//           nestedScrollEnabled={true}
-//           data={riderData}
-//           style={{padding:10}}
-//           showsVerticalScrollIndicator={false}
-//           // keyExtractor={item => item.index_id.toString()}
-//           keyExtractor={({ id }, index) => id}
-//           renderItem={({ item }) => (
-
-//             <TouchableOpacity
-//             style={{width:"95%",marginBottom:15,alignSelf:'center'}}
-//             onPress={()=>rider(item.first_name+" "+item.last_name,item.address,item.id)}
-//               // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-//             //   onPress={() =>
-//             //     navigation.navigate("PaymentHistoryDetail")
-//             //   }
-//             >
-//               <Card style={{borderRadius:15,padding:10}}>
-//                 {/* {console.log("Business_name",item.business_details[0]['name'])} */}
-//               <View
-//                 style={{
-//                 //   borderRadius: 10,
-//                 //   backgroundColor: "white",
-//                 //   overflow: "hidden",
-
-//                   flexDirection: "column",
-//                 //   justifyContent: "flex-start",
-//                 //   alignSelf: "center",
-
-//                 //   marginTop: 10,
-//                 //   shadowColor: "#000",
-//                 //   shadowOffset: { width: 0, height: 2 },
-//                 //   shadowOpacity: 0.25,
-//                 //   shadowRadius: 3.84,
-//                 //   elevation: 5,
-//                 }}
-//               >
-//                   {/* <View style={{flexDirection: "column"}}> */}
-//                 <View style={{flexDirection:'row'}}>
-//                 {/* <Ionicons name="person" size={20} color="red" style={{alignSelf:'center'}}/> */}
-//                 <View
-//                   style={{
-//                     padding: 10,
-//                     width: "100%",
-//                     // alignSelf: "center",
-//                     // alignItems: "center",
-//                     justifyContent: "flex-start",
-//                   }}
-//                 >
-
-//                   <Text
-//                     style={{
-//                       fontSize: 20,
-//                       fontWeight: "bold",
-//                       color:Colors.darkRedColor
-//                     //   marginTop: "4%",
-//                     }}
-//                   >
-
-//                     {item.first_name} {item.last_name}
-//                   </Text>
-
-//                   <View
-//                     style={{
-//                       // width: 200,
-//                        flexDirection: "row",
-//                       alignItems: "center",
-
-//                       marginTop: "1.5%",
-//                     }}
-//                   >
-//                     <Text style={{ fontSize: 14, color: "grey",width:240 }}>
-
-//                       {item.address}
-//                     </Text>
-
-//                   </View>
-
-//                 </View>
-//                 <View style={{alignSelf:'center'}}>
-//                       <Text style={{marginBottom:3,fontSize:14,alignSelf:'flex-end',marginRight:10,fontWeight:'bold'}}></Text>
-//                     {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
-//                         {item.status}
-//                     </Text> */}
-//                     </View>
-//               </View>
-//               </View>
-
-//               </Card>
-//             </TouchableOpacity>
-
-//           )}
-//         />
-//               </View>
-
-//         </BottomSheet>
-
-//             <Card style={{padding:10,marginLeft:5,width:'50%',backgroundColor:'#e6e6e6',elevation:0}}>
-//                 <Text style={{color:Colors.themeColor,fontSize:12}}>My Address:</Text>
-//                 <Text style={{fontSize:16,fontWeight:'bold'}}>M. Sheharyar Khan</Text>
-//                 <Text style={{width:150,fontSize:12,color:'#666666'}}>176-E Second Street, Manchester UK</Text>
-//             </Card>
-//             </View>
-
-//         </View>
-
-//       <View style = {{height:"8%",padding:10,bottom:15,marginTop:30}}>
-//         <Card style={{padding:10,width:'100%',backgroundColor:'#e6e6e6',elevation:0}}>
-//                 <Text style={{color:Colors.themeColor,fontSize:14,fontWeight:'bold',alignSelf:'center'}}>Add Item and Quantity Here:</Text>
-//                 <View style={{flexDirection:'row',marginTop:'5%',width:'100%'}}>
-//                         <View style={{width:'30%'}}>
-//                         <Autocomplete
-//                           autoCapitalize="none"
-
-//                           autoCorrect={false}
-//                           // containerStyle={{}}
-//                           listContainerStyle={{backgroundColor:'#e6e6e6',width:200}}
-//                           listStyle={{borderColor:'#e6e6e6'}}
-//                           style = {{backgroundColor:'#e6e6e6',paddingBottom:7,color:'black',width:'100%'}}
-//                           inputContainerStyle={{backgroundColor:'#F2F2F2',borderColor:'#e6e6e6'}}
-//                           //data to show in suggestion
-//                           data={filteredProducts}
-//                           //default value if you want to set something in input
-//                           defaultValue={
-//                           JSON.stringify(selectedValue) === '{}' ?
-//                           '' :
-//                           selectedValue.name
-//                           }
-
-//                           // onchange of the text changing the state of the query
-//                           // which will trigger the findFilm method
-//                           // to show the suggestions
-//                           onChangeText={(text) => findName(text)}
-//                           placeholder="Add Item"
-//                           placeholderTextColor={Colors.textGreyColor}
-//                           renderItem={({item}) => (
-
-//                           <TouchableOpacity
-
-//                           // style={{paddingHorizontal:10}}
-
-//                           onPress={() => {
-//                           setSelectedValue(item);
-//                           setFilteredProducts([]);
-//                           setUnitCheck(true);
-//                           }}>
-//                             <Text style={styles.itemText}>{item.name} ({item.unit})</Text>
-//                           </TouchableOpacity>
-
-//                           )}
-//                         />
-
-//                     </View>
-
-//                     <View style={{width:'20%',height:38,paddingTop:5}}>
-
-//                         {unitCheck?<Text style={{color:'black',marginLeft:1,padding:7,paddingBottom:12.5}}>{selectedValue.unit}</Text>:<Text style={{color:'black',marginLeft:1,padding:7,paddingBottom:12.5}}>Unit</Text>}
-//                     </View>
-//                     <View style={{width:'15%',paddingTop:5}}>
-
-//                         <TextInput
-//                             style={styles.o_inputArea}
-//                             placeholder="Qty"
-//                             autoCapitalize="none"
-//                             keyboardType="numeric"
-//                             maxLength={2}
-//                             placeholderTextColor={Colors.textGreyColor}
-//                             value={qtty}
-//                             required={true}
-//                             onChangeText={(value) => setQtty(value)}
-//                             initialValue=""
-//                         />
-//                     </View>
-//                     <View style={{width:'20%',paddingTop:5}}>
-//                     {unitCheck?<Text style={{color:'black',padding:7,marginLeft:1,paddingBottom:12.5}}>£ {selectedValue.avg_price}</Text>:<Text style={{color:'black',padding:7,marginLeft:1,paddingBottom:12.5}}>Price</Text>}
-
-//                     </View>
-//                     <View style = {{height:30,width:'10%',alignSelf:'center',justifyContent:'center',marginLeft:5}}>
-//                     {unitCheck?<TouchableOpacity activeOpacity={0.8} style={{alignSelf:'flex-end'}} onPress={()=>{
-//                       if(CheckId[selectedValue.id]){
-//                         alert("Already Inserted")
-//                       }
-//                       else{
-//                         dispatch(cartActions.addToCart(selectedValue,qtty)),
-//                         setCheckRow(true),
-//                         setSelectedValue([{}]),
-//                         setUnitCheck(false),
-//                         setQtty("")}}
-//                       }
-//                       >
-//                         <Text style={{color:'red',fontSize:13,fontWeight:'bold'}}>ADD</Text>
-//                     {/* <AntDesign name="pluscircleo" color={Colors.themeColor} size={20} style={{padding:10}} /> */}
-//                 </TouchableOpacity>:null}
-
-//                     </View>
-
-//                             {/* <View style={styles.container}> */}
-
-//                             {/* </View> */}
-
-//                     </View>
-
-//             </Card>
-//             </View>
-
-//         <View style={{padding:10,height:'61%',marginTop:40}}>
-//         <Card style={{elevation:0 ,backgroundColor:'#E6E6E6'}}>
-//             <View style={{flexDirection:'column'}}>
-//             <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Order Date:</Text>
-//             <Text style={{marginBottom:15,alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{currentDate}</Text>
-
-//             </View>
-//             <View style={{ height:'70%',borderRadius:10,backgroundColor:'#F2F2F2',padding:10}}>
-
-//             {/* <View style={{flexDirection:'row',alignSelf:'center',padding:10}}>
-//             <Card style={{padding:10,width:'50%',marginRight:"4%"}}>
-
-//                     <Text style={{color:Colors.themeColor,fontSize:12}}>Order Date:</Text>
-//                     {/* {var formattedDate = format(date, "MMMM do, yyyy H:mma")} */}
-//                     {/* <Text style={{marginBottom:5,fontSize:14}}>{currentDate}</Text> */}
-
-//              {/* </Card> */}
-//             {/* <Card style={{padding:10,marginLeft:5,width:'50%'}}> */}
-
-//             {/* </Card>  */}
-//             {/* {show && (
-//         <DatePicker
-//             defaultDate={new Date(year, month, date)}
-//             minimumDate={new Date(year, month, date)}
-//             maximumDate={new Date(2021, 12, 31)}
-//             // formatChosenDate={(date) => {
-//             //   return moment(date).format("YYYY-MM-DD");
-//             // }}
-//             locale={"en"}
-//             timeZoneOffsetInMinutes={undefined}
-//             modalTransparent={false}
-//             animationType={"fade"}
-//             androidMode={"default"}
-//             textStyle={{ color: "green" }}
-//             placeHolderTextStyle={{ color: "#d3d3d3" }}
-//             onDateChange={(itemValue, itemIndex) => {
-//               setPickUpDate(itemValue);
-//             }}
-//             disabled={false}
-//           />
-//     )}  */}
-//             {/* </View> */}
-//             <Card style={{padding:5,elevation:0,backgroundColor:'#F2F2F2'}}>
-//                 <View >
-//                 <View style={{flexDirection:'row',marginTop:10,marginLeft:10}}>
-//                         <Text style={{color:Colors.themeColor,width:75}}>Product</Text>
-//                         <Text style={{color:Colors.themeColor,width:45}}>UNIT</Text>
-//                         <Text style={{color:Colors.themeColor,width:75}}>Quantity</Text>
-//                         <Text style={{color:Colors.themeColor,}}>Price</Text>
-
-//                         {/* <SafeAreaView> */}
-//                             {/* <View style={styles.container}> */}
-
-//                             {/* </View> */}
-//                         {/* </SafeAreaView> */}
-
-//                     </View>
-//                    <View style={{height:'70%'}}>
-
-//                    {checkRow?
-//                     <FlatList
-//                     nestedScrollEnabled
-//                     data={cartItems}
-//                     keyExtractor={item => item.id}
-//                     renderItem={itemData => (
-//                       <CartItem
-//                         id={itemData.item.id}
-//                         quantity={itemData.item.quantity}
-//                         total_amount={itemData.item.total_amount}
-//                         name={itemData.item.name}
-//                         unit={itemData.item.unit}
-//                         price={itemData.item.price}
-//                         // addable
-//                         onAddPress={()=>{
-//                             dispatch(cartActions.addToQtty(itemData.item.id));
-//                         }}
-//                         // deletable
-//                         onRemove={() => {
-//                           dispatch(cartActions.removeFromCart(itemData.item.id));
-//                         }}
-//                         // removeable
-//                         onDelete={()=>{
-//                             dispatch(cartActions.deleteProduct(itemData.item.id));
-//                         }}
-//                       />
-//                     )}
-//                   />:null}
-//                   </View>
-
-//                    {/* {
-//                        newArray
-//                    } */}
-
-//                 </View>
-
-//                 <View style={{flexDirection:'row',padding:5}}>
-
-// <Text style={{color:Colors.themeColor,marginLeft:'12%'}}>Total Packages:</Text>
-// <Text style={{color:Colors.themeColor,marginLeft:5}}>{cartTotalAmount}</Text>
-// </View>
-
-//             </Card>
-//             </View>
-//             <View style={{paddingTop:10,alignSelf:'center'}}>
-//             <TouchableOpacity onPress={showDatepicker} >
-//             <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
-//             <Text style={{color:Colors.themeColor,fontWeight:'bold'}}>{date.toDateString()}</Text>
-//             </TouchableOpacity>
-//             {show && (
-//         <DateTimePicker
-//           testID="dateTimePicker"
-//           value={date}
-//           mode={mode}
-//           // is24Hour={true}
-//           style={{color:Colors.themeColor}}
-//           display="default"
-//           dateFormat="day month year"
-//           onChange={onChange}
-//         />
-//       )}
-//       </View>
-
-//             {/* <TouchableOpacity onPress={()=>setShow(true)}
-//             style = {{alignSelf:'center',marginTop:5,marginBottom:10}}
-//             >
-//              <View style={{flexDirection:'column'}}>
-//             <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
-//             <Text style={{alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{pickUpDate}</Text>
-
-//             </View>
-//             </TouchableOpacity> */}
-//              {/* {show && ( */}
-
-//             {/* <View>
-//         <DatePicker
-//             defaultDate={""}
-//             minimumDate={new Date(year, month, date)}
-//             maximumDate={new Date(2021, 12, 31)}
-
-//             // formatChosenDate={(date) => {
-//             //   return moment(date).format("YYYY-MM-DD");
-//             // }}
-//             locale={"en"}
-//             timeZoneOffsetInMinutes={undefined}
-//             modalTransparent={false}
-//             animationType={"fade"}
-//             androidMode={"default"}
-//             textStyle={{ color: Colors.themeColor,fontWeight:'bold',alignSelf:'center' }}
-//             placeHolderTextStyle={{ color: Colors.themeColor }}
-//             onDateChange={(itemValue, itemIndex) => {
-//               setPickUpDate(itemValue);
-//               // setShow(false);
-//             }}
-//             disabled={false}
-//           />
-//           </View> */}
-//     {/* ) */}
-//     {/* }  */}
-//         </Card>
-
-//         </View>
-//       <View style = {{height:'5%',bottom:40}}>
-
-//         <View style={{padding:10}}>
-//             <Card style={{elevation:0}}>
-//             <TextInput
-//             style={styles.note_inputArea}
-//             placeholder="Write any Notes"
-//             autoCapitalize="none"
-//             placeholderTextColor="black"
-//             value={note}
-//             required={true}
-//             onChangeText={(value) => setNote(value)}
-//             initialValue=""
-//           />
-//             </Card>
-//         </View>
-
-//         <TouchableOpacity
-//           style={styles.signupButton}
-//           activeOpacity={0.7}
-//           onPress={sendOrder}
-//            >
-
-//           <Text style={styles.signupButtonText}>SEND ORDER</Text>
-//         </TouchableOpacity>
-//         </View>
-//     </View>
-
-//     </ScrollView>
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-
-// signupButtonText:{
-//   fontSize: 20,
-// color: '#ffffff',
-// fontWeight: 'bold',
-// textAlign: 'center',
-// marginTop:5
-// },
-
-//   signupText: {
-//     fontSize: 14,
-// fontWeight: 'bold',
-// // color:'rgba(255,255,255, 0.7)',
-// color: 'black',
-//     },
-
-//   signupButton: {
-//       marginTop:10,
-//       marginBottom:70,
-//     height: 40,
-//   width: 300,
-// backgroundColor: Colors.themeColor,
-// alignSelf:'center',
-// borderRadius: 25,
-// // marginVertical: 20,
-//   },
-
-//   inputArea:{
-//       alignSelf:'center',
-//     marginVertical:10,
-//     height: 40,
-//     width:320,
-//      backgroundColor: '#F2F1F3',
-//     borderRadius:25,
-//     paddingHorizontal:30,
-// },
-// note_inputArea:{
-//   alignSelf:'center',
-// marginVertical:10,
-// height: 60,
-// width:"100%",
-//  backgroundColor: '#E6E6E6',
-// borderRadius:10,
-// paddingHorizontal:30,
-// },
-// auto_inputArea:{
-//   alignSelf:'center',
-// marginVertical:10,
-// height: 40,
-// // width:320,
-// //  backgroundColor: '#F2F1F3',
-// //borderRadius:25,
-// paddingHorizontal:30,
-// },
-// o_inputArea:{
-//     alignSelf:'center',
-// //   marginVertical:10,
-// color:'black',
-// fontSize:15,
-// padding:4,
-// // borderBottomColor:"#b3b3b3",
-// // borderBottomWidth:1,
-// // paddingBottom:12.5,
-// // fontSize:14,
-//   // height: 38,
-//   width:'100%',
-//   // width:40,
-// //    backgroundColor: '#F2F1F3',
-//   //  marginLeft:3
-//   //borderRadius:25,
-//   //paddingHorizontal:30,
-// },
-// q_inputArea:{
-//     alignSelf:'center',
-//   // marginVertical:10,
-//   height: 10,
-//   width:40,
-//    backgroundColor: '#F2F1F3',
-// //   borderRadius:25,
-// //   paddingHorizontal:30,
-// },
-
-//   signupContianer:{
-//     flexGrow: 1,
-// justifyContent: 'center',
-// alignItems: 'center',
-// flexDirection: 'row',
-
-//   },
-//   uploadButton: {
-//     height: 40,
-//   width: 300,
-//   borderWidth:2,
-//   flexDirection:'row',
-//   borderColor:Colors.themeColor,
-// backgroundColor: 'white',
-// alignSelf:'center',
-// borderRadius: 25,
-//   },
-//   uploadButtonText:{
-//     fontSize: 20,
-//     marginTop:5,
-//   color: Colors.themeColor,
-//   fontWeight: 'bold',
-//   justifyContent:'center',
-//   marginLeft:"20%"
-
-//   },
-//   container: {
-//     backgroundColor: '#F5FCFF',
-//     // flex: 1,
-//     padding: 16,
-//     // marginTop: 40,
-//   },
-//   autocompleteContainer: {
-//     flex: 1,
-//     left: 0,
-//     // position: 'absolute',
-
-//     right: 0,
-//     top: 0,
-//     zIndex: 1
-//   },
-//   descriptionContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//   },
-//   itemText: {
-//     fontSize: 12,
-//     paddingTop: 5,
-//     paddingBottom: 5,
-//     margin: 2,
-//   },
-//   infoText: {
-//     textAlign: 'center',
-//     fontSize: 16,
-//   },
-//   container: {
-//     flex: 1,
-//   },
-//   viewHolder: {
-//     height: 55,
-//     backgroundColor: '#ff4081',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     margin: 4
-//   },
-//   headerText: {
-//     color: 'white',
-//     fontSize: 25
-//   },
-//   buttonDesign: {
-//     position: 'absolute',
-//     right: 25,
-//     bottom: 25,
-//     borderRadius: 30,
-//     width: 60,
-//     height: 60,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   buttonImage: {
-//     resizeMode: 'contain',
-//     width: '100%',
-//   }
-// , bottomNavigationView: {
-//   backgroundColor: '#F2F1F3',
-//   width: '100%',
-//   height: '100%',
-
-//  // justifyContent: 'center',
-//   //alignItems: 'center',
-// },
-// inputContainer: {
-//   minWidth: 300,
-//   width: "90%",
-//   height: 55,
-//   backgroundColor: "transparent",
-//   color: "#6C6363",
-//   fontSize: 18,
-//   fontFamily: "Roboto",
-//   borderBottomWidth: 1,
-//   borderBottomColor: "rgba(108, 99, 99, .7)"
-//   },
-
-// });
-
-// const mapStateToProps = (state) => {
-//     return {
-//         cartItems: state,
-//         // selectedMeal : state
-//     }
-//   }
-
-//   const mapDispatchToProps = (dispatch) => {
-//     return {
-//         removeItem: (product) => dispatch({ type: 'REMOVE_FROM_CART', product: product })
-//     }
-//   }
-// export default connect(mapStateToProps, mapDispatchToProps)(CreateNewOrder)

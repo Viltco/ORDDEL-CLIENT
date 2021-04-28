@@ -178,7 +178,7 @@ const Support = ({ navigation,route }) => {
                 fontWeight: "bold",
               }}
             >
-              info@orddel.co.uk 
+              support@orddel.co.uk
             </Text>
           </View>
         </View>

@@ -17,10 +17,13 @@ import {
   ImageBackground,
   Image,
   Linking,
+  BackHandler,
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
+import CheckBox from '@react-native-community/checkbox';
 //import styles from './Login.style'
 import { useSelector, useDispatch } from "react-redux";
 import * as ApiDataActions from "../store/actions/ApiData";
@@ -28,7 +31,7 @@ import base64 from "react-native-base64";
 import AsyncStorage from "@react-native-community/async-storage";
 import Firebase from '@react-native-firebase/app'
 import Icon from "react-native-vector-icons/Ionicons"; 
-
+import { useRoute, useFocusEffect } from "@react-navigation/native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import URL from "../api/ApiURL";
 import PushNotification from "react-native-push-notification";
@@ -37,8 +40,9 @@ import * as Animatable from "react-native-animatable";
 import Colors from "../ColorCodes/Colors";
 import Logos from "../components/Logos";
 import { set } from "date-fns";
+import { useIsFocused } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-const Login = ({ navigation }) => {
+const Login = ({ navigation,route }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [companyInfo, setCompanyInfo] = useState([]);
@@ -47,7 +51,7 @@ const Login = ({ navigation }) => {
   const [personInfo, setPersonInfo] = useState([]);
   const [contactPerson, setContactPerson] = useState([]);
   const [accountInfo, setaccountInfo] = useState([]);
-
+  const [rememberMe, setRememberMe] = useState(true);
   const [securePass, setSecurePass] = useState(true);
   const [tokken, setTokken] = useState("");
   const [emailMsg, setEmailMsg] = useState(false);
@@ -56,7 +60,7 @@ const Login = ({ navigation }) => {
   const [device,setDevice]=useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [loading, setLoading] = useState("");
-
+  const isFocused = useIsFocused();
   // const saveData = async () => {
   //   try {
   //     await AsyncStorage.setItem(STORAGE_Login, email)
@@ -68,6 +72,32 @@ const Login = ({ navigation }) => {
   // }
   //   var arr=[email,password];
   //  var len=arr.length;
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel"
+          },
+          { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
+    }, [route])
+  );
+
+
 
   const check = () => {
    if(email==""||email==null){
@@ -263,6 +293,12 @@ const Login = ({ navigation }) => {
 
       await AsyncStorage.setItem("passData", JSON.stringify(p));
       await AsyncStorage.setItem("loginCheck", JSON.stringify(true));
+      if(rememberMe){
+        await AsyncStorage.setItem("remember", JSON.stringify(true));
+      }
+      else{
+        await AsyncStorage.setItem("remember", JSON.stringify(false));
+      }
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -270,18 +306,28 @@ const Login = ({ navigation }) => {
 
   var getToken = async () => {
     try {
-      let userEmail = await AsyncStorage.getItem("userData");
-
       let userPass = await AsyncStorage.getItem("passData");
-
-      let datae = JSON.parse(userEmail);
-
-      setEmail(datae);
-      console.log(email)
-
       let datap = JSON.parse(userPass);
-      setPassword(datap);
-
+      let userEmail = await AsyncStorage.getItem("userData");
+      let userRemember = await AsyncStorage.getItem("remember");
+     
+      let dataR=JSON.parse(userRemember);
+        let datae = JSON.parse(userEmail);
+      if(dataR){
+        
+  
+        setEmail(datae);
+        console.log("Async Email: ",datae)
+  
+        
+        setPassword(datap);
+        console.log("Async Pass: ",datap)
+      }
+      else{
+        setEmail("")
+        setPassword("");
+      }
+     
       //console.log(datae , datap);
       // if(datae != null && datap != null){
 
@@ -291,9 +337,11 @@ const Login = ({ navigation }) => {
       console.log("Something went wrong", error);
     }
   };
-
   useEffect(() => {
     getToken();
+  }, [isFocused]);
+  useEffect(() => {
+    
 
       Firebase.initializeApp
       PushNotification.configure({
@@ -545,7 +593,9 @@ const Login = ({ navigation }) => {
 
       <View style={styles.footer}>
         {/* <View style={styles.g_container}> */}
-          <KeyboardAvoidingView>
+        <KeyboardAvoidingView style={{}}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+        <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false} >
             <View>
               <TextInput
                 style={styles.n_inputArea}
@@ -604,14 +654,35 @@ const Login = ({ navigation }) => {
                 />
               </View>
             </View>
+
+            <View style={{flexDirection:'row',alignSelf:'center'}}>   
+            <CheckBox
+          value={rememberMe}
+          onValueChange={setRememberMe}
+          boxType="square"
+          onAnimationType="fade"
+          onTintColor={Colors.themeColor}
+          onCheckColor={Colors.themeColor}
+          tintColors={{ true: Colors.themeColor, false: 'black' }}
+         
+          style={{marginTop:Platform.OS=="android"?null:5, transform: [{ scaleX: Platform.OS=="android"? 0.8:0.7 }, { scaleY: Platform.OS=="android"? 0.8:0.7 }] }}
+        />
+                <View style={{alignSelf:"center",marginBottom:Platform.OS=="android"?null:4}}>
+                  <Text style={{fontSize:Platform.OS=="android"?12:14, marginRight:0,color:Colors.productGrey }}>Remember me</Text> 
+                 
+
+                </View>
+
+               
+        </View>
             {/* {passMsg == true ? (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text style={{ color: "#DC143C" }}>Please Enter Password</Text>
               </Animatable.View>
             ) : null} */}
-          </KeyboardAvoidingView>
-
-          <View style={{ flexDirection: "row", marginTop: 30,alignSelf:'center' }}>
+           
+         
+          <View style={{ flexDirection: "row", marginTop: 15,alignSelf:'center' }}>
             <Text style={{ color: Colors.textGreyColor, fontSize: 12 }}>
               {" "}
               Forgot Your Password?{" "}
@@ -625,6 +696,7 @@ const Login = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
+
 
           {/* {emptyMsg && (
             <Animatable.View animation="fadeInLeft" duration={500}>
@@ -659,6 +731,7 @@ const Login = ({ navigation }) => {
               {toastMessage}
             </Text>
           ) : null}
+           
 
           <TouchableOpacity disabled={email==""||password==""?true:false} style={styles.button} onPress={check}>
             {loading ? (
@@ -677,6 +750,8 @@ const Login = ({ navigation }) => {
             <Text style={{ color: Colors.darkRedColor,fontWeight:'bold' }}>Signup here</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
+          </KeyboardAvoidingView>
       </View>
     </View>
     // </ScrollView>

@@ -77,7 +77,7 @@ const PendingOrders = ({ navigation, route }) => {
           } else {
             console.log("InProgress:", data);
             setLoading(false);
-            setData(data);
+            setData(data.response);
             setIsLoading(false);
           }
         } else {
@@ -151,7 +151,8 @@ const PendingOrders = ({ navigation, route }) => {
               </View>
             ) : (
               <FlatList
-                data={data.response}
+                data={data}
+                inverted
                 style={{ alignSelf: "center" }}
                 showsVerticalScrollIndicator={false}
                 // keyExtractor={item => item.index_id.toString()}

@@ -45,6 +45,8 @@ const FirstView = ({ navigation }) => {
 
     try {
       let check = await AsyncStorage.getItem("loginCheck");
+      let remember = await AsyncStorage.getItem("remember");
+      let dataR = JSON.parse(remember);
       let datal = JSON.parse(check);
       // setCheckLogin(datal);
 
@@ -58,7 +60,7 @@ const FirstView = ({ navigation }) => {
       // console.log(email)
 
       let datap = JSON.parse(userPass);
-      if(datal){
+      if(datal&&dataR){
       setLoading(true)
 
         fetch(
@@ -124,7 +126,7 @@ const FirstView = ({ navigation }) => {
   useEffect(() => {
     getToken();
 
-    fetch(URL + "/version_control/?apk_version=1.1")
+    fetch(URL + "/version_control/?apk_version=1.2")
     // fetch(URL+'/client_app/clients_list/33/')
     .then( async (response) => {
         let data = await response.json();

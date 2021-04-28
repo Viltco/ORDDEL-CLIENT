@@ -404,12 +404,11 @@ const Profile = ({ navigation,route }) => {
         </ImageBackground>
       </View>
       <View style={{ height: "65%" }}>
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <KeyboardAvoidingView style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : null} >
+      <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
 
-<KeyboardAvoidingView
-  behavior={Platform.OS === "ios" ? "padding" : null}
-  style={{ flex: 0 }}
->
+
           <View style={{ height: "100%" }}>
             <View>
               {/*  */}
@@ -563,7 +562,7 @@ const Profile = ({ navigation,route }) => {
                 //bottom: 10,
               }}
             >
-              <View
+              {/* <View
                 style={{
                   width: "30%",
                   justifyContent: "center",
@@ -596,7 +595,7 @@ const Profile = ({ navigation,route }) => {
                 >
                   Packages
                 </Text>
-              </View>
+              </View> */}
               <View
                 style={{
                   width: "30%",
@@ -662,7 +661,7 @@ const Profile = ({ navigation,route }) => {
                   style={{
                     color: Colors.darkRedColor,
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 14,
                     marginTop: 5,
                   }}
                 >
@@ -734,8 +733,9 @@ const Profile = ({ navigation,route }) => {
               </TouchableOpacity>
             </View>
           </View>
-          </KeyboardAvoidingView>
+         
       </ScrollView>
+      </KeyboardAvoidingView>
       </View>
 
       <Modal

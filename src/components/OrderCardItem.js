@@ -49,7 +49,7 @@ const OrderCartItem = (props) => {
           style={{
             marginLeft: 5,
             color: Colors.productGrey,
-            textAlign: "center",
+            textAlign: "left",
           }}
         >
           {props.name}
@@ -67,7 +67,7 @@ const OrderCartItem = (props) => {
       </View>
 
       <View style={{ width: "20%", justifyContent: "center" }}>
-        <Text style={{ color: Colors.textGreyColor, textAlign: "center" }}>
+        <Text style={{ color: Colors.textGreyColor, textAlign: "right" }}>
           £ {props.price.toFixed(2)}
         </Text>
       </View>
