@@ -78,24 +78,24 @@ function CreateNewOrder({ navigation ,route }) {
   const cartTotalAmount = useSelector((state) => state.OrderBox.totalAmount);
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
-  const CheckId = useSelector((state) => state.OrderBox.items);
-  
-  const cartItems = useSelector((state) => 
-  {
-    const transformedCartItems = [];
-    for (const key in state.OrderBox.items) {
-      transformedCartItems.unshift({
-        id: key,
-        // id:items[key],
-        quantity: state.OrderBox.items[key].quantity,
-        total_amount: state.OrderBox.items[key].total_amount,
-        name: state.OrderBox.items[key].name,
-        unit: state.OrderBox.items[key].unit,
-        price: state.OrderBox.items[key].price,
-      });
-    }
-    return [...transformedCartItems]
-  });
+  const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
+  const cardItemsArray = useSelector((state) => {return state.OrderBox.cardItemsArray});
+  // const cartItems = useSelector((state) => 
+  // {
+  //   const transformedCartItems = [];
+  //   for (const key in state.OrderBox.items) {
+  //     transformedCartItems.unshift({
+  //       id: key,
+  //       // id:items[key],
+  //       quantity: state.OrderBox.items[key].quantity,
+  //       total_amount: state.OrderBox.items[key].total_amount,
+  //       name: state.OrderBox.items[key].name,
+  //       unit: state.OrderBox.items[key].unit,
+  //       price: state.OrderBox.items[key].price,
+  //     });
+  //   }
+  //   return [...transformedCartItems]
+  // });
   
   var Count = 0;
 
@@ -105,7 +105,7 @@ function CreateNewOrder({ navigation ,route }) {
 
   const PoNumber = useSelector((state) => state.ApiData.PoNumber);
   const OrderId = useSelector((state) => state.ApiData.OrderId);
-  console.log("cartItems  ", cartItems);
+  console.log("cartItems  ", cardItemsArray);
   console.log("OrderId", OrderId);
   const [pickUpDate, setPickUpDate] = useState("");
   const [MyOrderBoxId, setMyOrderBoxId] = useState("");
@@ -318,7 +318,7 @@ function CreateNewOrder({ navigation ,route }) {
       },
       body: JSON.stringify({
         order_box: OrderId,
-        order_products: cartItems,
+        order_products: cardItemsArray,
         
       }),
     })
@@ -437,7 +437,7 @@ function CreateNewOrder({ navigation ,route }) {
     // AsyncStorage.clear();
     // dispatch(ApiDataAction.SetOrderBoxId(1));
     // console.log("value",selectedValue.id);
-    if (cartItems == "") {
+    if (cardItemsArray == "") {
       
       alert("Kindly Place an Order.");
     } else {
@@ -1214,7 +1214,7 @@ function CreateNewOrder({ navigation ,route }) {
     <View style={{padding:2}}>
               <FlatList
                           nestedScrollEnabled
-                          data={cartItems}
+                          data={cardItemsArray}
                           // sort={true}
                           // inverted={true}
                           keyExtractor={(item) => item.id}
@@ -1803,7 +1803,7 @@ function CreateNewOrder({ navigation ,route }) {
                           nestedScrollEnabled
                           // inverted
                           // style={{flexDirection:"column-reverse"}}
-                          data={cartItems}
+                          data={cardItemsArray}
                           // sort={true}
                           // inverted={true}
                           keyExtractor={(item) => item.id}
@@ -2213,7 +2213,7 @@ borderRadius: 25,
 
 const mapStateToProps = (state) => {
   return {
-    cartItems: state,
+    cardItemsArray: state,
     // selectedMeal : state
   };
 };

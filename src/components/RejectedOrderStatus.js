@@ -77,22 +77,23 @@ function RejectedOrdersStatus({ navigation ,route }) {
   const cartTotalAmount = useSelector((state) => state.OrderBox.totalAmount);
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
-  const CheckId = useSelector((state) => state.OrderBox.items);
-  const cartItems = useSelector((state) => {
-    const transformedCartItems = [];
-    for (const key in state.OrderBox.items) {
-      transformedCartItems.push({
-        id: key,
-        // id:items[key],
-        quantity: state.OrderBox.items[key].quantity,
-        total_amount: state.OrderBox.items[key].total_amount,
-        name: state.OrderBox.items[key].name,
-        unit: state.OrderBox.items[key].unit,
-        price: state.OrderBox.items[key].price,
-      });
-    }
-    return transformedCartItems.sort((a, b) => (a.id > b.id ? 1 : -1));
-  });
+  const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
+  const cartItems = useSelector((state) => {return state.OrderBox.cardItemsArray});
+  // const cartItems = useSelector((state) => {
+  //   const transformedCartItems = [];
+  //   for (const key in state.OrderBox.items) {
+  //     transformedCartItems.push({
+  //       id: key,
+  //       // id:items[key],
+  //       quantity: state.OrderBox.items[key].quantity,
+  //       total_amount: state.OrderBox.items[key].total_amount,
+  //       name: state.OrderBox.items[key].name,
+  //       unit: state.OrderBox.items[key].unit,
+  //       price: state.OrderBox.items[key].price,
+  //     });
+  //   }
+  //   return transformedCartItems.sort((a, b) => (a.id > b.id ? 1 : -1));
+  // });
   var Count = 0;
 
   const dispatch = useDispatch();
