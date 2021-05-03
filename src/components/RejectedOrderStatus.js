@@ -73,7 +73,8 @@ import PreviewCart from '../components/PreviewCart';
 
 function RejectedOrdersStatus({ navigation ,route }) {
   const isFocused = useIsFocused();
-  
+  const units = useSelector((state) => state.ApiData.ProductList);
+  const products = useSelector((state) => state.ApiData.ProductList);
   const cartTotalAmount = useSelector((state) => state.OrderBox.totalAmount);
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
@@ -113,11 +114,11 @@ const {id, name ,address} = route.params
   const [note, setNote] = useState("");
   const [qtty, setQtty] = useState(0);
   // const autocompletes = [...Array(10).keys()];
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedValue, setSelectedValue] = useState([{}]);
 
-  const [units, setUnits] = useState([]);
+  // const [units, setUnits] = useState([]);
   const [totalAmount, setTotalAmount] = useState("");
   const [filteredUnits, setFilteredUnits] = useState([]);
   const [selectedUnits, setSelectedUnits] = useState({});
@@ -164,30 +165,30 @@ const {id, name ,address} = route.params
   var minn;
   var secc;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const backAction = () => {
-        dispatch(cartActions.allClear(1));
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const backAction = () => {
+  //       dispatch(cartActions.allClear(1));
 
-        // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        //   {
-        //     text: "Cancel",
-        //     onPress: () => null,
-        //     style: "cancel"
-        //   },
-        //   { text: "YES", onPress: () => BackHandler.exitApp() }
-        // ]);
-        return false;
-      };
+  //       // Alert.alert("Hold on!", "Are you sure you want to go back?", [
+  //       //   {
+  //       //     text: "Cancel",
+  //       //     onPress: () => null,
+  //       //     style: "cancel"
+  //       //   },
+  //       //   { text: "YES", onPress: () => BackHandler.exitApp() }
+  //       // ]);
+  //       return false;
+  //     };
   
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+  //     const backHandler = BackHandler.addEventListener(
+  //       "hardwareBackPress",
+  //       backAction
+  //     );
   
-      return () => backHandler.remove();
-    }, [])
-  );
+  //     return () => backHandler.remove();
+  //   }, [])
+  // );
   //const [dateData, setDateData] = useState("");
   //const [mode, setMode] = useState('date');
   //const [show, setShow] = useState(false);
@@ -615,18 +616,18 @@ const {id, name ,address} = route.params
     // getToken();
     // console.log("yup",OrderId)
 
-    fetch(URL + "/product/product_list/?client_id="+ClientId)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // const {results: films} = json;
-        // console.log("product_list",responseJson)
-        setProducts(responseJson);
-        setUnits(responseJson);
-        //setting the data in the films state
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    // fetch(URL + "/product/product_list/?client_id="+ClientId)
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     // const {results: films} = json;
+    //     // console.log("product_list",responseJson)
+    //     setProducts(responseJson);
+    //     setUnits(responseJson);
+    //     //setting the data in the films state
+    //   })
+    //   .catch((e) => {
+    //     alert(e);
+    //   });
       console.log("OID",OID)
     // if (OID != "" || OID != null) {
       fetch(URL + "/order/get_po_number/" + orderBoxId + "/")
@@ -717,7 +718,13 @@ const {id, name ,address} = route.params
         hourss + ":" + minn + ":" + secc
       );
   }, [checkRow, count, OrderId, isFocused, formattedDate, date]);
+  useEffect(() => {
 
+    return () => {
+         dispatch(cartActions.allClear(1));
+         // Clean up the subscription
+       };
+   },[]);
 
   var reg = /^\d+$/;
   return (
@@ -728,7 +735,7 @@ const {id, name ,address} = route.params
     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
       {/* <FlashMessage position="top" /> */}
       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-      <MyHeader name="RESEND ORDER" nav={navigation} />
+      {/* <MyHeader name="RESEND ORDER" nav={navigation} /> */}
       <KeyboardAvoidingView style={{ flex: 1 }}
         behavior={Platform.OS == "ios" ? "padding" : null} >
      
@@ -1699,7 +1706,9 @@ const {id, name ,address} = route.params
                       activeOpacity={0.8}
                       style={styles.AddButton}
                       onPress={() => {
-                        if (CheckId[selectedValue.id]) {
+                        const userExists = CheckId.some(item => item.id === selectedValue.id);
+                        console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
+                        if (userExists) {
                             // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
 
                           alert("Already Inserted");
@@ -1830,13 +1839,15 @@ const {id, name ,address} = route.params
                       {/* </View> */}
                       {/* </SafeAreaView> */}
                     </View>
-                    <View style={{}}>
+                    <View style={{marginBottom:"10%"}}>
                       {checkRow ? (
                         <FlatList
                           nestedScrollEnabled
                           data={cartItems}
                           // sort={true}
                           // inverted={true}
+                          keyboardShouldPersistTaps={'handled'}
+                          contentContainerStyle={{paddingBottom:90}}
                           keyExtractor={(item) => item.id}
                           renderItem={(itemData) => (
                             <CartItem

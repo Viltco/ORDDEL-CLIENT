@@ -3,11 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Platform,
   TextInput,
   BackHandler
 } from "react-native";
+import {
+  TouchableNativeFeedback,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Colors from "../ColorCodes/Colors";
@@ -16,36 +21,44 @@ import * as cartActions from "../store/actions/OrderBox";
 import { useRoute, useFocusEffect } from "@react-navigation/native";
 const CartItem = (props,{route}) => {
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const backAction = () => {
-        updateQuantity();
-        // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        //   {
-        //     text: "Cancel",
-        //     onPress: () => null,
-        //     style: "cancel"
-        //   },
-        //   { text: "YES", onPress: () => BackHandler.exitApp() }
-        // ]);
-        return true;
-      };
-  
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
-  
-      return () => backHandler.remove();
-    }, [route])
-  );
+
   const dispatch=useDispatch();
   const [qtty,setQtty]=useState("");
   const MyIcon1 = <FontAwesome name="minus" size={15} color="#EE0202" solid />;
   const MyIcon2 = <FontAwesome name="plus" size={15} color="#EE0202" solid />;
   let reg = /^\d+$/;
+  
+  const updateTotalAmount=()=>{
+    
+    
 
+    if(qtty!=""){
+     
+        if (qtty == "") {
+            // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
 
+            // alert("Please Enter Quantity.");
+          }
+          else if(reg.test(qtty) === false) {
+
+            // alert("Invalid Quantity");
+            setQtty("");
+              return false;
+          }
+          else if(qtty==0) {
+
+            // alert("Invalid Quantity");
+            setQtty("");
+          }
+          else {
+            dispatch(
+              cartActions.updateTotal(props.id, qtty)
+            )
+       
+            }
+        
+    }
+    }
 
 
 
@@ -91,6 +104,7 @@ const CartItem = (props,{route}) => {
         borderBottomColor: "grey",
         marginTop: 10,
         width: "100%",
+        
       }}
     >
       {/* <TouchableOpacity
@@ -135,6 +149,7 @@ value={qtty}
 onChangeText={(value) => {
     
   setQtty(value);
+  updateQuantity();
   
 //   setCheck(true);
    
@@ -147,10 +162,10 @@ selectTextOnFocus={true}
 // onPressOut={updateQuantity}
 onKeyPress={updateQuantity}
 //onEndEditin={bobo}
-onEndEditing= {updateQuantity}
+onEndEditing= {updateTotalAmount}
 // onTouchMove={updateQuantity}
 // onTouchStart={updateQuantity}
-onSubmitEditing={updateQuantity}
+// onSubmitEditing={updateQuantity}
 // onKeyPress={updateQuantity}
 initialValue=""
 />

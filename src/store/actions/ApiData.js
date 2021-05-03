@@ -11,7 +11,7 @@ export const UPDATEPROFILE = "UPDATEPROFILE";
 export const SETIMAGE = "SETIMAGE";
 export const CLEAR_ALL = "CLEAR_ALL";
 
-
+export const SET_LIST = "SET_LIST";
 export const SetLoginData = (res) => {
   return { type: SET_LOGIN_DATA, response: res };
 };
@@ -41,6 +41,10 @@ export const CreateOrder = (product) => {
 };
 export const SetEmail = (product) => {
   return { type: SETEMAIL, product: product };
+};
+
+export const SetList = (product) => {
+  return { type: SET_LIST, product: product };
 };
 
 export const UpdateProfile = (firstname, lastname, phoneNo) => {

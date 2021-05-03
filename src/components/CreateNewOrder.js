@@ -103,6 +103,11 @@ function CreateNewOrder({ navigation ,route }) {
   const ClientId = useSelector((state) => state.ApiData.ClientId);
   const ClientName = useSelector((state) => state.ApiData.ClientName);
 
+
+  const units = useSelector((state) => state.ApiData.ProductList);
+  const products = useSelector((state) => state.ApiData.ProductList);
+
+
   const PoNumber = useSelector((state) => state.ApiData.PoNumber);
   const OrderId = useSelector((state) => state.ApiData.OrderId);
   console.log("cartItems  ", cardItemsArray);
@@ -113,11 +118,11 @@ function CreateNewOrder({ navigation ,route }) {
   const [note, setNote] = useState("");
   const [qtty, setQtty] = useState(0);
   // const autocompletes = [...Array(10).keys()];
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedValue, setSelectedValue] = useState([{}]);
 
-  const [units, setUnits] = useState([]);
+  // const [units, setUnits] = useState([]);
   const [totalAmount, setTotalAmount] = useState("");
   const [filteredUnits, setFilteredUnits] = useState([]);
   const [selectedUnits, setSelectedUnits] = useState({});
@@ -164,30 +169,32 @@ function CreateNewOrder({ navigation ,route }) {
   var minn;
   var secc;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const backAction = () => {
-        dispatch(cartActions.allClear(1));
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const backAction = () => {
+  //       navigation.navigate("Dashboard");
+  //       // dispatch(cartActions.allClear(1));
+  //       // BackHandler.exitApp()
 
-        // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        //   {
-        //     text: "Cancel",
-        //     onPress: () => null,
-        //     style: "cancel"
-        //   },
-        //   { text: "YES", onPress: () => BackHandler.exitApp() }
-        // ]);
-        return false;
-      };
+  //       // Alert.alert("Hold on!", "Are you sure you want to go back?", [
+  //       //   {
+  //       //     text: "Cancel",
+  //       //     onPress: () => null,
+  //       //     style: "cancel"
+  //       //   },
+  //       //   { text: "YES", onPress: () => BackHandler.exitApp() }
+  //       // ]);
+  //       return false;
+  //     };
   
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+  //     const backHandler = BackHandler.addEventListener(
+  //       "hardwareBackPress",
+  //       backAction
+  //     );
   
-      return () => backHandler.remove();
-    }, [])
-  );
+  //     return () => backHandler.remove();
+  //   }, [route])
+  // );
   //const [dateData, setDateData] = useState("");
   //const [mode, setMode] = useState('date');
   //const [show, setShow] = useState(false);
@@ -326,6 +333,7 @@ function CreateNewOrder({ navigation ,route }) {
         let data = await response.json();
         // console.log("status code",response.status)
         // console.log("Order Detail",data.order_box.order_products)
+        console.log("response.status",response.status)
         if (response.status == 201) {
           // console.log("data",data)
           // dispatch(ApiDataAction.CreateOrder(1));
@@ -516,6 +524,11 @@ function CreateNewOrder({ navigation ,route }) {
   // });
 
   useEffect(() => {
+
+    // setProducts(productData);
+    // setUnits(productData);
+
+
     fetch(URL + "/client_app/list_business/client/" + ClientId + "/")
       // fetch(URL+'/client_app/clients_list/33/')
       .then((response) => response.json())
@@ -542,18 +555,7 @@ function CreateNewOrder({ navigation ,route }) {
     // getToken();
     // console.log("yup",OrderId)
 
-    fetch(URL + "/product/product_list/?client_id="+ClientId)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // const {results: films} = json;
-        // console.log("product_list",responseJson)
-        setProducts(responseJson);
-        setUnits(responseJson);
-        //setting the data in the films state
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    
     // if (OrderId != "" || OrderId != null) {
     //   fetch(URL + "/order/get_po_number/" + OrderId + "/")
     //     // fetch(URL+'/client_app/clients_list/33/')
@@ -642,8 +644,30 @@ function CreateNewOrder({ navigation ,route }) {
       setTodayTime(
         hourss + ":" + minn + ":" + secc
       );
+
+
+
+
+      
+
+
+      
+
+
+
+
+
+
   }, [checkRow, count, OrderId, isFocused, formattedDate, date]);
 
+
+  useEffect(() => {
+
+   return () => {
+        dispatch(cartActions.allClear(1));
+        // Clean up the subscription
+      };
+  },[]);
 
   var reg = /^\d+$/;
   return (
@@ -652,7 +676,7 @@ function CreateNewOrder({ navigation ,route }) {
     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
       {/* <FlashMessage position="top" /> */}
       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-      <MyHeader name="CREATE NEW ORDER" nav={navigation} />
+      {/* <MyHeader name="CREATE NEW ORDER" nav={navigation} /> */}
       <KeyboardAvoidingView style={{ flex: 1 }}
         behavior={Platform.OS == "ios" ? "padding" : null} >
       <ScrollView
@@ -1632,9 +1656,11 @@ function CreateNewOrder({ navigation ,route }) {
                       activeOpacity={0.8}
                       style={styles.AddButton}
                       onPress={() => {
-                        if (CheckId[selectedValue.id]) {
+                        const userExists = CheckId.some(item => item.id === selectedValue.id);
+                        console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
+                        if (userExists) {
                             // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
-
+                          // console.log('status',status);
                           alert("Already Inserted");
                         } else {
                           if (qtty == "") {
@@ -1693,6 +1719,7 @@ function CreateNewOrder({ navigation ,route }) {
                   backgroundColor: "#F2F2F2",
                   padding: 10,
                   marginTop: 20,
+                  zIndex:-1
                 }}
               >
                 
@@ -1703,6 +1730,7 @@ function CreateNewOrder({ navigation ,route }) {
           shadowRadius: 3.84,
           elevation: 0,
           padding:10,
+          
           // marginLeft:5
           }}>
                   <View>
@@ -1803,6 +1831,8 @@ function CreateNewOrder({ navigation ,route }) {
                           nestedScrollEnabled
                           // inverted
                           // style={{flexDirection:"column-reverse"}}
+                          keyboardShouldPersistTaps={'handled'}
+                          contentContainerStyle={{paddingBottom:90}}
                           data={cardItemsArray}
                           // sort={true}
                           // inverted={true}
@@ -1843,7 +1873,7 @@ function CreateNewOrder({ navigation ,route }) {
                       ) : null
                       }
                       {/* </ScrollView> */}
-                      <View style={{ flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
+                      <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
                     <Text
                       style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
                     >
@@ -1952,7 +1982,7 @@ const styles = StyleSheet.create({
   },
   AddButton: {
     // marginTop: 10,
-    marginBottom:Platform.OS=="android"?0 :110,
+    marginBottom:Platform.OS=="android"?0 :0,
     height: 30,
     width: 40,
     backgroundColor: Colors.themeColor,

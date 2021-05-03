@@ -6,6 +6,7 @@ export const ADD_TO_QTTY = 'ADD_TO_QTTY';
 export const REORDER = 'REORDER';
 export const RESEND = 'RESEND';
 export const UPDATE_QTTY = 'UPDATE_QTTY';
+export const UPDATE_TOTAL = 'UPDATE_TOTAL';
 
 
 export const addToCart = (product,qtty) => {
@@ -37,4 +38,8 @@ export const resend = (data) => {
 
 export const updateQtty = (id,qtty) => {
   return { type: UPDATE_QTTY, id:id,qtty:qtty };
+};
+
+export const updateTotal = (id,qtty) => {
+  return { type: UPDATE_TOTAL, id:id,qtty:qtty };
 };

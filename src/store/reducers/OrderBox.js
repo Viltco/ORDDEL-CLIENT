@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { ADD_TO_CART, REMOVE_FROM_CART, ALL_CLEAR,DELETE_PRODUCT,ADD_TO_QTTY,REORDER ,RESEND,UPDATE_QTTY} from '../actions/OrderBox';
+import { ADD_TO_CART, REMOVE_FROM_CART,UPDATE_TOTAL, ALL_CLEAR,DELETE_PRODUCT,ADD_TO_QTTY,REORDER ,RESEND,UPDATE_QTTY} from '../actions/OrderBox';
 import ProductItem from '../../Models/Product';
 
 
@@ -12,6 +12,59 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+
+    case UPDATE_TOTAL:
+      console.log("UPDATE_QTTY id ",action.id);
+      // console.log("UPDATE_QTTY Qty--------- ",state.cardItemsArray[action.id]["quantity"]);
+      // console.log("UPDATE_QTTY items ",state.items);
+     
+      console.log("UPDATE_QTTY  ",state.count);
+      // const [qtyCheck,setQtyCheck]=useState(false);
+      // const [newQty,setNewQty]=useState("");
+      // var qtyCheck=false;
+      // var Qty=0;
+      var newQuantity2=action.qtty;
+
+      var FindItem2 = state.cardItemsArray.find(item => item.id === action.id);
+      // state.totalPackages=parseInt(state.totalPackages) - parseInt(FindItem.quantity);
+      // state.totalPackages=parseInt(state.totalPackages) + parseInt(action.qtty);
+      var objIndex2 = state.cardItemsArray.findIndex((obj => obj.id == action.id));
+      // state.cardItemsArray[objIndex].quantity = newQuantity;
+
+
+
+      // state.totalAmount=parseFloat(state.totalAmount)- parseFloat(FindItem.quantity*FindItem.price);
+      // state.totalAmount=parseFloat(state.totalAmount)+ parseFloat(state.cardItemsArray[objIndex].quantity*state.cardItemsArray[objIndex].price);
+
+
+
+      // state.cardItemsArray[action.id]["quantity"]=newQuantity;
+
+      if(state.totalAmount>state.cardItemsArray[objIndex2].total_amount){
+        console.log("state.totalAmount 1 ",state.totalAmount);
+        state.totalAmount=parseFloat(state.totalAmount)- parseFloat(state.cardItemsArray[objIndex2].total_amount);
+      }
+      else{
+        console.log("state.totalAmount 2 ",state.totalAmount);
+        state.totalAmount=parseFloat(state.cardItemsArray[objIndex2].total_amount)-parseFloat(state.totalAmount);
+      }
+      state.totalAmount=parseFloat(state.totalAmount)+ parseInt(newQuantity2)*parseFloat(state.cardItemsArray[objIndex2].price);
+          console.log("state.totalAmount 3 ",state.totalAmount)
+
+
+        
+      return {
+        ...state,
+        // items: state.items,
+        totalPackages:state.totalPackages,
+        count: state.count,
+        totalAmount:state.totalAmount,
+        cardItemsArray:state.cardItemsArray
+      };
+
+
+
 
     case UPDATE_QTTY:
       console.log("UPDATE_QTTY id ",action.id);
@@ -31,67 +84,28 @@ export default (state = initialState, action) => {
       var objIndex = state.cardItemsArray.findIndex((obj => obj.id == action.id));
       state.cardItemsArray[objIndex].quantity = newQuantity;
 
+
+
+      // state.totalAmount=parseFloat(state.totalAmount)- parseFloat(FindItem.quantity*FindItem.price);
+      // state.totalAmount=parseFloat(state.totalAmount)+ parseFloat(state.cardItemsArray[objIndex].quantity*state.cardItemsArray[objIndex].price);
+
+
+
       // state.cardItemsArray[action.id]["quantity"]=newQuantity;
 
-      if(state.totalAmount>state.cardItemsArray[objIndex].total_amount){
-        console.log("state.totalAmount 1 ",state.totalAmount);
-        state.totalAmount=parseFloat(state.totalAmount)- parseFloat(state.cardItemsArray[objIndex].total_amount);
-      }
-      else{
-        console.log("state.totalAmount 2 ",state.totalAmount);
-        state.totalAmount=parseFloat(state.cardItemsArray[objIndex].total_amount)-parseFloat(state.totalAmount);
-      }
-      state.totalAmount=parseFloat(state.totalAmount)+ parseInt(newQuantity)*parseFloat(state.cardItemsArray[objIndex].price);
-          console.log("state.totalAmount 3 ",state.totalAmount)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // for(var i=0;i<state.count;i++){
-      //   if(state.cardItemsArray[action.id]){
-          
-          
-          
-          
-         
-      //     state.totalPackages=parseInt(state.totalPackages) - parseInt(state.items[action.id]["quantity"]);
-      //     state.totalPackages=parseInt(state.totalPackages) + parseInt(action.qtty);
-          
-
-          
-
-
-
-      //     state.items[action.id]["quantity"]=newQuantity;
-      //     // console.log("state.totalAmount 3 ",state.totalAmount)
-      //     console.log("if worksssssssss",state.items[action.id]["quantity"]);
-      //   }
-      // }
-      // if(state.totalAmount>state.items[action.id]["total_amount"]){
+      // if(state.totalAmount>state.cardItemsArray[objIndex].total_amount){
       //   console.log("state.totalAmount 1 ",state.totalAmount);
-      //   state.totalAmount=parseFloat(state.totalAmount)- parseFloat(state.items[action.id]["total_amount"]);
+      //   state.totalAmount=parseFloat(state.totalAmount)- parseFloat(state.cardItemsArray[objIndex].total_amount);
       // }
       // else{
       //   console.log("state.totalAmount 2 ",state.totalAmount);
-      //   state.totalAmount=parseFloat(state.items[action.id]["total_amount"])-parseFloat(state.totalAmount);
+      //   state.totalAmount=parseFloat(state.cardItemsArray[objIndex].total_amount)-parseFloat(state.totalAmount);
       // }
-      // state.totalAmount=parseFloat(state.totalAmount)+ parseInt(newQuantity)*parseFloat(state.items[action.id]["price"]);
+      // state.totalAmount=parseFloat(state.totalAmount)+ parseInt(newQuantity)*parseFloat(state.cardItemsArray[objIndex].price);
       //     console.log("state.totalAmount 3 ",state.totalAmount)
 
 
-      
-        
+   
       return {
         ...state,
         // items: state.items,
@@ -226,12 +240,12 @@ export default (state = initialState, action) => {
         cardItemsArray:state.cardItemsArray,
         totalPackages: state.totalPackages - item.quantity,
         count:state.count-1,
-        totalAmount:parseFloat(state.totalAmount)- parseFloat(item.quantity*item.price)
+        totalAmount:state.cardItemsArray==""?0:parseFloat(state.totalAmount)- parseFloat(item.quantity*item.price)
         
       };
       
     case ALL_CLEAR:
-      if(action.pid ==1){
+      if(action.pid==1){
         state.cardItemsArray=[];
         state.totalPackages= 0;
         state.count=0;

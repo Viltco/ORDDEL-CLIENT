@@ -18,7 +18,8 @@ import {
   SETEMAIL,
   UPDATEPROFILE,
   SETIMAGE,
-  CLEAR_ALL
+  CLEAR_ALL,
+  SET_LIST
 } from "../actions/ApiData";
 import AsyncStorage from "@react-native-community/async-storage";
 import URL from "../../api/ApiURL";
@@ -43,14 +44,23 @@ const initialState = {
   FirstName: "",
   LastName: "",
   ClientImage: "",
-  RiderId:""
+  RiderId:"",
+  ProductList:[]
 };
 
 const ApiData = (state = initialState, action) => {
   switch (action.type) {
     case SETIMAGE:
       state.ClientImage = action.product;
+
+      console.log("From Product listssssssss@@");
       return state;
+
+      case SET_LIST:
+        state.ProductList = action.product;
+        return state;
+
+
     case UPDATEPROFILE:
       state.FirstName = action.firstname;
       state.LastName = action.lastname;
@@ -127,6 +137,7 @@ const ApiData = (state = initialState, action) => {
       // else{
       state.OrderId = OrderId;
       console.log("state.OrderId", state.OrderId);
+      return state;
 
     // }
     //console.log("OrderID:",state.OrderId)
@@ -134,6 +145,8 @@ const ApiData = (state = initialState, action) => {
     case SET_PO_NUMBER:
       const po = action.product;
       state.PoNumber = po;
+
+      return state;
 
       case CLEAR_ALL:
         const check = action.response;

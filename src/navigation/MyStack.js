@@ -427,53 +427,27 @@ function MyStack() {
         <Stack.Screen
           name="CreateNewOrder"
           component={CreateNewOrder}
-          options={{ headerShown: false }}
-          // options={({ navigation, route }) => ({
-          //   headerShown: true,
-          //   title: "CREATE NEW ORDER",
-          //   headerTitleStyle: {
-          //     color: "white",
-          //     alignSelf: "center",
-          //   },
-          //   headerStyle: {
-          //     backgroundColor: Colors.themeColor,
-          //   },
-          //   headerTintColor: "#ffffff",
-          //   headerLeft:null,
-          //   navigationOptions: ({ navigation }) => ({
-          //     headerLeft: (<HeaderBackButton onPress={_ => {dispatch(cartActions.allClear(1));navigation.navigate("Dashboard")}}/>)
-          // }),
-          //   navigationOptions: ({ navigation}) => ({
-          //     // headerLeft: (
-          //         // <TouchableOpacity onPress={() => {
-          //         //     dispatch(cartActions.allClear(1));
-
-          //         //     // navigation.goBack();
-          //         //   }}>
-          //         //   <Icon name={'arrow-left'}
-          //         //          />
-          //         //     {/* <Image source={ require('../image/source.png') }/> */}
-          //         // </TouchableOpacity>
-          //     // )
-          // }),
-            // headerLeft: () => (
-          
-            //     onPress={() => alert('This is a button!')}
-            //     // title="Info"
-            //     color="#fff"
-             
-            // ),
-          //   headerRight: () => (
-          //     <Image
-          //       source={require("../assets/colorLogo.png")}
-          //       style={{
-          //         width: Platform.OS == "ios" ? 40 : 50,
-          //         height: Platform.OS == "ios" ? 40 : 50,
-          //       }}
-          //     />
-          //   ),
-          //   //headerLeft:()=>{}
-          // })}
+          options={{
+            headerShown: true,
+            title: "CREATE NEW ORDER",
+            headerTitleStyle: {
+              color: "white",
+              alignSelf: "center",
+            },
+            headerStyle: {
+              backgroundColor: Colors.themeColor,
+            },
+            headerTintColor: "#ffffff",
+            headerRight: () => (
+              <Image
+                source={require("../assets/colorLogo.png")}
+                style={{
+                  width: Platform.OS == "ios" ? 40 : 50,
+                  height: Platform.OS == "ios" ? 40 : 50,
+                }}
+              />
+            ),
+          }}
         />
         <Stack.Screen
           name="InvoiceItem"
@@ -685,16 +659,50 @@ function MyStack() {
           name="RejectedOrdersStatus"
           component={RejectedOrdersStatus}
           options={{
-            headerShown: false,
-            
+            headerShown: true,
+            title: "RESEND ORDER",
+            headerTitleStyle: {
+              color: "white",
+              alignSelf: "center",
+            },
+            headerStyle: {
+              backgroundColor: Colors.themeColor,
+            },
+            headerTintColor: "#ffffff",
+            headerRight: () => (
+              <Image
+                source={require("../assets/colorLogo.png")}
+                style={{
+                  width: Platform.OS == "ios" ? 40 : 50,
+                  height: Platform.OS == "ios" ? 40 : 50,
+                }}
+              />
+            ),
           }}
         />
         <Stack.Screen
           name="ReOrder"
           component={ReOrder}
           options={{
-            headerShown: false,
-           
+            headerShown: true,
+            title: "RESEND ORDER",
+            headerTitleStyle: {
+              color: "white",
+              alignSelf: "center",
+            },
+            headerStyle: {
+              backgroundColor: Colors.themeColor,
+            },
+            headerTintColor: "#ffffff",
+            headerRight: () => (
+              <Image
+                source={require("../assets/colorLogo.png")}
+                style={{
+                  width: Platform.OS == "ios" ? 40 : 50,
+                  height: Platform.OS == "ios" ? 40 : 50,
+                }}
+              />
+            ),
           }}
         />
         <Stack.Screen

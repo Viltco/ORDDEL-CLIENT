@@ -74,6 +74,11 @@ const Dashboard = ({ navigation, route }) => {
   const RemainingInvoices = useSelector(
     (state) => state.ApiData.RemainingInvoices
   );
+
+
+const [productList,setProductList]=useState("");
+
+
   const TotalInvoices = useSelector((state) => state.ApiData.TotalInvoices);
   const UsedInvoices = useSelector((state) => state.ApiData.UsedInvoices);
   const PoNumber = useSelector((state) => state.ApiData.PoNumber);
@@ -231,7 +236,19 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
           .catch((error) => console.error(error));
       }
 
-
+      fetch(URL + "/product/product_list/?client_id="+ClientId)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // const {results: films} = json;
+        // console.log("product_list",responseJson)
+        dispatch(ApiDataAction.SetList(responseJson));
+        setProductList(responseJson);
+        // setUnits(responseJson);
+        //setting the data in the films state
+      })
+      .catch((e) => {
+        alert(e);
+      });
 
     }
     
@@ -289,6 +306,7 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
   const apiFunc = () => {
     console.log("Called", RemainingInvoices)
     if(RemainingInvoices != 0){
+      console.log("OrderBoxxxxx",orderBoxId);
     if (orderBoxId == "") {
       fetch(URL + "/order/create_order_box/", {
         method: "POST",
@@ -303,7 +321,7 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
         .then(async (response) => {
           let data = await response.json();
 
-          console.log(response)
+          // console.log("oooodddeerrr",data)
           // console.log("Create",data )
           // console.log("status code",response.status)
           // console.log("status data",data)
