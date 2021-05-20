@@ -89,9 +89,9 @@ const CartItem = (props,{route}) => {
             dispatch(
               cartActions.updateQtty(props.id, qtty)
             )
-            dispatch(
-              cartActions.updateTotal(props.id, qtty)
-            )
+            // dispatch(
+            //   cartActions.updateTotal(props.id, qtty)
+            // )
             
             }
         
