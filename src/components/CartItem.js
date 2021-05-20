@@ -30,7 +30,7 @@ const CartItem = (props,{route}) => {
   
   const updateTotalAmount=()=>{
     
-    
+    alert("Key Edit")
 
     if(qtty!=""){
      
@@ -63,9 +63,9 @@ const CartItem = (props,{route}) => {
 
 
 
-  const updateQuantity=()=>{
-    
-    
+  const updateQuantity=(qtty)=>{
+    // alert("Key Press")
+    console.log(qtty)
 
     if(qtty!=""){
      
@@ -89,7 +89,10 @@ const CartItem = (props,{route}) => {
             dispatch(
               cartActions.updateQtty(props.id, qtty)
             )
-       
+            dispatch(
+              cartActions.updateTotal(props.id, qtty)
+            )
+            
             }
         
     }
@@ -150,7 +153,7 @@ onChangeText={(value) => {
     
   setQtty(value);
   //updateQuantity();
-  
+  updateQuantity(value)
 //   setCheck(true);
    
 }}
@@ -160,9 +163,12 @@ onChangeText={(value) => {
 // clearTextOnFocus={true}
 selectTextOnFocus={true}
 // onPressOut={updateQuantity}
-onKeyPress={updateQuantity}
+// onKeyPress={updateQuantity}
+// onKeyPress={alert("Key Press")}
 //onEndEditin={bobo}
-onEndEditing= {updateTotalAmount}
+// onEndEditing= {updateTotalAmount}
+// onEndEditing= {alert("Editing Press")}
+
 // onTouchMove={updateQuantity}
 // onTouchStart={updateQuantity}
 // onSubmitEditing={updateQuantity}

@@ -85,7 +85,7 @@ export default (state = initialState, action) => {
       state.cardItemsArray[objIndex].quantity = newQuantity;
 
 
-
+      
       // state.totalAmount=parseFloat(state.totalAmount)- parseFloat(FindItem.quantity*FindItem.price);
       // state.totalAmount=parseFloat(state.totalAmount)+ parseFloat(state.cardItemsArray[objIndex].quantity*state.cardItemsArray[objIndex].price);
 
@@ -165,8 +165,8 @@ export default (state = initialState, action) => {
 
         let updatedOrListCartItem;
 
-        updatedOrListCartItem1 = new ProductItem(Data[i]["quantity"],Data[i]["quantity"]*Data[i]["unit_sales_price"],Data[i]["product_name"],Data[i]["product_unit"],Data[i]["unit_sales_price"] );    
-        //updatedOrListCartItem = new ProductItem(data[i]["purchased_quantity"],data[i]["purchased_quantity"]*data[i]["avg_price"],data[i]["product_name"],data[i]["product_unit"],data[i]["avg_price"] );
+        // updatedOrListCartItem1 = new ProductItem(Data[i]["quantity"],Data[i]["quantity"]*Data[i]["unit_sales_price"],Data[i]["product_name"],Data[i]["product_unit"],Data[i]["unit_sales_price"] );    
+        updatedOrListCartItem = new ProductItem(data[i]["purchased_quantity"],data[i]["purchased_quantity"]*data[i]["avg_price"],data[i]["product_name"],data[i]["product_unit"],data[i]["avg_price"] );
         state.cardItemsArray=[{id:data[i]["product_id"],...updatedOrListCartItem},...state.cardItemsArray],
         // state.items={ ...state.items, [data[i]["product_id"]]: updatedOrListCartItem }
         state.totalPackages= parseInt(state.totalPackages) + parseInt(data[i]["purchased_quantity"]);

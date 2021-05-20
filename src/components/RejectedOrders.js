@@ -63,6 +63,9 @@ const RejectedOrders = ({ navigation, route }) => {
   const [id, setId] = useState();
 
   const [orderBoxId, setOrderBoxId] = useState();
+  const [handleIt, setHandleIt] = useState(false);
+  const [loadingIt, setLoadingIt] = useState(false);
+
 
   const forward=()=>{
     console.log("OrderBoxId:",orderBoxId)
@@ -205,9 +208,14 @@ const RejectedOrders = ({ navigation, route }) => {
                 // keyExtractor={item => item.index_id.toString()}
                 keyExtractor={({ id }, index) => id}
                 renderItem={({ item }) => (
+
+
+                  // { loadingIt?():()}
                   <TouchableOpacity
                     style={{ marginTop: 5, marginBottom: 5 }}
+                    disabled={handleIt? true: false}
                     onPress={()=>{
+                      setLoadingIt(true);
                       console.log("hello",item.order_box);
                       fetch(URL + "/order/list_order/" + item.order_box + "/")
               // fetch(URL+'/client_app/clients_list/33/')
@@ -215,7 +223,7 @@ const RejectedOrders = ({ navigation, route }) => {
               .then((responseJson) => {
                 console.log("OrderBoxDetail:", responseJson.order);
                 // setBoxData(responseJson.order);
-                
+                setLoadingIt(false)
                 dispatch(
                   cartActions.resend(responseJson.order.order_products)
                 )
@@ -305,7 +313,10 @@ const RejectedOrders = ({ navigation, route }) => {
                       </View>
                     </View>
                   </TouchableOpacity>
-                  // <Card style={{ borderRadius: 15 }}>
+                 
+                 
+                 
+                 // <Card style={{ borderRadius: 15 }}>
                   //   <TouchableOpacity
                   //     style={{ width: "75%" }}
                   // onPress={()=>{

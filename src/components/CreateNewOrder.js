@@ -1253,6 +1253,7 @@ function CreateNewOrder({ navigation ,route }) {
                               // addable
                               onAddPress={() => {
                                 dispatch(
+
                                   cartActions.addToQtty(itemData.item.id)
                                 );
                               }}
