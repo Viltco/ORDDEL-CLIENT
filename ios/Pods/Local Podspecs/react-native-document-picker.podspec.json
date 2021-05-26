@@ -4,11 +4,7 @@
   "summary": "A react native interface to access Documents from dropbox google drive, iCloud",
   "license": "MIT",
   "homepage": "https://github.com/Elyx0/react-native-document-picker#readme",
-  "authors": {
-    "name": "Elyx0",
-    "email": "elyx00@gmail.com",
-    "url": "@Elyx0"
-  },
+  "authors": "Elyx0 <elyx00@gmail.com> (@Elyx0)",
   "source": {
     "git": "https://github.com/Elyx0/react-native-document-picker",
     "tag": "v5.0.1"

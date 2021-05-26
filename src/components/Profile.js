@@ -106,7 +106,8 @@ const Profile = ({ navigation,route }) => {
       dispatch(ApiDataAction.SetImage(res.uri));
 
       uploadImage(res);
-      console.log(res, "Imageee");
+      //console.log(res, "Imageee");
+      alert('Image Updated successfully')
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on

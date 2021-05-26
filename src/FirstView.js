@@ -188,8 +188,30 @@ const FirstView = ({ navigation }) => {
               style={styles.tinyLogo}
               source={require("./assets/colorLogo.png")}
             />
-          </View>
-
+            <View style = {{  
+        //  borderColor:'white',
+        // borderWidth:1,
+        width:'100%'}}>
+      <Text 
+      style = {{
+        // borderColor:'white',
+        // borderWidth:1,
+        marginLeft:'7%',
+        width: "100%",
+        // padding:20,
+                  color: "white",
+                  fontSize: 20,
+                  fontWeight: "700",
+                  textAlign: "center",
+                  letterSpacing: 2,
+      }}
+      >
+    Customer App
+      </Text>
+      </View>
+        
+      </View>
+      
           {/* </View> */}
 
           {/* <View style = {{flex:3}}> */}

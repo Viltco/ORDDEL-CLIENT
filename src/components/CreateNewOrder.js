@@ -389,7 +389,7 @@ function CreateNewOrder({ navigation ,route }) {
 
           setLoading(false);
           // Alert.showAlert();
-          alert("Thanks, Your Order Has Been Placed.");
+          alert("Thanks, your order has been placed.");
           // dropDownAlertRef.alertWithType('success', 'Success', 'Your Order Has Been Placed.');
           // Toast.show("Your Order Has Been Placed.", Toast.LONG);
           dispatch(cartActions.allClear(1));
@@ -447,12 +447,12 @@ function CreateNewOrder({ navigation ,route }) {
     // console.log("value",selectedValue.id);
     if (cardItemsArray == "") {
       
-      alert("Kindly Place an Order.");
+      alert("Kindly place an order.");
     } else {
     
       if (selectedBusinessId == "") {
        
-        alert("Please Select Delivery Address");
+        alert("Please select delivery address");
 
       }
       else{
@@ -486,6 +486,9 @@ function CreateNewOrder({ navigation ,route }) {
 
     // alert("Thanks,Your Order is Placed,")
   };
+
+  
+
 
   const findName = (query) => {
     //method called everytime when we change the value of the input
@@ -1667,7 +1670,7 @@ function CreateNewOrder({ navigation ,route }) {
                           if (qtty == "") {
                             // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
 
-                            alert("Please Enter Quantity.");
+                            alert("Please enter quantity.");
                           }
                           else if(reg.test(qtty) === false) {
 
@@ -1874,7 +1877,7 @@ function CreateNewOrder({ navigation ,route }) {
                       ) : null
                       }
                       {/* </ScrollView> */}
-                      <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
+                      <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 ,borderBottomWidth:.5 , borderBottomColor:'gray' }}>
                     <Text
                       style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
                     >
