@@ -1,6 +1,0 @@
-module Pods_orddel_orddelTests {
-  umbrella header "Pods-orddel-orddelTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

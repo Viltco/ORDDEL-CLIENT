@@ -453,7 +453,7 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
                 paddingTop: 20,
               }}
             >
-              <View style={{ paddingLeft: 10, paddingBottom: 10 }}>
+              <View style={{ paddingLeft:'4%', paddingBottom: '5%' }}>
                 {imageLoading ? (
                   <Spinner color="white" />
                 ) : (
@@ -464,8 +464,8 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
                         : { uri: ClientImage }
                     }
                     style={{
-                      width: Platform.OS == "ios" ? 130 : 100,
-                      height: Platform.OS == "ios" ? 130 : 100,
+                      width: Platform.OS == "ios" ? 100 : 70,
+                      height: Platform.OS == "ios" ? 100 : 70,
                       borderRadius: 100,
                     }}
                   />
@@ -477,7 +477,8 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
       </View> */}
               <View
                 style={{
-                  paddingLeft: 12,
+                   paddingLeft: '2%',
+                   marginRight:'3%',
                   alignSelf: "center",
                   marginBottom: 20,
                 }}
@@ -488,7 +489,10 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
                     fontWeight: "bold",
                     borderBottomWidth: 3,
                     borderBottomColor: Colors.yellowColor,
-                    fontSize: Platform.OS == "android" ? 20 : 22,
+                    fontSize: Platform.OS == "android" ? 20 : 20,
+                    //numberOfLines='2'
+                    alignSelf: "flex-start",
+                      width: 230,
                   }}
                 >
                   {ClientName}

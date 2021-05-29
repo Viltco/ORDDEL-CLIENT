@@ -378,8 +378,8 @@ setButtonLoading(true);
               >
                 <View
                   style={{
-                    paddingTop: Platform.OS == "ios" ? 15 : 15,
-                    paddingLeft: 15,
+                    paddingTop: Platform.OS == "ios" ? '5%' : '5%',
+                    paddingLeft: '2%',
                   }}
                 >
                   <Image
@@ -416,7 +416,10 @@ setButtonLoading(true);
                   >
                     {boxData.client}
                   </Text> 
-                  <Text style={{fontSize: 13, marginTop: 2 ,width:Platform.OS=="android"? 240:250,}}>
+                  <Text style={{fontSize: 13, marginTop: 2 ,
+                  width:Platform.OS=="android"? 240:240,
+                alignSelf: "flex-start",
+                }}>
                     Order No: {boxData.purchase_order_no}
                   </Text>
                 </View>

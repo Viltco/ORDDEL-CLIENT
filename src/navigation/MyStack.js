@@ -141,7 +141,11 @@ function MyStack() {
         <Drawer.Screen
           name="ChangeForgotPassword"
           component={ChangeForgotPassword}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,
+          //   header: ({ goBack }) => ({
+          //     left: ( <Icon name={'chevron-left'} onPress={ () => { goBack() } }  /> ),  
+          // }),
+          }}
         />
         <Drawer.Screen
           name="ChangePasswordByEmail"
@@ -271,6 +275,7 @@ function MyStack() {
           component={Profile}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "PROFILE",
             headerTitleStyle: {
               color: "white",
@@ -429,6 +434,7 @@ function MyStack() {
           component={CreateNewOrder}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "CREATE NEW ORDER",
             headerTitleStyle: {
               color: "white",
@@ -459,6 +465,7 @@ function MyStack() {
           component={BuisnessDetail}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "BUSINESS DETAILS",
             headerTitleStyle: {
               color: "white",
@@ -485,6 +492,7 @@ function MyStack() {
           options={{
             headerShown: true,
             title: "INVOICE",
+            headerBackTitleVisible: false,
             headerTitleStyle: {
               color: "white",
               alignSelf: "center",
@@ -534,6 +542,9 @@ function MyStack() {
           component={InProgressListOrders}
           options={{
             headerShown: true,
+            //headerTitle:false,
+            //headerLeftTitle: false,
+            headerBackTitleVisible: false,
             title: "IN PROGRESS ORDERS",
             headerTitleStyle: {
               color: "white",
@@ -552,6 +563,16 @@ function MyStack() {
                 }}
               />
             ),
+            // headerLeft: ()=>
+            //   ({
+                
+            //     labelVisible={false}
+            //   })
+            
+          //   header: () => ({
+          //     left: (  onPress={  goBack()  }   ),  
+          // }),
+
           }}
         />
         <Stack.Screen name="TermCondition" component={TermCondition} 
@@ -604,6 +625,7 @@ function MyStack() {
           component={PendingOrders}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "PENDING ORDERS",
             headerTitleStyle: {
               color: "white",
@@ -635,6 +657,7 @@ function MyStack() {
           component={RejectedOrders}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "REJECTED ORDERS",
             headerTitleStyle: {
               color: "white",
@@ -660,6 +683,7 @@ function MyStack() {
           component={RejectedOrdersStatus}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "RESEND ORDER",
             headerTitleStyle: {
               color: "white",
@@ -685,6 +709,7 @@ function MyStack() {
           component={ReOrder}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "RESEND ORDER",
             headerTitleStyle: {
               color: "white",
@@ -710,6 +735,7 @@ function MyStack() {
           component={CompletedOrdersList}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "COMPLETED ORDERS",
             headerTitleStyle: {
               color: "white",
@@ -735,6 +761,7 @@ function MyStack() {
           component={OrderStatus}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "ORDER STATUS",
             headerTitleStyle: {
               color: "white",
@@ -822,6 +849,7 @@ function MyStack() {
           component={Support}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "SUPPORT",
             headerTitleStyle: {
               color: "white",

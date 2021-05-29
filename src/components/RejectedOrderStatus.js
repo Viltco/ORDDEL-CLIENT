@@ -418,6 +418,54 @@ const {id, name ,address} = route.params
   //     });
   // };
 
+
+  const addOrderBox=()=>{
+    setLoading(true);
+    console.log("before Order box", OrderId);
+    Count = Count + 1;
+    setSendButtonCheck(true);
+    setModalVisible(!modalVisible);
+    fetch(URL + "/order/add_to_order_box/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order_box: OrderId,
+        order_products: cartItems,
+        
+      }),
+    })
+      .then(async (response) => {
+        let data = await response.json();
+        // console.log("status code",response.status)
+        // console.log("Order Detail",data.order_box.order_products)
+        if (response.status == 201) {
+          // console.log("data",data)
+          // dispatch(ApiDataAction.CreateOrder(1));
+          
+          CreateOrder();
+          console.log("(Oreder is added to order box)");
+          // dispatch(ApiDataActions.SetLoginData(data));
+          // navigation.navigate("MyDrawer");
+        }else{
+    setSendButtonCheck(false);
+          alert(data.message)
+        //  Toast.show(data.message, Toast.LONG);
+          
+        }
+
+        // code that can access both here
+      })
+      .catch((error) => {
+        setSendButtonCheck(false);
+        console.log("Something went wrong from add to orderBox", error);
+      });
+  }
+
+
+
   const resend = () => {
     setLoading(true);
     setModalVisible(!modalVisible);
@@ -727,18 +775,17 @@ const {id, name ,address} = route.params
    },[]);
 
   var reg = /^\d+$/;
+  
+
   return (
     <>
-    
-
     
     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
       {/* <FlashMessage position="top" /> */}
       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-      {/* <MyHeader name="RESEND ORDER" nav={navigation} /> */}
+      {/* <MyHeader name="CREATE NEW ORDER" nav={navigation} /> */}
       <KeyboardAvoidingView style={{ flex: 1 }}
         behavior={Platform.OS == "ios" ? "padding" : null} >
-     
       <ScrollView
         style={{ padding: 0 }}
         nestedScrollEnabled={true}
@@ -830,6 +877,7 @@ const {id, name ,address} = route.params
                             width: "95%",
                             marginBottom: 15,
                             alignSelf: "center",
+                            
                           }}
                           onPress={() =>{
                             rider(
@@ -1152,7 +1200,7 @@ const {id, name ,address} = route.params
           shadowOffset: { width: 0, height: 2 },
           // shadowOpacity: 0.25,
           shadowRadius: 3.84,
-          elevation: 5,
+          elevation: 0,
           }}>
             {/* <Card style={{borderRadius:10,width:"90%",height:"90%",alignItems:'center',backgroundColor:"white"}}> */}
               <ScrollView keyboardShouldPersistTaps="always"  showsVerticalScrollIndicator={false} style={{padding:10}}>
@@ -1297,6 +1345,7 @@ const {id, name ,address} = route.params
     <View style={{padding:2}}>
               <FlatList
                           nestedScrollEnabled
+                          // data={cardItemsArray}
                           data={cartItems}
                           // sort={true}
                           // inverted={true}
@@ -1312,6 +1361,7 @@ const {id, name ,address} = route.params
                               // addable
                               onAddPress={() => {
                                 dispatch(
+
                                   cartActions.addToQtty(itemData.item.id)
                                 );
                               }}
@@ -1347,6 +1397,8 @@ const {id, name ,address} = route.params
                     £ {parseFloat(cartTotalAmount).toFixed(2)}
                     </Text>}
                   </View>
+
+
                   {note==""?null:
                 <View style={{alignSelf:"center",paddingTop:"20%"}}>
                   <Text>Note: {note}</Text>
@@ -1357,7 +1409,9 @@ const {id, name ,address} = route.params
             <Pressable
                style={styles.signupButton1}
                activeOpacity={0.7}
+               //onPress={addOrderBox}
               onPress={resend}
+              
             >
               {loading ? (
                 <Spinner color={"white"} size={20} />
@@ -1529,7 +1583,7 @@ const {id, name ,address} = route.params
                           textAlign: "center",
                         }}
                       >
-                       {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -1554,7 +1608,7 @@ const {id, name ,address} = route.params
                   width: "100%",
                 }}
               >
-                <View
+               <View
                   style={{
                     width: Platform.OS == "android" ? "30%" : "30%",
                     
@@ -1564,17 +1618,23 @@ const {id, name ,address} = route.params
                     // onFocus={() => {scrollView.props.scrollToEnd({animated: true})}}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    flatListProps={{ nestedScrollEnabled: true }}
+                    flatListProps={{ nestedScrollEnabled: true}}
                     // containerStyle={{}}
+                   
                     listContainerStyle={{
                       backgroundColor: "#e6e6e6",
                       width: 250,
-                      // height: Platform.OS == "android" ? 150 :150,
+                      left: 0,
+                      position: 'absolute',
+                      right: 0,
+                      top: 50,
+                    zIndex: 1,
+                      // height: Platform.OS == "android" ? 150 :150
 
                     }}
                     listStyle={{
                       borderColor: "#e6e6e6",
-                      height: Platform.OS == "android" ? 150 :null,
+                      height: Platform.OS == "android" ? 150 :150,
                     }}
                     style={{
                       // backgroundColor: "#e6e6e6",
@@ -1605,7 +1665,7 @@ const {id, name ,address} = route.params
                     placeholder="Add Item"
                     placeholderTextColor="black"
                     renderItem={({ item }) => (
-                      <ScrollView>
+                      <ScrollView keyboardShouldPersistTaps="always">
                         <TouchableOpacity
                           // style={{paddingHorizontal:10}}
 
@@ -1675,19 +1735,21 @@ const {id, name ,address} = route.params
                       }}
                     >
                       £ {selectedValue.avg_price}
+                      
                     </Text>
                   </View>
                 ) : (
-                  <View style={{ width: "40%", paddingTop: 5 }}>
+                  <View style={{ width: "40%", paddingTop: 0 }}>
                     <Text
                       style={{
                         color: Colors.textGreyColor,
                         padding: 10,
+                        paddingTop:0,
                         marginLeft: 1,
                         paddingBottom: 12.5,
                       }}
                     >
-                      Price Per Unit
+                    Price Per Unit
                     </Text>
                   </View>
                 )}
@@ -1710,13 +1772,13 @@ const {id, name ,address} = route.params
                         console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
                         if (userExists) {
                             // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
-
+                          // console.log('status',status);
                           alert("Already Inserted");
                         } else {
                           if (qtty == "") {
                             // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
 
-                            alert("Please Enter Quantity.");
+                            alert("Please enter quantity.");
                           }
                           else if(reg.test(qtty) === false) {
 
@@ -1769,16 +1831,20 @@ const {id, name ,address} = route.params
                   backgroundColor: "#F2F2F2",
                   padding: 10,
                   marginTop: 20,
+                  zIndex:-1
                 }}
               >
                 
-                <Card
-                  style={{
-                    height: "60%",
-                    elevation: 0,
-                    backgroundColor: "#F2F2F2",
-                  }}
-                >
+                <View style = {{height:"60%",backgroundColor:'#F2F2F2',alignSelf:"center",borderRadius:10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 0,
+          padding:10,
+          
+          // marginLeft:5
+          }}>
                   <View>
                     <View
                       style={{
@@ -1824,13 +1890,14 @@ const {id, name ,address} = route.params
                       <Text
                         style={{
                           color: Colors.textGreyColor,
-                          width: "24%",
+                          width: "28%",
 
                           fontSize: 14,
-                          textAlign: "center",
+                          textAlign:"center",
                         }}
                       >
                         Price Per Unit
+
                       </Text>
 
                       {/* <SafeAreaView> */}
@@ -1839,34 +1906,62 @@ const {id, name ,address} = route.params
                       {/* </View> */}
                       {/* </SafeAreaView> */}
                     </View>
-                    <View style={{marginBottom:"10%"}}>
-                      {checkRow ? (
+                    <View style={{}}>
+                      {/* <ScrollView nestedScrollEnabled > */}
+                     {checkRow ?  (
+                        // R_cartItems.map((item, index) => (
+                        //   // <View style={{flexDirection:"column-reverse"}}>
+                        //   <CartItem
+                        //   id={item.id}
+                        //   quantity={item.quantity}
+                        //   total_amount={item.total_amount}
+                        //   name={item.name}
+                        //   unit={item.unit}
+                        //   price={item.price}
+                          
+                         
+                        //   onAddPress={() => {
+                        //     dispatch(
+                        //       cartActions.addToQtty(item.id)
+                        //     );
+                        //   }}
+                         
+                        //   onRemove={() => {
+                        //     dispatch(
+                        //       cartActions.removeFromCart(item.id)
+                        //     );
+                        //   }}
+                        
+                        //   onDelete={() => {
+                        //     dispatch(
+                        //       cartActions.deleteProduct(item.id)
+                        //     );
+                        //   }}
+                        // />
+                        // // </View>
+                        // ))
                         <FlatList
                           nestedScrollEnabled
+                          // inverted
+                          // style={{flexDirection:"column-reverse"}}
+                          keyboardShouldPersistTaps={'handled'}
+                          contentContainerStyle={{paddingBottom:90}}
+                          //data={cardItemsArray}
                           data={cartItems}
                           // sort={true}
                           // inverted={true}
-                          keyboardShouldPersistTaps={'handled'}
-                          contentContainerStyle={{paddingBottom:90}}
                           keyExtractor={(item) => item.id}
                           renderItem={(itemData) => (
+                            // <Text style={{fontSize:30,backgroundColor:"green",flex:1}}>{JSON.stringify(itemData)}</Text>
+                            // <View style={{flexDirection:"column-reverse"}}>
                             <CartItem
-                              // id={itemData.item.id}
-                              // quantity={itemData.item.quantity}
-                              // total_amount={itemData.item.total_amount}
-                              // name={itemData.item.name}
-                              // unit={itemData.item.unit}
-                              // price={itemData.item.price}
-
                               id={itemData.item.id}
                               quantity={itemData.item.quantity}
                               total_amount={itemData.item.total_amount}
                               name={itemData.item.name}
                               unit={itemData.item.unit}
                               price={itemData.item.price}
-
-
-                              value={selectedValue}
+                              
                               // addable
                               onAddPress={() => {
                                 dispatch(
@@ -1886,10 +1981,13 @@ const {id, name ,address} = route.params
                                 );
                               }}
                             />
+                            // </View>
                           )}
                         />
-                      ) : null}
-                      <View style={{ flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
+                      ) : null
+                      }
+                      {/* </ScrollView> */}
+                      <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 ,borderBottomWidth:.5 , borderBottomColor:'gray' }}>
                     <Text
                       style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
                     >
@@ -1909,53 +2007,16 @@ const {id, name ,address} = route.params
                   </View>
                     </View>
 
-                    {/* {
-                       newArray
-                   } */}
+                    
                   </View>
 
                   
-                </Card>
+                </View>
+                
               </View>
 
-              {/* <TouchableOpacity onPress={()=>setShow(true)}
-            style = {{alignSelf:'center',marginTop:5,marginBottom:10}}
-            >
-             <View style={{flexDirection:'column'}}>
-            <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
-            <Text style={{alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{pickUpDate}</Text>
-            
-           
-            
-            </View>
-            </TouchableOpacity> */}
-              {/* {show && ( */}
-
-              {/* <View>
-        <DatePicker
-            defaultDate={""}
-            minimumDate={new Date(year, month, date)}
-            maximumDate={new Date(2021, 12, 31)}
-            
-            // formatChosenDate={(date) => {
-            //   return moment(date).format("YYYY-MM-DD");
-            // }}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            textStyle={{ color: Colors.themeColor,fontWeight:'bold',alignSelf:'center' }}
-            placeHolderTextStyle={{ color: Colors.themeColor }}
-            onDateChange={(itemValue, itemIndex) => {
-              setPickUpDate(itemValue);
-              // setShow(false);
-            }}
-            disabled={false}
-          />
-          </View> */}
-              {/* ) */}
-              {/* }  */}
+              
+             
             </Card>
           </View>
           <View style={{ height: "4%", bottom: 40, }}>
@@ -1993,6 +2054,8 @@ const {id, name ,address} = route.params
     </View>
     </>
   );
+
+
 }
 
 const styles = StyleSheet.create({

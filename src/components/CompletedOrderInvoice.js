@@ -463,7 +463,7 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
 
 <View style={{paddingLeft:Platform.OS=="android"?5:0,width:"65%"}}>
 
-<Text style={{color:Colors.themeColor,fontSize:12}}>Client:</Text>
+<Text style={{color:Colors.themeColor,fontSize:12}}>Customer:</Text>
 
 
 

@@ -202,7 +202,8 @@ function CreateNewOrder({ navigation ,route }) {
   // var month = new Date().getMonth();
   // var year = new Date().getFullYear();
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
+  const [wakt, setWakt] = useState(new Date());
+  const [mode, setMode] = useState("datetime");
   const [show, setShow] = useState(false);
 
 
@@ -1224,7 +1225,8 @@ function CreateNewOrder({ navigation ,route }) {
                           textAlign: "center",
                         }}
                       >
-                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                        {/* {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)} */}
+                        {("0" + wakt.getHours()).slice(-2) + ":" + ("0" + wakt.getMinutes()).slice(-2)}
                       </Text>
                     
                   </View>

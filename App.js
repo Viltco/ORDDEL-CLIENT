@@ -21,7 +21,9 @@ import profile_Data from "./src/store/reducers/profile_Data";
 import ApiData from "./src/store/reducers/ApiData";
 import MyStack from "./src/navigation/MyStack";
 import OrderBox from "./src/store/reducers/OrderBox";
+import NewScreen from "./NewScreen";
 // import BusinessData from "./src/store/reducers/BusinessData";
+
 
 const rootReducer = combineReducers({
   // products: productsReducer,
@@ -64,5 +66,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red'
   },
 });
+
+// const App = () => {
+//   return (
+// <NewScreen/>
+//   )
+
+// }
 
 export default App;
