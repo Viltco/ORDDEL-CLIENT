@@ -32,6 +32,9 @@ import base64 from "react-native-base64";
 import DocumentPicker from "react-native-document-picker";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 const Profile = ({ navigation,route }) => {
   useFocusEffect(
@@ -92,21 +95,43 @@ const Profile = ({ navigation,route }) => {
 
   var dataa = 0;
 
-  const handleChoosePhoto = async () => {
+  const handlePhoto = async () => {
+
+    
     const options = {
       noData: true,
     };
-    // var base64 = require('base-64');
-    var res = 0;
+     var res = 0;
+     
+    //  const result =await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+    //  if ("granted" === result) {
+    //   alert(result)
+      //console.log(result,'....permission ios......');
+      let pathToFile = "file:///var/mobile/Containers/Data/Application/9793A9C3-C666-4A0E-B630-C94F02E32BE4/Documents/images/72706B9A-12DF-4196-A3BE-6F17C61CAD06.jpg"
+      
     try {
       res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
+        //type: [DocumentPicker.types.allFiles]
       });
+
+    //   if (Platform.OS === 'ios') {
+    //     //pathToFile = '~' + pathToFile.substring(pathToFile.indexOf('/Documents'));
+    //     res.uri = '~' + res.uri.substring(res.uri.indexOf('/Documents'));
+        
+    // }
+    
       setPhotoState({ photo: res });
       dispatch(ApiDataAction.SetImage(res.uri));
 
       uploadImage(res);
-      //console.log(res, "Imageee");
+
+      // {"fileCopyUri": "content://com.android.providers.media.documents/document/image%3A27039", 
+      // "name": "Screenshot_20210530_170709.jpg", "size": 668283, "type": "image/jpeg", 
+      // "uri": "content://com.android.providers.media.documents/document/image%3A27039"} Imageee.......
+
+
+      console.log(res, "Imageee.......");
       alert('Image Updated successfully')
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -115,14 +140,95 @@ const Profile = ({ navigation,route }) => {
         throw err;
       }
     }
-
+  // }
+  // else{
+  //   return;
+  // }
     // const base64File = await RNFS.readFile(res.uri, "base64");
   };
+
+
+// const handleChoosePhoto = () =>{
+
+//   //alert('choose photo from libaray')
+//   ImagePicker.openPicker({
+//     width: 300,
+//     height: 400,
+//     //cropping: true
+//   })
+//   .then(image => {
+
+//     setPhotoState({ photo: image });
+//       //dispatch(ApiDataAction.SetImage(image.sourceURL));
+//       dispatch(ApiDataAction.SetImage(image.path));
+//       uploadImage(image);
+//     console.log(image.path,'.........uri......... ');
+//     alert('Image Updated successfully');
+//   })
+  
+
+// }
+
+  //-------------------New Handle Photo--------------------------//
+const handleChoosePhoto = () => {
+  const Options = {
+    title: "Choose an Image",
+    // includeBase64: true,
+  };
+  // launchCamera(Options, (response) => {
+  //   setPhotoState({ photo: response });
+  //   imageBase64 = response.base64;
+  //   //console.log("base64", response.base64, "____________sh");
+  //   console.log(response.uri, "----------------res");
+  //   setCheckImage(true);
+  //   setImageUri(response.uri);
+  //   handleBase64(imageBase64);
+  //   dispatch(ApiDataAction.SetImageUri(response.uri));
+  // });
+  launchImageLibrary(Options, (response) => {
+    // setPhotoState({ photo: response });
+    // imageBase64 = response.base64;
+
+    setPhotoState({ photo: response });
+    dispatch(ApiDataAction.SetImage(response.uri));
+
+    uploadImage(response);
+    console.log(response, "Imageee");
+    alert("Image Updated Successfully");
+    //console.log("base64", response.base64, "____________sh");
+    //console.log(response.uri, "----------------res");
+    // setCheckImage(true);
+    // setImageUri(response.uri);
+    // handleBase64(imageBase64);
+    // dispatch(ApiDataAction.SetImageUri(response.uri));
+  });
+};
 
   const uploadImage = (response) => {
     var formdata = new FormData();
     formdata.append("image", response);
     formdata.append("id", ClientId);
+//------------new add----------------//
+    formdata.append("name", "image");
+    formdata.append("image", {
+      uri: response.uri,
+      type: response.type,
+      name: response.fileName,
+    });
+
+
+    // formdata.append("name", "image");
+    // formdata.append("image", {
+    //   uri: response.uri,
+    //   type: response.type,
+    //   name: response.fileName,
+    // });
+    // // formdata.append("file", (response.uri, response.fileName, response.type));
+
+    // // formdata.append("image", response);
+    // formdata.append("id", RiderId);
+
+
 
     var requestOptions = {
       method: "POST",
@@ -171,7 +277,7 @@ const Profile = ({ navigation,route }) => {
         // fetch(URL+'/client_app/clients_list/33/')
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(" Getting Image:", responseJson);
+          console.log(" Getting Image:...........", responseJson);
           dispatch(ApiDataAction.SetImage(responseJson.image));
           // setImageCheck(false);
           // setImage(responseJson.image);
@@ -268,22 +374,7 @@ const Profile = ({ navigation,route }) => {
   };
 
   const UpdateProfile = () => {
-    // console.log(firstName, "-------------------old First Name");
-    // console.log(FirstName, "-------------------Old First Name");
-    // console.log(LastName, "-------------------Old Last Name");
-
-    // if (firstName == "") {
-    //   setFirstName(FirstName);
-    //   console.log(firstName, "-------------------First Name");
-    // } else {
-    //   console.log(firstName, "-------------------First Name");
-    // }
-    // if (lastName == "") {
-    //   setLastName(LastName);
-    //   console.log(lastName, "----------------------Last Name");
-    // } else {
-    //   console.log(lastName, "----------------------Last Name");
-    // }
+    
     console.log(FirstName, "-------------------new First Name");
     console.log(firstName, "-------------------Old Last Name");
 

@@ -384,6 +384,7 @@ function MyStack() {
           component={EditBuisnessDetail}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "EDIT DETAILS",
             headerTitleStyle: {
               color: "white",
@@ -517,6 +518,7 @@ function MyStack() {
           component={NewBuisnessDetail}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "ADD DETAILS",
             headerTitleStyle: {
               color: "white",

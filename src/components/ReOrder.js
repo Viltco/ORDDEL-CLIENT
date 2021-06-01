@@ -245,6 +245,13 @@ function Reorder({ navigation ,route }) {
   // showMode("time");
   // };
 
+
+  
+
+
+
+
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
@@ -289,6 +296,8 @@ function Reorder({ navigation ,route }) {
     //Toggling the visibility state of the bottom sheet
     setS_visible(!s_visible);
   };
+
+
 
   const addOrderBox=()=>{
     setLoading(true);
@@ -336,6 +345,10 @@ function Reorder({ navigation ,route }) {
   }
 
 
+
+  
+
+
   const CreateOrder = () => {
     setLoading(true);
     fetch(URL + "/order/create_order/", {
@@ -367,7 +380,7 @@ function Reorder({ navigation ,route }) {
 
           setLoading(false);
           // Alert.showAlert();
-          alert("Thanks, Your Order Has Been Placed.");
+          alert("Thanks, your order has been placed.");
           // dropDownAlertRef.alertWithType('success', 'Success', 'Your Order Has Been Placed.');
           // Toast.show("Your Order Has Been Placed.", Toast.LONG);
           dispatch(cartActions.allClear(1));
@@ -1817,129 +1830,1831 @@ function Reorder({ navigation ,route }) {
 
 
 
-  return (
-    <>
+//   return (
+//     <>
     
-    <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
-      {/* <FlashMessage position="top" /> */}
-      {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-      {/* <MyHeader name="CREATE NEW ORDER" nav={navigation} /> */}
-      <KeyboardAvoidingView style={{ flex: 1 }}
-        behavior={Platform.OS == "ios" ? "padding" : null} >
-      <ScrollView
-        style={{ padding: 0 }}
-        nestedScrollEnabled={true}
-        keyboardShouldPersistTaps="always"
-        listViewDisplayed={false}
-      >
-        <View>
+//     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
+//       {/* <FlashMessage position="top" /> */}
+//       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
+//       {/* <MyHeader name="CREATE NEW ORDER" nav={navigation} /> */}
+//       <KeyboardAvoidingView style={{ flex: 1 }}
+//         behavior={Platform.OS == "ios" ? "padding" : null} >
+//       <ScrollView
+//         style={{ padding: 0 }}
+//         nestedScrollEnabled={true}
+//         keyboardShouldPersistTaps="always"
+//         listViewDisplayed={false}
+//       >
+//         <View>
 
-          <View style={{ height: "14%", padding: 5 }}>
-            <Text
+//           <View style={{ height: "14%", padding: 5 }}>
+//             <Text
+//               style={{
+//                 alignSelf: "center",
+//                 flexDirection: "row",
+//                 fontSize: 16,
+//                 fontWeight: "bold",
+//               }}
+//             >
+//               {PoNumber}
+//             </Text>
+
+//             <View
+//               style={{ flexDirection: "row", alignSelf: "center", padding: 10 }}
+//             >
+//               <Card
+//                 style={{
+//                   padding: 10,
+//                   width: "50%",
+//                   backgroundColor: "#e6e6e6",
+//                   elevation: 0,
+//                 }}
+//               >
+//                 <TouchableOpacity onPress={toggleBottomNavigationView}>
+//                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                     Delivery Person:
+//                   </Text>
+//                   {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                     {name}
+//                   </Text>:
+//                   <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                   {riderName}
+//                 </Text>}
+//                  {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {address}
+//                   </Text>:
+//                   <Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {riderAddress}
+//                   </Text>}
+//                 </TouchableOpacity>
+//               </Card>
+//               <BottomSheet
+//                 visible={visible}
+//                 onBackButtonPress={toggleBottomNavigationView}
+//                 onBackdropPress={toggleBottomNavigationView}
+//               >
+               
+//                 <View style={styles.bottomNavigationView}>
+//                   {riderLoading ? (
+//                     <View
+//                       style={{
+//                         justifyContent: "center",
+//                         alignItems: "center",
+//                         // alignSelf:'center',
+//                         marginTop: "20%",
+//                       }}
+//                     >
+//                       <Text
+//                         style={{
+//                           color: Colors.themeColor,
+//                           fontWeight: "bold",
+//                           marginTop: 20,
+//                           fontSize: 25,
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         Rider is Not Available
+//                       </Text>
+//                     </View>
+//                   ) : (
+//                     <FlatList
+//                       // nestedScrollEnabled={true}
+//                       data={riderData}
+//                       style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
+//                       showsVerticalScrollIndicator={false}
+//                       // keyExtractor={item => item.index_id.toString()}
+//                       keyExtractor={({ id }, index) => id}
+//                       renderItem={({ item }) => (
+//                         <TouchableOpacity
+//                           style={{
+//                             width: "95%",
+//                             marginBottom: 15,
+//                             alignSelf: "center",
+                            
+//                           }}
+//                           onPress={() =>{
+//                             rider(
+//                               item.first_name + " " + item.last_name,
+//                               item.address,
+//                               item.id
+//                             )
+//                           }}
+//                            // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
+//                           // onPress={() => 
+//                            // navigation.navigate("PaymentHistoryDetail")
+//                           // }
+//                         >
+//                           <Card 
+//                              style={{
+//                               borderRadius: 15,
+//                               padding: 10,
+//                             }}
+//                           > 
+//                              <View
+//                               style={{ 
+//                                // borderRadius: 10,
+//                                 // backgroundColor: "white",
+//                                 // overflow: "hidden",
+
+//                                 flexDirection: "column",
+//                                 // justifyContent: "flex-start",
+//                                 // alignSelf: "center",
+
+//                                 // marginTop: 10,
+//                                 // shadowColor: "#000",
+//                                 // shadowOffset: { width: 0, height: 2 },
+//                                 // shadowOpacity: 0.25,
+//                                 // shadowRadius: 3.84,
+//                                 // elevation: 5,
+//                               }}
+//                             > 
+//                               <View style={{ flexDirection: "row" }}>
+//                                 <View
+//                                   style={{
+//                                     padding: 10,
+//                                     width: "100%",
+//                                     // alignSelf: "center",
+//                                     // alignItems: "center",
+//                                     justifyContent: "flex-start",
+//                                   }}
+//                                 > 
+//                                    <Text
+//                                     style={{
+//                                       fontSize: 20,
+//                                       fontWeight: "bold",
+//                                       color: Colors.darkRedColor,
+//                                       // marginTop: "4%",
+//                                     }}
+//                                   >
+//                                     {item.first_name} {item.last_name}
+//                                   </Text> 
+
+//                                    <View
+//                                     style={{
+//                                       // width: 200,
+//                                       flexDirection: "row",
+//                                       alignItems: "center",
+
+//                                       marginTop: "1.5%",
+//                                     }}
+//                                   >
+//                                     <Text
+//                                       style={{
+//                                         fontSize: 14,
+//                                         color: "grey",
+//                                         width: 240,
+//                                       }}
+//                                     >
+//                                       {item.address}
+//                                     </Text> 
+//                                    </View>
+//                                 </View>
+//                                 <View style={{ alignSelf: "center" }}>
+//                                   <Text
+//                                     style={{
+//                                       marginBottom: 3,
+//                                       fontSize: 14,
+//                                       alignSelf: "flex-end",
+//                                       marginRight: 10,
+//                                       fontWeight: "bold",
+//                                     }}
+//                                   ></Text> 
+//                                    {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
+//   {item.status}
+//   </Text>  */}
+//                                  </View>
+//                               </View>
+//                             </View>
+//                           </Card>
+//                         </TouchableOpacity>
+//                       )}
+//                     />
+//                   )}
+//                 </View>
+//               </BottomSheet> 
+
+//               <Card
+//                 style={{
+//                   padding: 10,
+//                   marginLeft: 10,
+//                   width: "50%",
+//                   backgroundColor: "#e6e6e6",
+//                   elevation: 0,
+//                 }}
+//               >
+//                 <TouchableOpacity
+//                   // style={{width:"95%",marginBottom:15,alignSelf:'center'}}
+//                   // onPress={()=>rider(item.first_name+" "+item.last_name,item.address,item.id)}
+//                   onPress={s_toggleBottomNavigationView}
+//                 >
+//                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                     Delivery Address:
+//                   </Text>
+//                   <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                     {businessName}
+//                   </Text>
+//                   <Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {AddressName}
+//                   </Text>
+//                 </TouchableOpacity>
+//               </Card>
+
+//               <BottomSheet
+//                 visible={s_visible}
+//                 //setting the visibility state of the bottom shee
+//                 onBackButtonPress={s_toggleBottomNavigationView}
+//                 //Toggling the visibility state on the click of the back botton
+//                 onBackdropPress={s_toggleBottomNavigationView}
+//                 //Toggling the visibility state on the clicking out side of the sheet
+//               >
+//                 {/*Bottom Sheet inner View*/}
+//                 <View style={styles.bottomNavigationView}>
+//                   {addressCheck ? (
+//                     <View
+//                       style={{
+//                         justifyContent: "center",
+//                         alignItems: "center",
+//                         // alignSelf:'center',
+//                         marginTop: "60%",
+//                       }}
+//                     >
+//                       <Text
+//                         style={{
+//                           color: "black",
+//                           fontWeight: "bold",
+//                           marginTop: 20,
+//                           fontSize: 25,
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         There is no Address Record, Please Add Your Address.
+//                       </Text>
+//                       <View style={{ marginTop: 40 }}>
+//         <TouchableOpacity
+//           style={styles.uploadButton}
+//           activeOpacity={0.7}
+//           onPress={() => {s_toggleBottomNavigationView(); navigation.navigate("NewBuisnessDetail")}}
+//         >
+//           <Text style={styles.uploadButtonText}>Add New Business</Text>
+//         </TouchableOpacity>
+//       </View>
+//                     </View>
+//                   ) : (
+//                     <FlatList
+//                       nestedScrollEnabled={true}
+//                       data={businessData}
+//                       style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
+//                       showsVerticalScrollIndicator={false}
+//                       // keyExtractor={item => item.index_id.toString()}
+//                       keyExtractor={({ id }, index) => id}
+//                       renderItem={({ item }) => (
+//                         <View>
+//                           <TouchableOpacity
+//                             style={{
+//                               width: "95%",
+//                               marginBottom: 15,
+//                               alignSelf: "center",
+//                             }}
+//                             onPress={() => {
+//                               setSelectedBusinessId(item.id);
+//                               setAddressName(item.address);
+//                               setBusinessName(item.name);
+//                               s_toggleBottomNavigationView();
+//                             }}
+//                             // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
+//                             // onPress={() =>
+//                             // navigation.navigate("PaymentHistoryDetail")
+//                             // }
+//                           >
+//                             <Card style={{ borderRadius: 15, padding: 10 }}>
+//                               <View
+//                                 style={{
+//                                   // borderRadius: 10,
+//                                   // backgroundColor: "white",
+//                                   // overflow: "hidden",
+
+//                                   flexDirection: "column",
+//                                   // justifyContent: "flex-start",
+//                                   // alignSelf: "center",
+
+//                                   // marginTop: 10,
+//                                   // shadowColor: "#000",
+//                                   // shadowOffset: { width: 0, height: 2 },
+//                                   // shadowOpacity: 0.25,
+//                                   // shadowRadius: 3.84,
+//                                   // elevation: 5,
+//                                 }}
+//                               >
+//                                 <View style={{ flexDirection: "row" }}>
+//                                   <View
+//                                     style={{
+//                                       padding: 10,
+//                                       width: "100%",
+//                                       // alignSelf: "center",
+//                                       // alignItems: "center",
+//                                       justifyContent: "flex-start",
+//                                     }}
+//                                   >
+//                                     <Text
+//                                       style={{
+//                                         fontSize: 20,
+//                                         fontWeight: "bold",
+//                                         color: Colors.darkRedColor,
+//                                         // marginTop: "4%",
+//                                       }}
+//                                     >
+//                                       {item.name}
+//                                     </Text>
+
+//                                     <View
+//                                       style={{
+//                                         // width: 200,
+//                                         flexDirection: "row",
+//                                         alignItems: "center",
+
+//                                         marginTop: "1.5%",
+//                                       }}
+//                                     >
+//                                       <Text
+//                                         style={{
+//                                           fontSize: 14,
+//                                           color: "grey",
+//                                           width: 240,
+//                                         }}
+//                                       >
+//                                         {item.address}
+//                                       </Text>
+//                                     </View>
+//                                   </View>
+//                                   <View style={{ alignSelf: "center" }}>
+//                                     <Text
+//                                       style={{
+//                                         marginBottom: 3,
+//                                         fontSize: 14,
+//                                         alignSelf: "flex-end",
+//                                         marginRight: 10,
+//                                         fontWeight: "bold",
+//                                       }}
+//                                     ></Text>
+//                                     {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
+//   {item.status}
+//   </Text> */}
+//                                   </View>
+//                                 </View>
+//                               </View>
+//                             </Card>
+//                           </TouchableOpacity>
+//                         </View>
+//                       )}
+//                     />
+//                   )}
+//                 </View>
+//               </BottomSheet>
+
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+//             </View>
+//           </View>
+//           <Modal
+//         animationType="slide"
+        
+//         transparent={true}
+//         visible={modalVisible}
+//         onRequestClose={() => {
+//         //   Alert.alert("Modal has been closed.");
+//           setModalVisible(!modalVisible);
+//         }}
+//       >
+//         <View style={styles.centeredView2}>
+//           <View style={styles.modalView2}>
+//           <View style = {{width:"95%",height:Platform.OS=="android"?"95%":"90%",backgroundColor:'white',alignSelf:"center",borderRadius:10,flexDirection:'row',
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           }}>
+//             {/* <Card style={{borderRadius:10,width:"90%",height:"90%",alignItems:'center',backgroundColor:"white"}}> */}
+//               <ScrollView keyboardShouldPersistTaps="always"  showsVerticalScrollIndicator={false} style={{padding:10}}>
+//             <View style={{alignSelf:"center",padding:"3%",paddingBottom:"2%",marginRight:10}}>
+//               <Text style={{color:Colors.themeColor,fontSize:24,fontWeight:"bold",textAlign:"center"}}>PREVIEW</Text>
+//             </View>
+//             <View style={{ flexDirection: "row",padding:5,alignSelf:"center" }}>
+//             <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           padding:10
+//           }}>
+            
+//             {/* <Card
+//                 style={{
+//                   padding: 10,
+//                   width: "48%",
+//                   backgroundColor: "#e6e6e6",
+//                   elevation: 0,
+//                 }}
+//               > */}
+                
+//                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                     Delivery Person:
+//                   </Text>
+//                   {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                     {name}
+//                   </Text>:
+//                   <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                   {riderName}
+//                 </Text>}
+//                  {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {address}
+//                   </Text>:
+//                   <Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {riderAddress}
+//                   </Text>}
+                
+//               </View>
+//               <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           padding:10,
+//           marginLeft:5
+//           }}>
+                
+//                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                     Delivery Address:
+//                   </Text>
+//                   <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+//                     {businessName}
+//                   </Text>
+//                   <Text style={{ fontSize: 12, color: "#666666" }}>
+//                     {AddressName}
+//                   </Text>
+                
+//               </View>
+//               </View>
+
+//               <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: "center",
+//                   padding: 5,
+//                   paddingTop:0
+//                 }}
+//               >
+                
+
+//                 <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           padding:10,
+          
+//           }}>
+//                   <View style={{ padding: 5 }}>
+                    
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Date:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getDate()).slice(-2) +
+//                           "-" +
+//                           ("0" + (date.getMonth() + 1)).slice(-2)+
+//                           "-" +
+//                           date.getFullYear()}
+//                       </Text>
+                    
+//                   </View>
+//                 </View>
+
+//                 <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           padding:10,
+//           marginLeft:5
+//           }}>
+//                   <View style={{ padding: 5 }}>
+                    
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Time:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+//                       </Text>
+                    
+//                   </View>
+//                 </View>
+//               </View>
+
+              
+
+         
+
+
+
+//               <View style={{flexDirection:'row',marginTop:10}}>
+//         <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
+//         <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
+//         <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"24%"}}>Quantity</Text>
+//         <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"right",width:"26%"}}>Last month Avg.Price</Text>
+//     </View>
+//     <View style={{padding:2}}>
+//               <FlatList
+//                           nestedScrollEnabled
+//                           // data={cardItemsArray}
+//                           data={cartItems}
+//                           // sort={true}
+//                           // inverted={true}
+//                           keyExtractor={(item) => item.id}
+//                           renderItem={(itemData) => (
+//                             <PreviewCart
+//                               id={itemData.item.id}
+//                               quantity={itemData.item.quantity}
+//                               total_amount={itemData.item.total_amount}
+//                               name={itemData.item.name}
+//                               unit={itemData.item.unit}
+//                               price={itemData.item.price}
+//                               // addable
+//                               onAddPress={() => {
+//                                 dispatch(
+
+//                                   cartActions.addToQtty(itemData.item.id)
+//                                 );
+//                               }}
+//                               // deletable
+//                               onRemove={() => {
+//                                 dispatch(
+//                                   cartActions.removeFromCart(itemData.item.id)
+//                                 );
+//                               }}
+//                               // removeable
+//                               onDelete={() => {
+//                                 dispatch(
+//                                   cartActions.deleteProduct(itemData.item.id)
+//                                 );
+//                               }}
+//                             />
+//                           )}
+//                         />
+//               </View>
+//               <View style={{ flexDirection: "row", }}>
+//                     <Text
+//                       style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
+//                     >
+//                       Total:
+//                     </Text>
+//                     <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%",textAlign:"center" }}>
+//                       {cartTotalPackages}
+//                     </Text>
+//                     {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+//                     £ {cartTotalAmount}
+//                     </Text>:
+//                     <Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+//                     £ {parseFloat(cartTotalAmount).toFixed(2)}
+//                     </Text>}
+//                   </View>
+
+
+//                   {note==""?null:
+//                 <View style={{alignSelf:"center",paddingTop:"20%"}}>
+//                   <Text>Note: {note}</Text>
+//                 </View>}
+
+
+//           <View style={{marginTop:"10%",alignSelf:"center"}}>
+//             <Pressable
+//                style={styles.signupButton1}
+//                activeOpacity={0.7}
+//               //onPress={CreateOrder}
+//               //onPress={sendOrder}
+//               onPress={addOrderBox}
+           
+//             >
+//               {loading ? (
+//                 <Spinner color={"white"} size={20} />
+//               ) : (
+//               <Text style={styles.signupButtonText1}>CONFIRM</Text>)}
+//             </Pressable>
+//             <Pressable
+//                style={{...styles.bu_signupButton1,borderWidth:1,marginBottom:"10%"}}
+//                activeOpacity={0.7}
+//               onPress={()=>
+//                 setModalVisible(!modalVisible)
+//                 }
+//             >
+//               <Text style={styles.bu_signupButtonText1}>CANCEL</Text>
+//             </Pressable>
+//             </View>
+//             </ScrollView>
+//            </View>
+        
+ 
+            
+//           </View>
+//         </View>
+//       </Modal>
+
+//           <View style={{ height: "70%", marginTop: 40}}>
+//             <Card
+//               style={{
+//                 padding: 10,
+//                 width: "100%",
+//                 backgroundColor: "#e6e6e6",
+//                 elevation: 0,
+//               }}
+//             >
+//               <Text
+//                 style={{
+//                   alignSelf: "center",
+//                   flexDirection: "row",
+//                   fontSize: 14,
+//                   // fontWeight: "bold",
+//                 }}
+//               >
+//                 Order Date
+//               </Text>
+//               <Text
+//                 style={{
+//                   alignSelf: "center",
+//                   flexDirection: "row",
+//                   fontSize: 15,
+//                   fontWeight: "bold",
+//                   color: Colors.themeColor,
+//                 }}
+//               >
+//                 {currentDate}
+//               </Text>
+//               {/* <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: "center",
+//                   padding: 5,
+//                 }}
+//               >
+//                 {/* <Card
+//   style={{
+//   padding: 0,
+//   width: "50%",
+//   backgroundColor: "#F2F2F2",
+//   elevation: 0,
+//   }}
+//   >
+//   <View style={{ padding: 5 }}>
+//   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//   Order Date:
+//   </Text>
+//   <Text
+//   style={{
+//   fontSize: 16,
+//   fontWeight: "bold",
+//   textAlign: "center",
+//   }}
+//   >
+//   {currentDate}
+//   </Text>
+//   </View>
+//   </Card> */}
+
+//                 {/* <Card
+//                   style={{
+//                     padding: 5,
+//                     // marginLeft: 10,
+//                     width: "50%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                   }}
+//                 >
+//                   <View style={{ padding: 5 }}>
+//                     <TouchableOpacity onPress={showDatepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Date:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getDate()).slice(-2) +
+//                           "-" +
+//                           ("0" + (date.getMonth() + 1)).slice(-2)+
+//                           "-" +
+//                           date.getFullYear()}
+//                       </Text>
+//                     </TouchableOpacity>
+//                     {show && (
+//                       // <DatePicker
+//                       // defaultDate={new Date(yearr, monthh, datee)}
+//                       // minimumDate={new Date(yearr, monthh, datee)}
+//                       // maximumDate={new Date(2021, 12, 31)}
+//                       // // formatChosenDate={(date) => {
+//                       // // return moment(date).format("YYYY-MM-DD");
+//                       // // }}
+//                       // locale={"en"}
+//                       // timeZoneOffsetInMinutes={undefined}
+//                       // modalTransparent={false}
+//                       // animationType={"fade"}
+//                       // androidMode={"default"}
+//                       // textStyle={{ color: "green" }}
+//                       // placeHolderTextStyle={{ color: "#d3d3d3" }}
+//                       // onDateChange={(itemValue, itemIndex) => {
+//                       // setPickUpDate(itemValue);
+//                       // }}
+//                       // disabled={false}
+//                       // />
+//                       <DateTimePicker
+//                         testID="dateTimePicker"
+//                         value={date}
+//                         mode={mode}
+//                         // defaultDate={new Date()}
+//                         minimumDate={new Date()}
+//                         is24Hour={true}
+//                         style={{ color: Colors.themeColor }}
+//                         display="default"
+//                         // dateFormat="day month year"
+//                         onChange={onChange}
+//                       />
+//                     )}
+//                   </View>
+//                 </Card>
+
+//                 <Card
+//                   style={{
+//                     padding: 5,
+//                     marginLeft: 10,
+//                     width: "50%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                   }}
+//                 >
+//                   <View style={{ padding: 5 }}>
+//                     <TouchableOpacity onPress={showTimepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Time:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+//                       </Text>
+//                     </TouchableOpacity>
+//                   </View>
+//                 </Card>
+//               // </View> */} 
+             
+             
+//              {/* {//------------new date UI=========////} */}
+
+
+//               { Platform.OS==='ios'? (
+
+// <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: 'center',
+//                   //padding: 5,
+//                 }}
+//               >
+
+//     {/* //-------------------------------------Delivery Date ----------------------------// */}            
+// <Card
+//                   style={{
+//                     padding: 5,
+//                     // marginLeft: 10,
+//                     width: "90%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                     flexDirection:'row',
+//                     marginBottom:'5%',
+//                     marginTop:'5%'
+//                   }}
+//                 >
+//                   <View style={{ padding: 7 ,
+//                     marginRight:'8%' 
+//                     }}>
+//                     <TouchableOpacity onPress={showDatepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Date
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getDate()).slice(-2) +
+//                           "-" +
+//                           ("0" + (date.getMonth() + 1)).slice(-2)+
+//                           "-" +
+//                           date.getFullYear()}
+//                       </Text>
+//                     </TouchableOpacity>
+//                     {/* {show && (
+                      
+//                       <DateTimePicker
+//                         testID="dateTimePicker"
+//                         value={date}
+//                         mode={mode}
+//                         // defaultDate={new Date()}
+//                         minimumDate={new Date()}
+//                         is24Hour={true}
+//                         style={{ color: Colors.themeColor }}
+//                         display="default"
+//                         // dateFormat="day month year"
+//                         onChange={onChange}
+//                       />
+//                     )} */}
+//                   </View>
+//                 {/* </Card> */}
+
+//                 {/* //-------------------------------------Delivery Time ----------------------------// */}
+//                 {/* <Card
+//                   style={{
+//                     padding: 5,
+//                     marginLeft: 10,
+//                     width: "50%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                   }}
+//                 > */}
+
+//                   {/* <View style={{ padding: 5 }}> */}
+
+//                   <View style={{ alignSelf:'flex-end', width:'30%'  }}>
+//                   {show && (
+                      
+//                       <DateTimePicker
+//                         testID="dateTimePicker"
+//                         value={date}
+//                         mode={mode}
+//                         // defaultDate={new Date()}
+//                         minimumDate={new Date()}
+//                         is24Hour={true}
+//                         style={{ color: Colors.themeColor }}
+//                         display="default"
+//                         // dateFormat="day month year"
+//                         onChange={onChange}
+//                       />
+//                     )}
+//                   </View>
+
+
+
+//                   <View
+//                 style={{
+//                   flexDirection: "row",
+//                   //alignSelf: 'flex-start',
+//                   marginLeft:'5%',
+//                   padding: 7,
+//                 }}
+//               >
+//                     <TouchableOpacity onPress={showTimepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Time
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+//                       </Text>
+//                     </TouchableOpacity>
+//                     {/* {show && (
+                      
+//                       <DateTimePicker
+//                         testID="dateTimePicker"
+//                         value={date}
+//                         mode={mode}
+//                         // defaultDate={new Date()}
+//                         minimumDate={new Date()}
+//                         is24Hour={true}
+//                         style={{ color: Colors.themeColor }}
+//                         display="default"
+//                         // dateFormat="day month year"
+//                         onChange={onChange}
+//                       />
+//                     )} */}
+//                   </View>
+//                 </Card>
+
+//               </View>
+
+// ):(
+
+// <View
+//                 style={{
+//                   flexDirection: "row",
+//                   alignSelf: "center",
+//                   padding: 5,
+//                 }}
+//               >
+
+//                 {/* //-------------------------------------Delivery Date ----------------------------// */}
+// <Card
+//                   style={{
+//                     padding: 5,
+//                     // marginLeft: 10,
+//                     width: "50%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                   }}
+//                 >
+//                   <View style={{ padding: 5 }}>
+//                     <TouchableOpacity onPress={showDatepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Date:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getDate()).slice(-2) +
+//                           "-" +
+//                           ("0" + (date.getMonth() + 1)).slice(-2)+
+//                           "-" +
+//                           date.getFullYear()}
+//                       </Text>
+//                     </TouchableOpacity>
+//                     {show && (
+                      
+//                       <DateTimePicker
+//                         testID="dateTimePicker"
+//                         value={date}
+//                         mode={mode}
+//                         // defaultDate={new Date()}
+//                         minimumDate={new Date()}
+//                         is24Hour={true}
+//                         style={{ color: Colors.themeColor }}
+//                         display="default"
+//                         // dateFormat="day month year"
+//                         onChange={onChange}
+//                       />
+//                     )}
+//                   </View>
+//                 </Card>
+
+//                 {/* //-------------------------------------Delivery Time ----------------------------// */}
+//                 <Card
+//                   style={{
+//                     padding: 5,
+//                     marginLeft: 10,
+//                     width: "50%",
+//                     backgroundColor: "#F2F2F2",
+//                     elevation: 0,
+//                   }}
+//                 >
+//                   <View style={{ padding: 5 }}>
+//                     <TouchableOpacity onPress={showTimepicker}>
+//                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+//                         Delivery Time:
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           fontSize: 16,
+//                           fontWeight: "bold",
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+//                       </Text>
+//                     </TouchableOpacity>
+//                   </View>
+//                 </Card>
+
+//               </View>
+
+// ) }
+
+
+             
+             
+//               <Text
+//                 style={{
+//                   color: Colors.themeColor,
+//                   fontSize: 14,
+//                   fontWeight: "bold",
+//                   alignSelf: "center",
+//                   marginTop: 10,
+//                 }}
+//               >
+//                 Add Item and Quantity Here:
+//               </Text>
+
+//               <View
+//                 style={{
+//                   flexDirection: "row",
+//                   marginTop: "5%",
+//                   width: "100%",
+//                 }}
+//               >
+//                <View
+//                   style={{
+//                     width: Platform.OS == "android" ? "30%" : "30%",
+                    
+//                   }}
+//                 >
+//                   <Autocomplete
+//                     // onFocus={() => {scrollView.props.scrollToEnd({animated: true})}}
+//                     autoCapitalize="none"
+//                     autoCorrect={false}
+//                     flatListProps={{ nestedScrollEnabled: true}}
+//                     // containerStyle={{}}
+                   
+//                     listContainerStyle={{
+//                       backgroundColor: "#e6e6e6",
+//                       width: 250,
+//                       left: 0,
+//                       position: 'absolute',
+//                       right: 0,
+//                       top: 50,
+//                     zIndex: 1,
+//                       // height: Platform.OS == "android" ? 150 :150
+
+//                     }}
+//                     listStyle={{
+//                       borderColor: "#e6e6e6",
+//                       height: Platform.OS == "android" ? 150 :150,
+//                     }}
+//                     style={{
+//                       // backgroundColor: "#e6e6e6",
+//                       paddingBottom: 7,
+//                       color: "black",
+//                       width: "100%",
+//                     }}
+//                     inputContainerStyle={{
+//                       backgroundColor: "#F2F2F2",
+//                       height: Platform.OS == "android" ? 45 : 40,
+//                       justifyContent: "center",
+
+//                       //borderColor: "#e6e6e6",
+//                       //borderBottomColor: Colors.textGreyColor,
+//                     }}
+//                     //data to show in suggestion
+//                     data={filteredProducts}
+//                     //default value if you want to set something in input
+//                     defaultValue={
+//                       JSON.stringify(selectedValue) === "{}"
+//                         ? ""
+//                         : selectedValue.name
+//                     }
+//                     // onchange of the text changing the state of the query
+//                     // which will trigger the findFilm method
+//                     // to show the suggestions
+//                     onChangeText={(text) => findName(text)}
+//                     placeholder="Add Item"
+//                     placeholderTextColor="black"
+//                     renderItem={({ item }) => (
+//                       <ScrollView keyboardShouldPersistTaps="always">
+//                         <TouchableOpacity
+//                           // style={{paddingHorizontal:10}}
+
+//                           onPress={() => {
+//                             setSelectedValue(item);
+//                             setFilteredProducts([]);
+//                             setUnitCheck(true);
+//                           }}
+//                         >
+//                           <Text style={styles.itemText}>
+//                             {item.name} ({item.unit})
+//                           </Text>
+//                         </TouchableOpacity>
+//                       </ScrollView>
+//                     )}
+//                   />
+//                 </View>
+
+//                 <View style={{ width: "20%", height: 38, paddingTop: 5 }}>
+//                   {unitCheck ? (
+//                     <Text
+//                       style={{
+//                         color: Colors.textGreyColor,
+//                         marginLeft: 1,
+//                         padding: 10,
+//                         paddingBottom: 12.5,
+//                       }}
+//                     >
+//                       {selectedValue.unit}
+//                     </Text>
+//                   ) : (
+//                     <Text
+//                       style={{
+//                         color: Colors.textGreyColor,
+//                         marginLeft: 1,
+//                         padding: 10,
+//                         paddingBottom: 12.5,
+//                       }}
+//                     >
+//                       Unit
+//                     </Text>
+//                   )}
+//                 </View>
+//                 <View style={{ width: "15%", paddingTop: 0 }}>
+//                   <TextInput
+//                     style={styles.o_inputArea}
+//                     placeholder="Qty"
+//                     autoCapitalize="none"
+//                     keyboardType="numeric"
+//                     maxLength={2}
+//                     placeholderTextColor="black"
+//                     value={qtty}
+//                     required={true}
+//                     onChangeText={(value) => setQtty(value)}
+//                     initialValue=""
+//                   />
+//                 </View>
+
+//                 {unitCheck ? (
+//                   <View style={{ width: "28%", paddingTop: 5 }}>
+//                     <Text
+//                       style={{
+//                         color: Colors.textGreyColor,
+//                         padding: 10,
+//                         marginLeft: 1,
+//                         paddingBottom: 12.5,
+//                       }}
+//                     >
+//                       £ {selectedValue.avg_price}
+                      
+//                     </Text>
+//                   </View>
+//                 ) : (
+//                   <View style={{ width: "40%", paddingTop: 0 }}>
+//                     <Text
+//                       style={{
+//                         color: Colors.textGreyColor,
+//                         padding: 10,
+//                         paddingTop:0,
+//                         marginLeft: 1,
+//                         paddingBottom: 12.5,
+//                       }}
+//                     >
+//                     Price Per Unit
+//                     </Text>
+//                   </View>
+//                 )}
+
+//                 <View
+//                   style={{
+//                     height: 30,
+//                     width: "6%",
+//                     alignSelf: "center",
+//                     justifyContent: "center",
+//                     marginLeft: 0,
+//                   }}
+//                 >
+//                   {unitCheck ? (
+//                     <TouchableOpacity
+//                       activeOpacity={0.8}
+//                       style={styles.AddButton}
+//                       onPress={() => {
+//                         const userExists = CheckId.some(item => item.id === selectedValue.id);
+//                         console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
+//                         if (userExists) {
+//                             // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
+//                           // console.log('status',status);
+//                           alert("Already Inserted");
+//                         } else {
+//                           if (qtty == "") {
+//                             // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
+
+//                             alert("Please enter quantity.");
+//                           }
+//                           else if(reg.test(qtty) === false) {
+
+//                             alert("Invalid Quantity");
+//                             setQtty("");
+//                               return false;
+//                           }
+//                           else if(qtty==0) {
+
+//                             alert("Invalid Quantity");
+//                             setQtty("");
+//                           }
+//                           else {
+//                             dispatch(
+//                               cartActions.addToCart(selectedValue, qtty)
+//                             ),
+//                               setCheckRow(true),
+//                               setSelectedValue([{}]),
+//                               setUnitCheck(false),
+//                               setQtty("");
+//                           }
+//                         }
+//                       }}
+//                     >
+//                       <Text
+//                       style={styles.AddButtonText}
+//                       >
+//                         ADD
+//                       </Text>
+//                       {/* <AntDesign name="pluscircleo" color={Colors.themeColor} size={20} style={{padding:10}} /> */}
+//                     </TouchableOpacity>
+//                   ) : null}
+//                 </View>
+
+//                 {/* <View style={styles.container}> */}
+
+//                 {/* </View> */}
+//               </View>
+
+//               {/* </Card> */}
+//               {/* </View> */}
+
+//               {/* <View style={{padding:10,height:'60%',marginTop:30}}> */}
+//               {/* <Card style={{elevation:0 ,backgroundColor:'#E6E6E6'}}> */}
+//               {/* <Text style={styles.verticleLine}></Text> */}
+
+//               <View
+//                 style={{
+//                   borderRadius: 10,
+//                   backgroundColor: "#F2F2F2",
+//                   padding: 10,
+//                   marginTop: 20,
+//                   zIndex:-1
+//                 }}
+//               >
+                
+//                 <View style = {{height:"60%",backgroundColor:'#F2F2F2',alignSelf:"center",borderRadius:10,
+//           shadowColor: "#000",
+//           shadowOffset: { width: 0, height: 2 },
+//           // shadowOpacity: 0.25,
+//           shadowRadius: 3.84,
+//           elevation: 0,
+//           padding:10,
+          
+//           // marginLeft:5
+//           }}>
+//                   <View>
+//                     <View
+//                       style={{
+//                         flexDirection: "row",
+//                         marginTop: 10,
+//                         //justifyContent: "center",
+//                         width: "100%",
+//                       }}
+//                     >
+//                       <Text
+//                         style={{
+//                           color: Colors.themeColor,
+//                           width: "30%",
+//                           textAlign: "center",
+
+//                           fontSize: 14,
+//                         }}
+//                       >
+//                         Product
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           color: Colors.textGreyColor,
+//                           width: "20%",
+//                           textAlign: "center",
+
+//                           fontSize: 14,
+//                         }}
+//                       >
+//                         Unit
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           color: Colors.themeColor,
+//                           width: "20%",
+
+//                           fontSize: 14,
+//                           textAlign: "center",
+//                         }}
+//                       >
+//                         Quantity
+//                       </Text>
+//                       <Text
+//                         style={{
+//                           color: Colors.textGreyColor,
+//                           width: "28%",
+
+//                           fontSize: 14,
+//                           textAlign:"center",
+//                         }}
+//                       >
+//                         Price Per Unit
+
+//                       </Text>
+
+//                       {/* <SafeAreaView> */}
+//                       {/* <View style={styles.container}> */}
+
+//                       {/* </View> */}
+//                       {/* </SafeAreaView> */}
+//                     </View>
+//                     <View style={{}}>
+//                       {/* <ScrollView nestedScrollEnabled > */}
+//                      {checkRow ?  (
+//                         // R_cartItems.map((item, index) => (
+//                         //   // <View style={{flexDirection:"column-reverse"}}>
+//                         //   <CartItem
+//                         //   id={item.id}
+//                         //   quantity={item.quantity}
+//                         //   total_amount={item.total_amount}
+//                         //   name={item.name}
+//                         //   unit={item.unit}
+//                         //   price={item.price}
+                          
+                         
+//                         //   onAddPress={() => {
+//                         //     dispatch(
+//                         //       cartActions.addToQtty(item.id)
+//                         //     );
+//                         //   }}
+                         
+//                         //   onRemove={() => {
+//                         //     dispatch(
+//                         //       cartActions.removeFromCart(item.id)
+//                         //     );
+//                         //   }}
+                        
+//                         //   onDelete={() => {
+//                         //     dispatch(
+//                         //       cartActions.deleteProduct(item.id)
+//                         //     );
+//                         //   }}
+//                         // />
+//                         // // </View>
+//                         // ))
+//                         <FlatList
+//                           nestedScrollEnabled
+//                           // inverted
+//                           // style={{flexDirection:"column-reverse"}}
+//                           keyboardShouldPersistTaps={'handled'}
+//                           contentContainerStyle={{paddingBottom:90}}
+//                           //data={cardItemsArray}
+//                           data={cartItems}
+//                           // sort={true}
+//                           // inverted={true}
+//                           keyExtractor={(item) => item.id}
+//                           renderItem={(itemData) => (
+//                             // <Text style={{fontSize:30,backgroundColor:"green",flex:1}}>{JSON.stringify(itemData)}</Text>
+//                             // <View style={{flexDirection:"column-reverse"}}>
+//                             <CartItem
+//                               id={itemData.item.id}
+//                               quantity={itemData.item.quantity}
+//                               total_amount={itemData.item.total_amount}
+//                               name={itemData.item.name}
+//                               unit={itemData.item.unit}
+//                               price={itemData.item.price}
+                              
+//                               // addable
+//                               onAddPress={() => {
+//                                 dispatch(
+//                                   cartActions.addToQtty(itemData.item.id)
+//                                 );
+//                               }}
+//                               // deletable
+//                               onRemove={() => {
+//                                 dispatch(
+//                                   cartActions.removeFromCart(itemData.item.id)
+//                                 );
+//                               }}
+//                               // removeable
+//                               onDelete={() => {
+//                                 dispatch(
+//                                   cartActions.deleteProduct(itemData.item.id)
+//                                 );
+//                               }}
+//                             />
+//                             // </View>
+//                           )}
+//                         />
+//                       ) : null
+//                       }
+//                       {/* </ScrollView> */}
+//                       <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 ,borderBottomWidth:.5 , borderBottomColor:'gray' }}>
+//                     <Text
+//                       style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
+//                     >
+//                       Total:
+//                     </Text>
+//                     <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"16%",textAlign:"center" }}>
+//                       {cartTotalPackages}
+//                     </Text>
+//                     {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
+//                     £ {cartTotalAmount}
+            
+//                     </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
+//                     £ {parseFloat(cartTotalAmount).toFixed(2)}
+            
+//                     </Text>}
+                    
+//                   </View>
+//                     </View>
+
+                    
+//                   </View>
+
+                  
+//                 </View>
+                
+//               </View>
+
+              
+             
+//             </Card>
+//           </View>
+//           <View style={{ height: "4%", bottom: 40, }}>
+//             <View style={{ padding: 0 }}>
+//               <Card style={{ elevation: 0 }}>
+//                 <TextInput
+//                   style={styles.note_inputArea}
+//                   placeholder="Write any Notes"
+//                   autoCapitalize="none"
+//                   placeholderTextColor="black"
+//                   value={note}
+//                   required={true}
+//                   onChangeText={(value) => setNote(value)}
+//                   initialValue=""
+//                 />
+//               </Card>
+//             </View>
+
+//             <TouchableOpacity
+//               style={styles.signupButton}
+//               activeOpacity={0.7}
+//               disabled={sendButtonCheck}
+//               //onPress={sendOrder}
+//               onPress={CreateOrder}
+//             >
+//               {loading ? (
+//                 <Spinner color={"white"} />
+//               ) : (
+//                 <Text style={styles.signupButtonText}>SEND ORDER</Text>
+//               )}
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       </ScrollView>
+//       </KeyboardAvoidingView>
+//     </View>
+//     </>
+//   );
+// }
+
+
+//===========================================================================//
+
+
+return (
+  <>
+  
+
+  
+  <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
+    {/* <FlashMessage position="top" /> */}
+    {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
+    {/* <MyHeader name="REORDER" nav={navigation} /> */}
+    <KeyboardAvoidingView style={{ flex: 1 }}
+      behavior={Platform.OS == "ios" ? "padding" : null} >
+    <ScrollView
+      style={{ padding: 0 }}
+      nestedScrollEnabled={true}
+      keyboardShouldPersistTaps="always"
+      listViewDisplayed={false}
+    >
+      <View>
+
+        <View style={{ height: "14%", padding: 5 }}>
+          <Text
+            style={{
+              alignSelf: "center",
+              flexDirection: "row",
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+          >
+            {PoNumber}
+          </Text>
+
+          <View
+            style={{ flexDirection: "row", alignSelf: "center", padding: 10 }}
+          >
+            <Card
               style={{
-                alignSelf: "center",
-                flexDirection: "row",
-                fontSize: 16,
-                fontWeight: "bold",
+                padding: 10,
+                width: "50%",
+                backgroundColor: "#e6e6e6",
+                elevation: 0,
               }}
             >
-              {PoNumber}
-            </Text>
-
-            <View
-              style={{ flexDirection: "row", alignSelf: "center", padding: 10 }}
-            >
-              <Card
-                style={{
-                  padding: 10,
-                  width: "50%",
-                  backgroundColor: "#e6e6e6",
-                  elevation: 0,
-                }}
-              >
-                <TouchableOpacity onPress={toggleBottomNavigationView}>
-                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                    Delivery Person:
-                  </Text>
-                  {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                    {name}
-                  </Text>:
-                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                  {riderName}
+              <TouchableOpacity onPress={toggleBottomNavigationView}>
+                <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                  Delivery Person:
+                </Text>
+                {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {name}
+                </Text>:
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {riderName}
+              </Text>}
+               {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
+                  {address}
+                </Text>:
+                <Text style={{ fontSize: 12, color: "#666666" }}>
+                  {riderAddress}
                 </Text>}
-                 {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
-                    {address}
-                  </Text>:
-                  <Text style={{ fontSize: 12, color: "#666666" }}>
-                    {riderAddress}
-                  </Text>}
-                </TouchableOpacity>
-              </Card>
-              <BottomSheet
-                visible={visible}
-                onBackButtonPress={toggleBottomNavigationView}
-                onBackdropPress={toggleBottomNavigationView}
-              >
-               
-                <View style={styles.bottomNavigationView}>
-                  {riderLoading ? (
-                    <View
+              </TouchableOpacity>
+            </Card>
+            <BottomSheet
+              visible={visible}
+              onBackButtonPress={toggleBottomNavigationView}
+              onBackdropPress={toggleBottomNavigationView}
+            >
+             
+              <View style={styles.bottomNavigationView}>
+                {riderLoading ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // alignSelf:'center',
+                      marginTop: "20%",
+                    }}
+                  >
+                    <Text
                       style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // alignSelf:'center',
-                        marginTop: "20%",
+                        color: Colors.themeColor,
+                        fontWeight: "bold",
+                        marginTop: 20,
+                        fontSize: 25,
+                        textAlign: "center",
                       }}
                     >
-                      <Text
+                      Rider is Not Available
+                    </Text>
+                  </View>
+                ) : (
+                  <FlatList
+                    // nestedScrollEnabled={true}
+                    data={riderData}
+                    style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
+                    showsVerticalScrollIndicator={false}
+                    // keyExtractor={item => item.index_id.toString()}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
                         style={{
-                          color: Colors.themeColor,
-                          fontWeight: "bold",
-                          marginTop: 20,
-                          fontSize: 25,
-                          textAlign: "center",
+                          width: "95%",
+                          marginBottom: 15,
+                          alignSelf: "center",
                         }}
+                        onPress={() =>{
+                          rider(
+                            item.first_name + " " + item.last_name,
+                            item.address,
+                            item.id
+                          )
+                        }}
+                         // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
+                        // onPress={() => 
+                         // navigation.navigate("PaymentHistoryDetail")
+                        // }
                       >
-                        Rider is Not Available
-                      </Text>
-                    </View>
-                  ) : (
-                    <FlatList
-                      // nestedScrollEnabled={true}
-                      data={riderData}
-                      style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
-                      showsVerticalScrollIndicator={false}
-                      // keyExtractor={item => item.index_id.toString()}
-                      keyExtractor={({ id }, index) => id}
-                      renderItem={({ item }) => (
+                        <Card 
+                           style={{
+                            borderRadius: 15,
+                            padding: 10,
+                          }}
+                        > 
+                           <View
+                            style={{ 
+                             // borderRadius: 10,
+                              // backgroundColor: "white",
+                              // overflow: "hidden",
+
+                              flexDirection: "column",
+                              // justifyContent: "flex-start",
+                              // alignSelf: "center",
+
+                              // marginTop: 10,
+                              // shadowColor: "#000",
+                              // shadowOffset: { width: 0, height: 2 },
+                              // shadowOpacity: 0.25,
+                              // shadowRadius: 3.84,
+                              // elevation: 5,
+                            }}
+                          > 
+                            <View style={{ flexDirection: "row" }}>
+                              <View
+                                style={{
+                                  padding: 10,
+                                  width: "100%",
+                                  // alignSelf: "center",
+                                  // alignItems: "center",
+                                  justifyContent: "flex-start",
+                                }}
+                              > 
+                                 <Text
+                                  style={{
+                                    fontSize: 20,
+                                    fontWeight: "bold",
+                                    color: Colors.darkRedColor,
+                                    // marginTop: "4%",
+                                  }}
+                                >
+                                  {item.first_name} {item.last_name}
+                                </Text> 
+
+                                 <View
+                                  style={{
+                                    // width: 200,
+                                    flexDirection: "row",
+                                    alignItems: "center",
+
+                                    marginTop: "1.5%",
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      fontSize: 14,
+                                      color: "grey",
+                                      width: 240,
+                                    }}
+                                  >
+                                    {item.address}
+                                  </Text> 
+                                 </View>
+                              </View>
+                              <View style={{ alignSelf: "center" }}>
+                                <Text
+                                  style={{
+                                    marginBottom: 3,
+                                    fontSize: 14,
+                                    alignSelf: "flex-end",
+                                    marginRight: 10,
+                                    fontWeight: "bold",
+                                  }}
+                                ></Text> 
+                                 {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
+{item.status}
+</Text>  */}
+                               </View>
+                            </View>
+                          </View>
+                        </Card>
+                      </TouchableOpacity>
+                    )}
+                  />
+                )}
+              </View>
+            </BottomSheet> 
+
+            <Card
+              style={{
+                padding: 10,
+                marginLeft: 10,
+                width: "50%",
+                backgroundColor: "#e6e6e6",
+                elevation: 0,
+              }}
+            >
+              <TouchableOpacity
+                // style={{width:"95%",marginBottom:15,alignSelf:'center'}}
+                // onPress={()=>rider(item.first_name+" "+item.last_name,item.address,item.id)}
+                onPress={s_toggleBottomNavigationView}
+              >
+                <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                  Delivery Address:
+                </Text>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {businessName}
+                </Text>
+                <Text style={{ fontSize: 12, color: "#666666" }}>
+                  {AddressName}
+                </Text>
+              </TouchableOpacity>
+            </Card>
+
+            <BottomSheet
+              visible={s_visible}
+              //setting the visibility state of the bottom shee
+              onBackButtonPress={s_toggleBottomNavigationView}
+              //Toggling the visibility state on the click of the back botton
+              onBackdropPress={s_toggleBottomNavigationView}
+              //Toggling the visibility state on the clicking out side of the sheet
+            >
+              {/*Bottom Sheet inner View*/}
+              <View style={styles.bottomNavigationView}>
+                {addressCheck ? (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // alignSelf:'center',
+                      marginTop: "60%",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "black",
+                        fontWeight: "bold",
+                        marginTop: 20,
+                        fontSize: 25,
+                        textAlign: "center",
+                      }}
+                    >
+                      There is no Address Record, Please Add Your Address.
+                    </Text>
+                    <View style={{ marginTop: 40 }}>
+      <TouchableOpacity
+        style={styles.uploadButton}
+        activeOpacity={0.7}
+        onPress={() => {s_toggleBottomNavigationView(); navigation.navigate("NewBuisnessDetail")}}
+      >
+        <Text style={styles.uploadButtonText}>Add New Business</Text>
+      </TouchableOpacity>
+    </View>
+                  </View>
+                ) : (
+                  <FlatList
+                    nestedScrollEnabled={true}
+                    data={businessData}
+                    style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
+                    showsVerticalScrollIndicator={false}
+                    // keyExtractor={item => item.index_id.toString()}
+                    keyExtractor={({ id }, index) => id}
+                    renderItem={({ item }) => (
+                      <View>
                         <TouchableOpacity
                           style={{
                             width: "95%",
                             marginBottom: 15,
                             alignSelf: "center",
-                            
                           }}
-                          onPress={() =>{
-                            rider(
-                              item.first_name + " " + item.last_name,
-                              item.address,
-                              item.id
-                            )
+                          onPress={() => {
+                            setSelectedBusinessId(item.id);
+                            setAddressName(item.address);
+                            setBusinessName(item.name);
+                            s_toggleBottomNavigationView();
                           }}
-                           // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                          // onPress={() => 
-                           // navigation.navigate("PaymentHistoryDetail")
+                          // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
+                          // onPress={() =>
+                          // navigation.navigate("PaymentHistoryDetail")
                           // }
                         >
-                          <Card 
-                             style={{
-                              borderRadius: 15,
-                              padding: 10,
-                            }}
-                          > 
-                             <View
-                              style={{ 
-                               // borderRadius: 10,
+                          <Card style={{ borderRadius: 15, padding: 10 }}>
+                            <View
+                              style={{
+                                // borderRadius: 10,
                                 // backgroundColor: "white",
                                 // overflow: "hidden",
 
@@ -1954,7 +3669,7 @@ function Reorder({ navigation ,route }) {
                                 // shadowRadius: 3.84,
                                 // elevation: 5,
                               }}
-                            > 
+                            >
                               <View style={{ flexDirection: "row" }}>
                                 <View
                                   style={{
@@ -1964,8 +3679,8 @@ function Reorder({ navigation ,route }) {
                                     // alignItems: "center",
                                     justifyContent: "flex-start",
                                   }}
-                                > 
-                                   <Text
+                                >
+                                  <Text
                                     style={{
                                       fontSize: 20,
                                       fontWeight: "bold",
@@ -1973,10 +3688,10 @@ function Reorder({ navigation ,route }) {
                                       // marginTop: "4%",
                                     }}
                                   >
-                                    {item.first_name} {item.last_name}
-                                  </Text> 
+                                    {item.name}
+                                  </Text>
 
-                                   <View
+                                  <View
                                     style={{
                                       // width: 200,
                                       flexDirection: "row",
@@ -1993,8 +3708,8 @@ function Reorder({ navigation ,route }) {
                                       }}
                                     >
                                       {item.address}
-                                    </Text> 
-                                   </View>
+                                    </Text>
+                                  </View>
                                 </View>
                                 <View style={{ alignSelf: "center" }}>
                                   <Text
@@ -2005,330 +3720,463 @@ function Reorder({ navigation ,route }) {
                                       marginRight: 10,
                                       fontWeight: "bold",
                                     }}
-                                  ></Text> 
-                                   {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
-  {item.status}
-  </Text>  */}
-                                 </View>
+                                  ></Text>
+                                  {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
+{item.status}
+</Text> */}
+                                </View>
                               </View>
                             </View>
                           </Card>
                         </TouchableOpacity>
-                      )}
-                    />
-                  )}
+                      </View>
+                    )}
+                  />
+                )}
+              </View>
+            </BottomSheet>
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </View>
+        </View>
+        <Modal
+      animationType="slide"
+      
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+      //   Alert.alert("Modal has been closed.");
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView2}>
+        <View style={styles.modalView2}>
+        <View style = {{width:"95%",height:Platform.OS=="android"?"95%":"90%",backgroundColor:'white',alignSelf:"center",borderRadius:10,flexDirection:'row',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        }}>
+          {/* <Card style={{borderRadius:10,width:"90%",height:"90%",alignItems:'center',backgroundColor:"white"}}> */}
+            <ScrollView keyboardShouldPersistTaps="always"  showsVerticalScrollIndicator={false} style={{padding:10}}>
+          <View style={{alignSelf:"center",padding:"3%",paddingBottom:"2%",marginRight:10}}>
+            <Text style={{color:Colors.themeColor,fontSize:24,fontWeight:"bold",textAlign:"center"}}>PREVIEW</Text>
+          </View>
+          <View style={{ flexDirection: "row",padding:5,alignSelf:"center" }}>
+          <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 0,
+        padding:10
+        }}>
+          
+          {/* <Card
+              style={{
+                padding: 10,
+                width: "48%",
+                backgroundColor: "#e6e6e6",
+                elevation: 0,
+              }}
+            > */}
+              
+                <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                  Delivery Person:
+                </Text>
+                {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {name}
+                </Text>:
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                {riderName}
+              </Text>}
+               {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
+                  {address}
+                </Text>:
+                <Text style={{ fontSize: 12, color: "#666666" }}>
+                  {riderAddress}
+                </Text>}
+              
+            </View>
+            <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 0,
+        padding:10,
+        marginLeft:5
+        }}>
+              
+                <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                  Delivery Address:
+                </Text>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                  {businessName}
+                </Text>
+                <Text style={{ fontSize: 12, color: "#666666" }}>
+                  {AddressName}
+                </Text>
+              
+            </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                padding: 5,
+                paddingTop:0
+              }}
+            >
+              
+
+              <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 0,
+        padding:10,
+        
+        }}>
+                <View style={{ padding: 5 }}>
+                  
+                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                      Delivery Date:
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {("0" + date.getDate()).slice(-2) +
+                        "-" +
+                        ("0" + (date.getMonth() + 1)).slice(-2)+
+                        "-" +
+                        date.getFullYear()}
+                    </Text>
+                  
                 </View>
-              </BottomSheet> 
+              </View>
+
+              <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        // shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 0,
+        padding:10,
+        marginLeft:5
+        }}>
+                <View style={{ padding: 5 }}>
+                  
+                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                      Delivery Time:
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                    </Text>
+                  
+                </View>
+              </View>
+            </View>
+
+            
+            <View style={{flexDirection:'row',marginTop:10}}>
+      <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
+      <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
+      <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"24%"}}>Quantity</Text>
+      <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"right",width:"26%"}}>Last month Avg.Price</Text>
+  </View>
+  <View style={{padding:2}}>
+            <FlatList
+                        nestedScrollEnabled
+                        data={cartItems}
+                        // sort={true}
+                        // inverted={true}
+                        keyExtractor={(item) => item.id}
+                        renderItem={(itemData) => (
+                          <PreviewCart
+                            id={itemData.item.id}
+                            quantity={itemData.item.quantity}
+                            total_amount={itemData.item.total_amount}
+                            name={itemData.item.name}
+                            unit={itemData.item.unit}
+                            price={itemData.item.price}
+                            // addable
+                            onAddPress={() => {
+                              dispatch(
+                                cartActions.addToQtty(itemData.item.id)
+                              );
+                            }}
+                            // deletable
+                            onRemove={() => {
+                              dispatch(
+                                cartActions.removeFromCart(itemData.item.id)
+                              );
+                            }}
+                            // removeable
+                            onDelete={() => {
+                              dispatch(
+                                cartActions.deleteProduct(itemData.item.id)
+                              );
+                            }}
+                          />
+                        )}
+                      />
+            </View>
+            <View style={{ flexDirection: "row", }}>
+                  <Text
+                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
+                  >
+                    Total:
+                  </Text>
+                  <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%",textAlign:"center" }}>
+                    {cartTotalPackages}
+                  </Text>
+                  {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+                  £ {cartTotalAmount}
+                  </Text>:
+                  <Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
+                  £ {parseFloat(cartTotalAmount).toFixed(2)}
+                  </Text>}
+                </View>
+                {note==""?null:
+              <View style={{alignSelf:"center",paddingTop:"20%"}}>
+                <Text>Note: {note}</Text>
+              </View>}
+
+
+        <View style={{marginTop:"10%",alignSelf:"center"}}>
+          <Pressable
+             style={styles.signupButton1}
+             activeOpacity={0.7}
+            onPress={addOrderBox}
+          >
+            {loading ? (
+              <Spinner color={"white"} size={20} />
+            ) : (
+            <Text style={styles.signupButtonText1}>CONFIRM</Text>)}
+          </Pressable>
+          <Pressable
+             style={{...styles.bu_signupButton1,borderWidth:1,marginBottom:"10%"}}
+             activeOpacity={0.7}
+            onPress={()=>
+              setModalVisible(!modalVisible)
+              }
+          >
+            <Text style={styles.bu_signupButtonText1}>CANCEL</Text>
+          </Pressable>
+          </View>
+          </ScrollView>
+         </View>
+      
+
+          
+        </View>
+      </View>
+    </Modal>
+
+        <View style={{ height: "70%", marginTop: 40}}>
+          <Card
+            style={{
+              padding: 10,
+              width: "100%",
+              backgroundColor: "#e6e6e6",
+              elevation: 0,
+            }}
+          >
+            <Text
+              style={{
+                alignSelf: "center",
+                flexDirection: "row",
+                fontSize: 14,
+                // fontWeight: "bold",
+              }}
+            >
+              Order Date
+            </Text>
+            <Text
+              style={{
+                alignSelf: "center",
+                flexDirection: "row",
+                fontSize: 15,
+                fontWeight: "bold",
+                color: Colors.themeColor,
+              }}
+            >
+              {currentDate}
+            </Text>
+
+
+
+            {/* <View
+              style={{
+                flexDirection: "row",
+                alignSelf: "center",
+                padding: 5,
+              }}
+            >
+              
 
               <Card
                 style={{
-                  padding: 10,
-                  marginLeft: 10,
+                  padding: 5,
+                  // marginLeft: 10,
                   width: "50%",
-                  backgroundColor: "#e6e6e6",
+                  backgroundColor: "#F2F2F2",
                   elevation: 0,
                 }}
               >
-                <TouchableOpacity
-                  // style={{width:"95%",marginBottom:15,alignSelf:'center'}}
-                  // onPress={()=>rider(item.first_name+" "+item.last_name,item.address,item.id)}
-                  onPress={s_toggleBottomNavigationView}
-                >
-                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                    Delivery Address:
-                  </Text>
-                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                    {businessName}
-                  </Text>
-                  <Text style={{ fontSize: 12, color: "#666666" }}>
-                    {AddressName}
-                  </Text>
-                </TouchableOpacity>
-              </Card>
-
-              <BottomSheet
-                visible={s_visible}
-                //setting the visibility state of the bottom shee
-                onBackButtonPress={s_toggleBottomNavigationView}
-                //Toggling the visibility state on the click of the back botton
-                onBackdropPress={s_toggleBottomNavigationView}
-                //Toggling the visibility state on the clicking out side of the sheet
-              >
-                {/*Bottom Sheet inner View*/}
-                <View style={styles.bottomNavigationView}>
-                  {addressCheck ? (
-                    <View
+                <View style={{ padding: 5 }}>
+                  <TouchableOpacity onPress={showDatepicker}>
+                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                      Delivery Date:
+                    </Text>
+                    <Text
                       style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // alignSelf:'center',
-                        marginTop: "60%",
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        textAlign: "center",
                       }}
                     >
-                      <Text
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          marginTop: 20,
-                          fontSize: 25,
-                          textAlign: "center",
-                        }}
-                      >
-                        There is no Address Record, Please Add Your Address.
-                      </Text>
-                      <View style={{ marginTop: 40 }}>
-        <TouchableOpacity
-          style={styles.uploadButton}
-          activeOpacity={0.7}
-          onPress={() => {s_toggleBottomNavigationView(); navigation.navigate("NewBuisnessDetail")}}
-        >
-          <Text style={styles.uploadButtonText}>Add New Business</Text>
-        </TouchableOpacity>
-      </View>
-                    </View>
-                  ) : (
-                    <FlatList
-                      nestedScrollEnabled={true}
-                      data={businessData}
-                      style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
-                      showsVerticalScrollIndicator={false}
-                      // keyExtractor={item => item.index_id.toString()}
-                      keyExtractor={({ id }, index) => id}
-                      renderItem={({ item }) => (
-                        <View>
-                          <TouchableOpacity
-                            style={{
-                              width: "95%",
-                              marginBottom: 15,
-                              alignSelf: "center",
-                            }}
-                            onPress={() => {
-                              setSelectedBusinessId(item.id);
-                              setAddressName(item.address);
-                              setBusinessName(item.name);
-                              s_toggleBottomNavigationView();
-                            }}
-                            // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                            // onPress={() =>
-                            // navigation.navigate("PaymentHistoryDetail")
-                            // }
-                          >
-                            <Card style={{ borderRadius: 15, padding: 10 }}>
-                              <View
-                                style={{
-                                  // borderRadius: 10,
-                                  // backgroundColor: "white",
-                                  // overflow: "hidden",
-
-                                  flexDirection: "column",
-                                  // justifyContent: "flex-start",
-                                  // alignSelf: "center",
-
-                                  // marginTop: 10,
-                                  // shadowColor: "#000",
-                                  // shadowOffset: { width: 0, height: 2 },
-                                  // shadowOpacity: 0.25,
-                                  // shadowRadius: 3.84,
-                                  // elevation: 5,
-                                }}
-                              >
-                                <View style={{ flexDirection: "row" }}>
-                                  <View
-                                    style={{
-                                      padding: 10,
-                                      width: "100%",
-                                      // alignSelf: "center",
-                                      // alignItems: "center",
-                                      justifyContent: "flex-start",
-                                    }}
-                                  >
-                                    <Text
-                                      style={{
-                                        fontSize: 20,
-                                        fontWeight: "bold",
-                                        color: Colors.darkRedColor,
-                                        // marginTop: "4%",
-                                      }}
-                                    >
-                                      {item.name}
-                                    </Text>
-
-                                    <View
-                                      style={{
-                                        // width: 200,
-                                        flexDirection: "row",
-                                        alignItems: "center",
-
-                                        marginTop: "1.5%",
-                                      }}
-                                    >
-                                      <Text
-                                        style={{
-                                          fontSize: 14,
-                                          color: "grey",
-                                          width: 240,
-                                        }}
-                                      >
-                                        {item.address}
-                                      </Text>
-                                    </View>
-                                  </View>
-                                  <View style={{ alignSelf: "center" }}>
-                                    <Text
-                                      style={{
-                                        marginBottom: 3,
-                                        fontSize: 14,
-                                        alignSelf: "flex-end",
-                                        marginRight: 10,
-                                        fontWeight: "bold",
-                                      }}
-                                    ></Text>
-                                    {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
-  {item.status}
-  </Text> */}
-                                  </View>
-                                </View>
-                              </View>
-                            </Card>
-                          </TouchableOpacity>
-                        </View>
-                      )}
+                      {("0" + date.getDate()).slice(-2) +
+                        "-" +
+                        ("0" + (date.getMonth() + 1)).slice(-2)+
+                        "-" +
+                        date.getFullYear()}
+                    </Text>
+                  </TouchableOpacity>
+                  {show && (
+                    // <DatePicker
+                    // defaultDate={new Date(yearr, monthh, datee)}
+                    // minimumDate={new Date(yearr, monthh, datee)}
+                    // maximumDate={new Date(2021, 12, 31)}
+                    // // formatChosenDate={(date) => {
+                    // // return moment(date).format("YYYY-MM-DD");
+                    // // }}
+                    // locale={"en"}
+                    // timeZoneOffsetInMinutes={undefined}
+                    // modalTransparent={false}
+                    // animationType={"fade"}
+                    // androidMode={"default"}
+                    // textStyle={{ color: "green" }}
+                    // placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    // onDateChange={(itemValue, itemIndex) => {
+                    // setPickUpDate(itemValue);
+                    // }}
+                    // disabled={false}
+                    // />
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode={mode}
+                      // defaultDate={new Date()}
+                      minimumDate={new Date()}
+                      is24Hour={true}
+                      style={{ color: Colors.themeColor }}
+                      display="default"
+                      // dateFormat="day month year"
+                      onChange={onChange}
                     />
                   )}
                 </View>
-              </BottomSheet>
+              </Card>
 
-
-
-
-
-
-
-
-
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </View>
-          </View>
-          <Modal
-        animationType="slide"
-        
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-        //   Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView2}>
-          <View style={styles.modalView2}>
-          <View style = {{width:"95%",height:Platform.OS=="android"?"95%":"90%",backgroundColor:'white',alignSelf:"center",borderRadius:10,flexDirection:'row',
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          }}>
-            {/* <Card style={{borderRadius:10,width:"90%",height:"90%",alignItems:'center',backgroundColor:"white"}}> */}
-              <ScrollView keyboardShouldPersistTaps="always"  showsVerticalScrollIndicator={false} style={{padding:10}}>
-            <View style={{alignSelf:"center",padding:"3%",paddingBottom:"2%",marginRight:10}}>
-              <Text style={{color:Colors.themeColor,fontSize:24,fontWeight:"bold",textAlign:"center"}}>PREVIEW</Text>
-            </View>
-            <View style={{ flexDirection: "row",padding:5,alignSelf:"center" }}>
-            <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10
-          }}>
-            
-            {/* <Card
+              <Card
                 style={{
-                  padding: 10,
-                  width: "48%",
-                  backgroundColor: "#e6e6e6",
+                  padding: 5,
+                  marginLeft: 10,
+                  width: "50%",
+                  backgroundColor: "#F2F2F2",
                   elevation: 0,
                 }}
-              > */}
-                
-                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                    Delivery Person:
-                  </Text>
-                  {riderId==""?<Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                    {name}
-                  </Text>:
-                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                  {riderName}
-                </Text>}
-                 {riderId==""?<Text style={{ fontSize: 12, color: "#666666" }}>
-                    {address}
-                  </Text>:
-                  <Text style={{ fontSize: 12, color: "#666666" }}>
-                    {riderAddress}
-                  </Text>}
-                
-              </View>
-              <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
-          marginLeft:5
-          }}>
-                
-                  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                    Delivery Address:
-                  </Text>
-                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                    {businessName}
-                  </Text>
-                  <Text style={{ fontSize: 12, color: "#666666" }}>
-                    {AddressName}
-                  </Text>
-                
-              </View>
-              </View>
+              >
+                <View style={{ padding: 5 }}>
+                  <TouchableOpacity onPress={showTimepicker}>
+                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                      Delivery Time:
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Card>
+            </View> */}
 
-              <View
+
+
+{/* //-----------------------------Date time UI---------------------------------// */}
+
+
+{ Platform.OS==='ios'? (
+
+<View
                 style={{
                   flexDirection: "row",
-                  alignSelf: "center",
-                  padding: 5,
-                  paddingTop:0
+                  alignSelf: 'center',
+                  //padding: 5,
                 }}
               >
-                
 
-                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
-          
-          }}>
-                  <View style={{ padding: 5 }}>
-                    
+    {/* //-------------------------------------Delivery Date ----------------------------// */}            
+<Card
+                  style={{
+                    padding: 5,
+                    // marginLeft: 10,
+                    width: "90%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                    flexDirection:'row',
+                    marginBottom:'5%',
+                    marginTop:'5%'
+                  }}
+                >
+                  <View style={{ padding: 7 ,
+                    marginRight:'8%' 
+                    }}>
+                    <TouchableOpacity onPress={showDatepicker}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Date:
+                        Delivery Date
                       </Text>
                       <Text
                         style={{
@@ -2343,23 +4191,69 @@ function Reorder({ navigation ,route }) {
                           "-" +
                           date.getFullYear()}
                       </Text>
-                    
+                    </TouchableOpacity>
+                    {/* {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )} */}
                   </View>
-                </View>
+                {/* </Card> */}
 
-                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
-          marginLeft:5
-          }}>
-                  <View style={{ padding: 5 }}>
-                    
+                {/* //-------------------------------------Delivery Time ----------------------------// */}
+                {/* <Card
+                  style={{
+                    padding: 5,
+                    marginLeft: 10,
+                    width: "50%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                  }}
+                > */}
+
+                  {/* <View style={{ padding: 5 }}> */}
+
+                  <View style={{ alignSelf:'flex-end', width:'30%'  }}>
+                  {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )}
+                  </View>
+
+
+
+                  <View
+                style={{
+                  flexDirection: "row",
+                  //alignSelf: 'flex-start',
+                  marginLeft:'5%',
+                  padding: 7,
+                }}
+              >
+                    <TouchableOpacity onPress={showTimepicker}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Time:
+                        Delivery Time
                       </Text>
                       <Text
                         style={{
@@ -2370,173 +4264,39 @@ function Reorder({ navigation ,route }) {
                       >
                         {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
                       </Text>
-                    
+                    </TouchableOpacity>
+                    {/* {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )} */}
                   </View>
-                </View>
+                </Card>
+
               </View>
 
-              
-              <View style={{flexDirection:'row',marginTop:10}}>
-        <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
-        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
-        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"24%"}}>Quantity</Text>
-        <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"right",width:"26%"}}>Last month Avg.Price</Text>
-    </View>
-    <View style={{padding:2}}>
-              <FlatList
-                          nestedScrollEnabled
-                          // data={cardItemsArray}
-                          data={cartItems}
-                          // sort={true}
-                          // inverted={true}
-                          keyExtractor={(item) => item.id}
-                          renderItem={(itemData) => (
-                            <PreviewCart
-                              id={itemData.item.id}
-                              quantity={itemData.item.quantity}
-                              total_amount={itemData.item.total_amount}
-                              name={itemData.item.name}
-                              unit={itemData.item.unit}
-                              price={itemData.item.price}
-                              // addable
-                              onAddPress={() => {
-                                dispatch(
+):(
 
-                                  cartActions.addToQtty(itemData.item.id)
-                                );
-                              }}
-                              // deletable
-                              onRemove={() => {
-                                dispatch(
-                                  cartActions.removeFromCart(itemData.item.id)
-                                );
-                              }}
-                              // removeable
-                              onDelete={() => {
-                                dispatch(
-                                  cartActions.deleteProduct(itemData.item.id)
-                                );
-                              }}
-                            />
-                          )}
-                        />
-              </View>
-              <View style={{ flexDirection: "row", }}>
-                    <Text
-                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
-                    >
-                      Total:
-                    </Text>
-                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%",textAlign:"center" }}>
-                      {cartTotalPackages}
-                    </Text>
-                    {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
-                    £ {cartTotalAmount}
-                    </Text>:
-                    <Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
-                    £ {parseFloat(cartTotalAmount).toFixed(2)}
-                    </Text>}
-                  </View>
-
-
-                  {note==""?null:
-                <View style={{alignSelf:"center",paddingTop:"20%"}}>
-                  <Text>Note: {note}</Text>
-                </View>}
-
-
-          <View style={{marginTop:"10%",alignSelf:"center"}}>
-            <Pressable
-               style={styles.signupButton1}
-               activeOpacity={0.7}
-              onPress={addOrderBox}
-            >
-              {loading ? (
-                <Spinner color={"white"} size={20} />
-              ) : (
-              <Text style={styles.signupButtonText1}>CONFIRM</Text>)}
-            </Pressable>
-            <Pressable
-               style={{...styles.bu_signupButton1,borderWidth:1,marginBottom:"10%"}}
-               activeOpacity={0.7}
-              onPress={()=>
-                setModalVisible(!modalVisible)
-                }
-            >
-              <Text style={styles.bu_signupButtonText1}>CANCEL</Text>
-            </Pressable>
-            </View>
-            </ScrollView>
-           </View>
-        
- 
-            
-          </View>
-        </View>
-      </Modal>
-
-          <View style={{ height: "70%", marginTop: 40}}>
-            <Card
-              style={{
-                padding: 10,
-                width: "100%",
-                backgroundColor: "#e6e6e6",
-                elevation: 0,
-              }}
-            >
-              <Text
-                style={{
-                  alignSelf: "center",
-                  flexDirection: "row",
-                  fontSize: 14,
-                  // fontWeight: "bold",
-                }}
-              >
-                Order Date
-              </Text>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  flexDirection: "row",
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  color: Colors.themeColor,
-                }}
-              >
-                {currentDate}
-              </Text>
-              <View
+<View
                 style={{
                   flexDirection: "row",
                   alignSelf: "center",
                   padding: 5,
                 }}
               >
-                {/* <Card
-  style={{
-  padding: 0,
-  width: "50%",
-  backgroundColor: "#F2F2F2",
-  elevation: 0,
-  }}
-  >
-  <View style={{ padding: 5 }}>
-  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-  Order Date:
-  </Text>
-  <Text
-  style={{
-  fontSize: 16,
-  fontWeight: "bold",
-  textAlign: "center",
-  }}
-  >
-  {currentDate}
-  </Text>
-  </View>
-  </Card> */}
 
-                <Card
+                {/* //-------------------------------------Delivery Date ----------------------------// */}
+<Card
                   style={{
                     padding: 5,
                     // marginLeft: 10,
@@ -2565,25 +4325,7 @@ function Reorder({ navigation ,route }) {
                       </Text>
                     </TouchableOpacity>
                     {show && (
-                      // <DatePicker
-                      // defaultDate={new Date(yearr, monthh, datee)}
-                      // minimumDate={new Date(yearr, monthh, datee)}
-                      // maximumDate={new Date(2021, 12, 31)}
-                      // // formatChosenDate={(date) => {
-                      // // return moment(date).format("YYYY-MM-DD");
-                      // // }}
-                      // locale={"en"}
-                      // timeZoneOffsetInMinutes={undefined}
-                      // modalTransparent={false}
-                      // animationType={"fade"}
-                      // androidMode={"default"}
-                      // textStyle={{ color: "green" }}
-                      // placeHolderTextStyle={{ color: "#d3d3d3" }}
-                      // onDateChange={(itemValue, itemIndex) => {
-                      // setPickUpDate(itemValue);
-                      // }}
-                      // disabled={false}
-                      // />
+                      
                       <DateTimePicker
                         testID="dateTimePicker"
                         value={date}
@@ -2600,6 +4342,7 @@ function Reorder({ navigation ,route }) {
                   </View>
                 </Card>
 
+                {/* //-------------------------------------Delivery Time ----------------------------// */}
                 <Card
                   style={{
                     padding: 5,
@@ -2626,479 +4369,478 @@ function Reorder({ navigation ,route }) {
                     </TouchableOpacity>
                   </View>
                 </Card>
+
               </View>
-              <Text
+
+) }
+
+{/* //-----------------------------Date time UI---------------------------------// */}
+
+
+            <Text
+              style={{
+                color: Colors.themeColor,
+                fontSize: 14,
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginTop: 10,
+              }}
+            >
+              Add Item and Quantity Here:
+            </Text>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: "5%",
+                width: "100%",
+              }}
+            >
+              <View
                 style={{
-                  color: Colors.themeColor,
-                  fontSize: 14,
-                  fontWeight: "bold",
-                  alignSelf: "center",
-                  marginTop: 10,
+                  width: Platform.OS == "android" ? "30%" : "30%",
+                  
                 }}
               >
-                Add Item and Quantity Here:
-              </Text>
+                <Autocomplete
+                  // onFocus={() => {scrollView.props.scrollToEnd({animated: true})}}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  flatListProps={{ nestedScrollEnabled: true }}
+                  // containerStyle={{}}
+                  listContainerStyle={{
+                    backgroundColor: "#e6e6e6",
+                    width: 250,
+                    left: 0,
+                    position: 'absolute',
+                    right: 0,
+                    top: 50,
+                  zIndex: 1,
+                    // height: Platform.OS == "android" ? 150 :150
+
+                  }}
+                  listStyle={{
+                    borderColor: "#e6e6e6",
+                    height: Platform.OS == "android" ? 150 :150,
+                  }}
+                  style={{
+                    // backgroundColor: "#e6e6e6",
+                    paddingBottom: 7,
+                    color: "black",
+                    width: "100%",
+                  }}
+                  inputContainerStyle={{
+                    backgroundColor: "#F2F2F2",
+                    height: Platform.OS == "android" ? 45 : 40,
+                    justifyContent: "center",
+
+                    //borderColor: "#e6e6e6",
+                    //borderBottomColor: Colors.textGreyColor,
+                  }}
+                  //data to show in suggestion
+                  data={filteredProducts}
+                  //default value if you want to set something in input
+                  defaultValue={
+                    JSON.stringify(selectedValue) === "{}"
+                      ? ""
+                      : selectedValue.name
+                  }
+                  // onchange of the text changing the state of the query
+                  // which will trigger the findFilm method
+                  // to show the suggestions
+                  onChangeText={(text) => findName(text)}
+                  placeholder="Add Item"
+                  placeholderTextColor="black"
+                  renderItem={({ item }) => (
+                    <ScrollView>
+                      <TouchableOpacity
+                        // style={{paddingHorizontal:10}}
+
+                        onPress={() => {
+                          setSelectedValue(item);
+                          setFilteredProducts([]);
+                          setUnitCheck(true);
+                        }}
+                      >
+                        <Text style={styles.itemText}>
+                          {item.name} ({item.unit})
+                        </Text>
+                      </TouchableOpacity>
+                    </ScrollView>
+                  )}
+                />
+              </View>
+
+              <View style={{ width: "20%", height: 38, paddingTop: 5 }}>
+                {unitCheck ? (
+                  <Text
+                    style={{
+                      color: Colors.textGreyColor,
+                      marginLeft: 1,
+                      padding: 10,
+                      paddingBottom: 12.5,
+                    }}
+                  >
+                    {selectedValue.unit}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      color: Colors.textGreyColor,
+                      marginLeft: 1,
+                      padding: 10,
+                      paddingBottom: 12.5,
+                    }}
+                  >
+                    Unit
+                  </Text>
+                )}
+              </View>
+              <View style={{ width: "15%", paddingTop: 0 }}>
+                <TextInput
+                  style={styles.o_inputArea}
+                  placeholder="Qty"
+                  autoCapitalize="none"
+                  keyboardType="numeric"
+                  maxLength={2}
+                  placeholderTextColor="black"
+                  value={qtty}
+                  required={true}
+                  onChangeText={(value) => setQtty(value)}
+                  initialValue=""
+                />
+              </View>
+
+              {unitCheck ? (
+                <View style={{ width: "28%", paddingTop: 5 }}>
+                  <Text
+                    style={{
+                      color: Colors.textGreyColor,
+                      padding: 10,
+                      marginLeft: 1,
+                      paddingBottom: 12.5,
+                    }}
+                  >
+                    £ {selectedValue.avg_price}
+                  </Text>
+                </View>
+              ) : (
+                <View style={{ width: "40%", paddingTop: 5 }}>
+                  <Text
+                    style={{
+                      color: Colors.textGreyColor,
+                      padding: 10,
+                      marginLeft: 1,
+                      paddingBottom: 12.5,
+                    }}
+                  >
+                    Price Per Unit
+                  </Text>
+                </View>
+              )}
 
               <View
                 style={{
-                  flexDirection: "row",
-                  marginTop: "5%",
-                  width: "100%",
+                  height: 30,
+                  width: "6%",
+                  alignSelf: "center",
+                  justifyContent: "center",
+                  marginLeft: 0,
                 }}
               >
-               <View
-                  style={{
-                    width: Platform.OS == "android" ? "30%" : "30%",
-                    
-                  }}
-                >
-                  <Autocomplete
-                    // onFocus={() => {scrollView.props.scrollToEnd({animated: true})}}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    flatListProps={{ nestedScrollEnabled: true}}
-                    // containerStyle={{}}
-                   
-                    listContainerStyle={{
-                      backgroundColor: "#e6e6e6",
-                      width: 250,
-                      left: 0,
-                      position: 'absolute',
-                      right: 0,
-                      top: 50,
-                    zIndex: 1,
-                      // height: Platform.OS == "android" ? 150 :150
+                {unitCheck ? (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.AddButton}
+                    onPress={() => {
+                      const userExists = CheckId.some(item => item.id === selectedValue.id);
+                      console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
+                      if (userExists) {
+                          // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
 
+                        alert("Already Inserted");
+                      } else {
+                        if (qtty == "") {
+                          // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
+
+                          alert("Please Enter Quantity.");
+                        }
+                        else if(reg.test(qtty) === false) {
+
+                          alert("Invalid Quantity");
+                          setQtty("");
+                            return false;
+                        }
+                        else if(qtty==0) {
+
+                          alert("Invalid Quantity");
+                          setQtty("");
+                        }
+                        else {
+                          dispatch(
+                            cartActions.addToCart(selectedValue, qtty)
+                          ),
+                            setCheckRow(true),
+                            setSelectedValue([{}]),
+                            setUnitCheck(false),
+                            setQtty("");
+                        }
+                      }
                     }}
-                    listStyle={{
-                      borderColor: "#e6e6e6",
-                      height: Platform.OS == "android" ? 150 :150,
-                    }}
+                  >
+                    <Text
+                    style={styles.AddButtonText}
+                    >
+                      ADD
+                    </Text>
+                    {/* <AntDesign name="pluscircleo" color={Colors.themeColor} size={20} style={{padding:10}} /> */}
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+
+              {/* <View style={styles.container}> */}
+
+              {/* </View> */}
+            </View>
+
+            {/* </Card> */}
+            {/* </View> */}
+
+            {/* <View style={{padding:10,height:'60%',marginTop:30}}> */}
+            {/* <Card style={{elevation:0 ,backgroundColor:'#E6E6E6'}}> */}
+            {/* <Text style={styles.verticleLine}></Text> */}
+
+            <View
+              style={{
+                borderRadius: 10,
+                backgroundColor: "#F2F2F2",
+                padding: 10,
+                marginTop: 20,
+                zIndex:-1
+              }}
+            >
+              
+              <Card
+                style={{
+                  height: "60%",
+                  elevation: 0,
+                  backgroundColor: "#F2F2F2",
+                }}
+              >
+                <View>
+                  <View
                     style={{
-                      // backgroundColor: "#e6e6e6",
-                      paddingBottom: 7,
-                      color: "black",
+                      flexDirection: "row",
+                      marginTop: 10,
+                      //justifyContent: "center",
                       width: "100%",
                     }}
-                    inputContainerStyle={{
-                      backgroundColor: "#F2F2F2",
-                      height: Platform.OS == "android" ? 45 : 40,
-                      justifyContent: "center",
-
-                      //borderColor: "#e6e6e6",
-                      //borderBottomColor: Colors.textGreyColor,
-                    }}
-                    //data to show in suggestion
-                    data={filteredProducts}
-                    //default value if you want to set something in input
-                    defaultValue={
-                      JSON.stringify(selectedValue) === "{}"
-                        ? ""
-                        : selectedValue.name
-                    }
-                    // onchange of the text changing the state of the query
-                    // which will trigger the findFilm method
-                    // to show the suggestions
-                    onChangeText={(text) => findName(text)}
-                    placeholder="Add Item"
-                    placeholderTextColor="black"
-                    renderItem={({ item }) => (
-                      <ScrollView keyboardShouldPersistTaps="always">
-                        <TouchableOpacity
-                          // style={{paddingHorizontal:10}}
-
-                          onPress={() => {
-                            setSelectedValue(item);
-                            setFilteredProducts([]);
-                            setUnitCheck(true);
-                          }}
-                        >
-                          <Text style={styles.itemText}>
-                            {item.name} ({item.unit})
-                          </Text>
-                        </TouchableOpacity>
-                      </ScrollView>
-                    )}
-                  />
-                </View>
-
-                <View style={{ width: "20%", height: 38, paddingTop: 5 }}>
-                  {unitCheck ? (
+                  >
                     <Text
                       style={{
-                        color: Colors.textGreyColor,
-                        marginLeft: 1,
-                        padding: 10,
-                        paddingBottom: 12.5,
+                        color: Colors.themeColor,
+                        width: "30%",
+                        textAlign: "center",
+
+                        fontSize: 14,
                       }}
                     >
-                      {selectedValue.unit}
+                      Product
                     </Text>
-                  ) : (
                     <Text
                       style={{
                         color: Colors.textGreyColor,
-                        marginLeft: 1,
-                        padding: 10,
-                        paddingBottom: 12.5,
+                        width: "20%",
+                        textAlign: "center",
+
+                        fontSize: 14,
                       }}
                     >
                       Unit
                     </Text>
-                  )}
-                </View>
-                <View style={{ width: "15%", paddingTop: 0 }}>
-                  <TextInput
-                    style={styles.o_inputArea}
-                    placeholder="Qty"
-                    autoCapitalize="none"
-                    keyboardType="numeric"
-                    maxLength={2}
-                    placeholderTextColor="black"
-                    value={qtty}
-                    required={true}
-                    onChangeText={(value) => setQtty(value)}
-                    initialValue=""
-                  />
-                </View>
+                    <Text
+                      style={{
+                        color: Colors.themeColor,
+                        width: "20%",
 
-                {unitCheck ? (
-                  <View style={{ width: "28%", paddingTop: 5 }}>
+                        fontSize: 14,
+                        textAlign: "center",
+                      }}
+                    >
+                      Quantity
+                    </Text>
                     <Text
                       style={{
                         color: Colors.textGreyColor,
-                        padding: 10,
-                        marginLeft: 1,
-                        paddingBottom: 12.5,
+                        width: "24%",
+
+                        fontSize: 14,
+                        textAlign: "center",
                       }}
                     >
-                      £ {selectedValue.avg_price}
-                      
+                      Price Per Unit
                     </Text>
+
+                    {/* <SafeAreaView> */}
+                    {/* <View style={styles.container}> */}
+
+                    {/* </View> */}
+                    {/* </SafeAreaView> */}
                   </View>
-                ) : (
-                  <View style={{ width: "40%", paddingTop: 0 }}>
-                    <Text
-                      style={{
-                        color: Colors.textGreyColor,
-                        padding: 10,
-                        paddingTop:0,
-                        marginLeft: 1,
-                        paddingBottom: 12.5,
-                      }}
-                    >
-                    Price Per Unit
-                    </Text>
-                  </View>
-                )}
-
-                <View
-                  style={{
-                    height: 30,
-                    width: "6%",
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    marginLeft: 0,
-                  }}
-                >
-                  {unitCheck ? (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.AddButton}
-                      onPress={() => {
-                        const userExists = CheckId.some(item => item.id === selectedValue.id);
-                        console.log('statuuuuuuuuuuuuuuuuuuuuuuus',userExists);
-                        if (userExists) {
-                            // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
-                          // console.log('status',status);
-                          alert("Already Inserted");
-                        } else {
-                          if (qtty == "") {
-                            // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
-
-                            alert("Please enter quantity.");
-                          }
-                          else if(reg.test(qtty) === false) {
-
-                            alert("Invalid Quantity");
-                            setQtty("");
-                              return false;
-                          }
-                          else if(qtty==0) {
-
-                            alert("Invalid Quantity");
-                            setQtty("");
-                          }
-                          else {
-                            dispatch(
-                              cartActions.addToCart(selectedValue, qtty)
-                            ),
-                              setCheckRow(true),
-                              setSelectedValue([{}]),
-                              setUnitCheck(false),
-                              setQtty("");
-                          }
-                        }
-                      }}
-                    >
-                      <Text
-                      style={styles.AddButtonText}
-                      >
-                        ADD
-                      </Text>
-                      {/* <AntDesign name="pluscircleo" color={Colors.themeColor} size={20} style={{padding:10}} /> */}
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-
-                {/* <View style={styles.container}> */}
-
-                {/* </View> */}
-              </View>
-
-              {/* </Card> */}
-              {/* </View> */}
-
-              {/* <View style={{padding:10,height:'60%',marginTop:30}}> */}
-              {/* <Card style={{elevation:0 ,backgroundColor:'#E6E6E6'}}> */}
-              {/* <Text style={styles.verticleLine}></Text> */}
-
-              <View
-                style={{
-                  borderRadius: 10,
-                  backgroundColor: "#F2F2F2",
-                  padding: 10,
-                  marginTop: 20,
-                  zIndex:-1
-                }}
-              >
-                
-                <View style = {{height:"60%",backgroundColor:'#F2F2F2',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
+                  <View style={{marginBottom:"10%"}}>
+                    {checkRow ? (
+                      <FlatList
+                        nestedScrollEnabled
+                        data={cartItems}
+                        // sort={true}
+                        // inverted={true}
+                        keyboardShouldPersistTaps={'handled'}
+                        contentContainerStyle={{paddingBottom:90}}
+                        keyExtractor={(item) => item.id}
+                        renderItem={(itemData) => (
+                          <CartItem
+                            id={itemData.item.id}
+                            quantity={itemData.item.quantity}
+                            total_amount={itemData.item.total_amount}
+                            name={itemData.item.name}
+                            unit={itemData.item.unit}
+                            price={itemData.item.price}
+                            // addable
+                            onAddPress={() => {
+                              dispatch(
+                                cartActions.addToQtty(itemData.item.id)
+                              );
+                            }}
+                            // deletable
+                            onRemove={() => {
+                              dispatch(
+                                cartActions.removeFromCart(itemData.item.id)
+                              );
+                            }}
+                            // removeable
+                            onDelete={() => {
+                              dispatch(
+                                cartActions.deleteProduct(itemData.item.id)
+                              );
+                            }}
+                          />
+                        )}
+                      />
+                    ) : null}
+                     <View style={{ flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
+                  <Text
+                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
+                  >
+                    Total:
+                  </Text>
+                  <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"16%",textAlign:"center" }}>
+                    {cartTotalPackages}
+                  </Text>
+                  {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
+                  £ {cartTotalAmount}
           
-          // marginLeft:5
-          }}>
-                  <View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginTop: 10,
-                        //justifyContent: "center",
-                        width: "100%",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: Colors.themeColor,
-                          width: "30%",
-                          textAlign: "center",
-
-                          fontSize: 14,
-                        }}
-                      >
-                        Product
-                      </Text>
-                      <Text
-                        style={{
-                          color: Colors.textGreyColor,
-                          width: "20%",
-                          textAlign: "center",
-
-                          fontSize: 14,
-                        }}
-                      >
-                        Unit
-                      </Text>
-                      <Text
-                        style={{
-                          color: Colors.themeColor,
-                          width: "20%",
-
-                          fontSize: 14,
-                          textAlign: "center",
-                        }}
-                      >
-                        Quantity
-                      </Text>
-                      <Text
-                        style={{
-                          color: Colors.textGreyColor,
-                          width: "28%",
-
-                          fontSize: 14,
-                          textAlign:"center",
-                        }}
-                      >
-                        Price Per Unit
-
-                      </Text>
-
-                      {/* <SafeAreaView> */}
-                      {/* <View style={styles.container}> */}
-
-                      {/* </View> */}
-                      {/* </SafeAreaView> */}
-                    </View>
-                    <View style={{}}>
-                      {/* <ScrollView nestedScrollEnabled > */}
-                     {checkRow ?  (
-                        // R_cartItems.map((item, index) => (
-                        //   // <View style={{flexDirection:"column-reverse"}}>
-                        //   <CartItem
-                        //   id={item.id}
-                        //   quantity={item.quantity}
-                        //   total_amount={item.total_amount}
-                        //   name={item.name}
-                        //   unit={item.unit}
-                        //   price={item.price}
-                          
-                         
-                        //   onAddPress={() => {
-                        //     dispatch(
-                        //       cartActions.addToQtty(item.id)
-                        //     );
-                        //   }}
-                         
-                        //   onRemove={() => {
-                        //     dispatch(
-                        //       cartActions.removeFromCart(item.id)
-                        //     );
-                        //   }}
-                        
-                        //   onDelete={() => {
-                        //     dispatch(
-                        //       cartActions.deleteProduct(item.id)
-                        //     );
-                        //   }}
-                        // />
-                        // // </View>
-                        // ))
-                        <FlatList
-                          nestedScrollEnabled
-                          // inverted
-                          // style={{flexDirection:"column-reverse"}}
-                          keyboardShouldPersistTaps={'handled'}
-                          contentContainerStyle={{paddingBottom:90}}
-                          //data={cardItemsArray}
-                          data={cartItems}
-                          // sort={true}
-                          // inverted={true}
-                          keyExtractor={(item) => item.id}
-                          renderItem={(itemData) => (
-                            // <Text style={{fontSize:30,backgroundColor:"green",flex:1}}>{JSON.stringify(itemData)}</Text>
-                            // <View style={{flexDirection:"column-reverse"}}>
-                            <CartItem
-                              id={itemData.item.id}
-                              quantity={itemData.item.quantity}
-                              total_amount={itemData.item.total_amount}
-                              name={itemData.item.name}
-                              unit={itemData.item.unit}
-                              price={itemData.item.price}
-                              
-                              // addable
-                              onAddPress={() => {
-                                dispatch(
-                                  cartActions.addToQtty(itemData.item.id)
-                                );
-                              }}
-                              // deletable
-                              onRemove={() => {
-                                dispatch(
-                                  cartActions.removeFromCart(itemData.item.id)
-                                );
-                              }}
-                              // removeable
-                              onDelete={() => {
-                                dispatch(
-                                  cartActions.deleteProduct(itemData.item.id)
-                                );
-                              }}
-                            />
-                            // </View>
-                          )}
-                        />
-                      ) : null
-                      }
-                      {/* </ScrollView> */}
-                      <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 ,borderBottomWidth:.5 , borderBottomColor:'gray' }}>
-                    <Text
-                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
-                    >
-                      Total:
-                    </Text>
-                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"16%",textAlign:"center" }}>
-                      {cartTotalPackages}
-                    </Text>
-                    {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
-                    £ {cartTotalAmount}
-            
-                    </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
-                    £ {parseFloat(cartTotalAmount).toFixed(2)}
-            
-                    </Text>}
-                    
-                  </View>
-                    </View>
-
-                    
-                  </View>
-
+                  </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
+                  £ {parseFloat(cartTotalAmount).toFixed(2)}
+          
+                  </Text>}
                   
                 </View>
-                
-              </View>
+                  </View>
 
-              
-             
-            </Card>
-          </View>
-          <View style={{ height: "4%", bottom: 40, }}>
-            <View style={{ padding: 0 }}>
-              <Card style={{ elevation: 0 }}>
-                <TextInput
-                  style={styles.note_inputArea}
-                  placeholder="Write any Notes"
-                  autoCapitalize="none"
-                  placeholderTextColor="black"
-                  value={note}
-                  required={true}
-                  onChangeText={(value) => setNote(value)}
-                  initialValue=""
-                />
+                  {/* {
+                     newArray
+                 } */}
+                </View>
+
+                
               </Card>
             </View>
 
-            <TouchableOpacity
-              style={styles.signupButton}
-              activeOpacity={0.7}
-              disabled={sendButtonCheck}
-              onPress={sendOrder}
-            >
-              {loading ? (
-                <Spinner color={"white"} />
-              ) : (
-                <Text style={styles.signupButtonText}>SEND ORDER</Text>
-              )}
-            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={()=>setShow(true)}
+          style = {{alignSelf:'center',marginTop:5,marginBottom:10}}
+          >
+           <View style={{flexDirection:'column'}}>
+          <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
+          <Text style={{alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{pickUpDate}</Text>
+          
+         
+          
           </View>
+          </TouchableOpacity> */}
+            {/* {show && ( */}
+
+            {/* <View>
+      <DatePicker
+          defaultDate={""}
+          minimumDate={new Date(year, month, date)}
+          maximumDate={new Date(2021, 12, 31)}
+          
+          // formatChosenDate={(date) => {
+          //   return moment(date).format("YYYY-MM-DD");
+          // }}
+          locale={"en"}
+          timeZoneOffsetInMinutes={undefined}
+          modalTransparent={false}
+          animationType={"fade"}
+          androidMode={"default"}
+          textStyle={{ color: Colors.themeColor,fontWeight:'bold',alignSelf:'center' }}
+          placeHolderTextStyle={{ color: Colors.themeColor }}
+          onDateChange={(itemValue, itemIndex) => {
+            setPickUpDate(itemValue);
+            // setShow(false);
+          }}
+          disabled={false}
+        />
+        </View> */}
+            {/* ) */}
+            {/* }  */}
+          </Card>
         </View>
-      </ScrollView>
-      </KeyboardAvoidingView>
-    </View>
-    </>
-  );
+        <View style={{ height: "4%", bottom: 40, }}>
+          <View style={{ padding: 0 }}>
+            <Card style={{ elevation: 0 }}>
+              <TextInput
+                style={styles.note_inputArea}
+                placeholder="Write any Notes"
+                autoCapitalize="none"
+                placeholderTextColor="black"
+                value={note}
+                required={true}
+                onChangeText={(value) => setNote(value)}
+                initialValue=""
+              />
+            </Card>
+          </View>
+
+          <TouchableOpacity
+            style={styles.signupButton}
+            activeOpacity={0.7}
+            disabled={sendButtonCheck}
+            onPress={sendOrder}
+          >
+            {loading ? (
+              <Spinner color={"white"} />
+            ) : (
+              <Text style={styles.signupButtonText}>SEND ORDER</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
+  </View>
+  </>
+);
+            }
 
 
 
 
 
 
-}
+
+
+
 
 const styles = StyleSheet.create({
   signupButtonText: {

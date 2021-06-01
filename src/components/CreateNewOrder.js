@@ -1163,75 +1163,81 @@ function CreateNewOrder({ navigation ,route }) {
               </View>
               </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  padding: 5,
-                  paddingTop:0
-                }}
-              >
-                
+{/* //-------------- changing in date time UI-----------// */}
+{/* {Platform.OS === "ios"? ( */}
+  <View
+  style={{
+    flexDirection: "row",
+    alignSelf: "center",
+    padding: 5,
+    paddingTop:0
+  }}
+>
+  
 
-                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
-          
-          }}>
-                  <View style={{ padding: 5 }}>
-                    
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Date:
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {("0" + date.getDate()).slice(-2) +
-                          "-" +
-                          ("0" + (date.getMonth() + 1)).slice(-2)+
-                          "-" +
-                          date.getFullYear()}
-                      </Text>
-                    
-                  </View>
-                </View>
+  <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+shadowColor: "#000",
+shadowOffset: { width: 0, height: 2 },
+// shadowOpacity: 0.25,
+shadowRadius: 3.84,
+elevation: 0,
+padding:10,
 
-                <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 0,
-          padding:10,
-          marginLeft:5
-          }}>
-                  <View style={{ padding: 5 }}>
-                    
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Time:
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {/* {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)} */}
-                        {("0" + wakt.getHours()).slice(-2) + ":" + ("0" + wakt.getMinutes()).slice(-2)}
-                      </Text>
-                    
-                  </View>
-                </View>
-              </View>
+}}>
+    <View style={{ padding: 5 }}>
+      
+        <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+          Delivery Date:
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          {("0" + date.getDate()).slice(-2) +
+            "-" +
+            ("0" + (date.getMonth() + 1)).slice(-2)+
+            "-" +
+            date.getFullYear()}
+        </Text>
+      
+    </View>
+  </View>
+
+  <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
+shadowColor: "#000",
+shadowOffset: { width: 0, height: 2 },
+// shadowOpacity: 0.25,
+shadowRadius: 3.84,
+elevation: 0,
+padding:10,
+marginLeft:5
+}}>
+    <View style={{ padding: 5 }}>
+      
+        <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+          Delivery Time:
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          {/* {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)} */}
+          {("0" + wakt.getHours()).slice(-2) + ":" + ("0" + wakt.getMinutes()).slice(-2)}
+        </Text>
+      
+    </View>
+  </View>
+</View>
+ 
+ 
+
+              
 
               
               <View style={{flexDirection:'row',marginTop:10}}>
@@ -1308,7 +1314,8 @@ function CreateNewOrder({ navigation ,route }) {
                activeOpacity={0.7}
               onPress={addOrderBox}
             >
-              {loading ? (
+              {
+              loading ? (
                 <Spinner color={"white"} size={20} />
               ) : (
               <Text style={styles.signupButtonText1}>CONFIRM</Text>)}
@@ -1339,6 +1346,7 @@ function CreateNewOrder({ navigation ,route }) {
                 width: "100%",
                 backgroundColor: "#e6e6e6",
                 elevation: 0,
+                //marginBottom:'15%'
               }}
             >
               <Text
@@ -1362,13 +1370,7 @@ function CreateNewOrder({ navigation ,route }) {
               >
                 {currentDate}
               </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  padding: 5,
-                }}
-              >
+              
                 {/* <Card
   style={{
   padding: 0,
@@ -1393,7 +1395,242 @@ function CreateNewOrder({ navigation ,route }) {
   </View>
   </Card> */}
 
+
+{ Platform.OS==='ios'? (
+
+<View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: 'center',
+                  //padding: 5,
+                }}
+              >
+
+    {/* //-------------------------------------Delivery Date ----------------------------// */}            
+<Card
+                  style={{
+                    padding: 5,
+                    // marginLeft: 10,
+                    width: "90%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                    flexDirection:'row',
+                    marginBottom:'5%',
+                    marginTop:'5%'
+                  }}
+                >
+                  <View style={{ padding: 7 ,
+                    marginRight:'8%' 
+                    }}>
+                    <TouchableOpacity onPress={showDatepicker}>
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Date
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getDate()).slice(-2) +
+                          "-" +
+                          ("0" + (date.getMonth() + 1)).slice(-2)+
+                          "-" +
+                          date.getFullYear()}
+                      </Text>
+                    </TouchableOpacity>
+                    {/* {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )} */}
+                  </View>
+                {/* </Card> */}
+
+                {/* //-------------------------------------Delivery Time ----------------------------// */}
+                {/* <Card
+                  style={{
+                    padding: 5,
+                    marginLeft: 10,
+                    width: "50%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                  }}
+                > */}
+
+                  {/* <View style={{ padding: 5 }}> */}
+
+                  <View style={{ alignSelf:'flex-end', width:'30%'  }}>
+                  {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )}
+                  </View>
+
+
+
+                  <View
+                style={{
+                  flexDirection: "row",
+                  //alignSelf: 'flex-start',
+                  marginLeft:'5%',
+                  padding: 7,
+                }}
+              >
+                    <TouchableOpacity onPress={showTimepicker}>
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Time
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                      </Text>
+                    </TouchableOpacity>
+                    {/* {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )} */}
+                  </View>
+                </Card>
+
+              </View>
+
+):(
+
+<View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  padding: 5,
+                }}
+              >
+
+                {/* //-------------------------------------Delivery Date ----------------------------// */}
+<Card
+                  style={{
+                    padding: 5,
+                    // marginLeft: 10,
+                    width: "50%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                  }}
+                >
+                  <View style={{ padding: 5 }}>
+                    <TouchableOpacity onPress={showDatepicker}>
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Date:
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getDate()).slice(-2) +
+                          "-" +
+                          ("0" + (date.getMonth() + 1)).slice(-2)+
+                          "-" +
+                          date.getFullYear()}
+                      </Text>
+                    </TouchableOpacity>
+                    {show && (
+                      
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        // defaultDate={new Date()}
+                        minimumDate={new Date()}
+                        is24Hour={true}
+                        style={{ color: Colors.themeColor }}
+                        display="default"
+                        // dateFormat="day month year"
+                        onChange={onChange}
+                      />
+                    )}
+                  </View>
+                </Card>
+
+                {/* //-------------------------------------Delivery Time ----------------------------// */}
                 <Card
+                  style={{
+                    padding: 5,
+                    marginLeft: 10,
+                    width: "50%",
+                    backgroundColor: "#F2F2F2",
+                    elevation: 0,
+                  }}
+                >
+                  <View style={{ padding: 5 }}>
+                    <TouchableOpacity onPress={showTimepicker}>
+                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
+                        Delivery Time:
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Card>
+
+              </View>
+
+) }
+
+{/* <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  padding: 5,
+                }}
+              > */}
+{/* //-------------------------------------Delivery Date ----------------------------// */}
+                {/* <Card
                   style={{
                     padding: 5,
                     // marginLeft: 10,
@@ -1455,9 +1692,9 @@ function CreateNewOrder({ navigation ,route }) {
                       />
                     )}
                   </View>
-                </Card>
-
-                <Card
+                </Card> */}
+{/* //-------------------------------------Delivery Time ----------------------------// */}
+                {/* <Card
                   style={{
                     padding: 5,
                     marginLeft: 10,
@@ -1483,7 +1720,10 @@ function CreateNewOrder({ navigation ,route }) {
                     </TouchableOpacity>
                   </View>
                 </Card>
-              </View>
+
+              </View> */}
+
+              
               <Text
                 style={{
                   color: Colors.themeColor,
