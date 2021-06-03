@@ -371,7 +371,7 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
     // if(PoNumber=="")
     // {
   }else{
-    alert("Your Remaining Invoices Are 0 , Please Renew Your Package")
+    alert("Your remaining invoices Are 0, please renew your package")
     // Toast.show("Your Remaining Invoices Are 0 , Please Renew Your Package", Toast.LONG);
 
   }

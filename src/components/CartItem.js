@@ -30,7 +30,7 @@ const CartItem = (props,{route}) => {
   
   const updateTotalAmount=()=>{
     
-    alert("Key Edit")
+    alert("Key edit")
 
     if(qtty!=""){
      
@@ -72,17 +72,17 @@ const CartItem = (props,{route}) => {
         if (qtty == "") {
             // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
 
-            alert("Please Enter Quantity.");
+            alert("Please enter quantity.");
           }
           else if(reg.test(qtty) === false) {
 
-            alert("Invalid Quantity");
+            alert("Invalid quantity");
             setQtty("");
               return false;
           }
           else if(qtty==0) {
 
-            alert("Invalid Quantity");
+            alert("Invalid quantity");
             setQtty("");
           }
           else {

@@ -95,7 +95,7 @@ const FirstView = ({ navigation }) => {
                 // alert(response.message);
               } else {
                 setLoading(false);
-                alert("There was a issue in your build, Re-Install your App");
+                alert("There was a issue in your build, re-Install your app");
               }
               // code that can access both here
             } else {

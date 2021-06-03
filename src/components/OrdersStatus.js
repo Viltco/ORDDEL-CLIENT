@@ -71,6 +71,13 @@ function OrdersStatus({ navigation, route }) {
   const OId = OrderId;
   const OrderBoxId = OrderBox;
   const totalQuantity = Quantity;
+ const actualTime = boxData.order_delivery_datetime
+//  const wakt= actualTime.split('')[0];
+//  const tarik= actualTime.split('')[1];
+
+
+ console.log(actualTime,' --------- time-----------');
+
 
   const setting = () => {
     toggleBottomNavigationView();
@@ -197,41 +204,7 @@ setButtonLoading(true);
    
 
 
-    // fetch(URL + "/order/get_order_box/" + ClientId + "/")
-    //   // fetch(URL+'/client_app/clients_list/33/')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     // console.log(
-    //     //   "Dashboard:",
-    //     //   responseJson
-    //     // );
-    //     console.log("OrderBoxId:", responseJson);
-    //     setOrderBoxId(responseJson.order_box);
-    //     if(responseJson.order_box!=""){
-    //       fetch(URL + "/order/get_po_number/" + responseJson.order_box + "/")
-    //       // fetch(URL+'/client_app/clients_list/33/')
-    //       .then((response) => response.json())
-    //       .then((responseJson) => {
-    //         dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
-    //         // state.PoNumber=responseJson.po_number;
-    //         // setPoNumber(responseJson.po_number);
-    //         navigation.navigate("ReOrder", {
-    //           OID: OId,
-    //           orderBoxId: OrderBoxId,
-    //           Quantity: totalQuantity,
-    //           id:boxData.delivery_person,
-    //           name:boxData.delivery_person_name,
-    //           address:"142-Allama Iqbal Road"
-    //         })
-    //         console.log("PO number:",responseJson.po_number);
-    //       });
-    //       dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
-
-    //     }
-        
-        
-    //   })
-    //   .catch((error) => console.error(error));
+   
   }
 
 
@@ -339,17 +312,7 @@ setButtonLoading(true);
         setDataStatus(responseJson.order.status);
         console.log(boxDetail, "-------");
         setIsLoading(false);
-        //   console.log("Dashboard:",responseJson.client_dashboard.client_name);
-        //console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-        // if (json["response"] == "Record does not exist or not found") {
-        //   setLoading(true);
-        // } else {
-        //   dispatch(ApiDataAction.SetListData(responseJson));
-        //   dataa=responseJson;
-        //   setData(responseJson);
-        //   //console.log(json);
-
-        // }
+        
       })
       .catch((error) => console.error(error));
     setDisvisible(false);
@@ -399,7 +362,7 @@ setButtonLoading(true);
                 <View
                   style={{
                     paddingTop: Platform.OS == "ios" ? 0 : 0,
-                    paddingLeft: 12,
+                    paddingLeft: '4%',
                     alignSelf: "center",
                   }}
                 >
@@ -409,18 +372,21 @@ setButtonLoading(true);
                       fontWeight: "bold",
                       borderBottomWidth: 2,
                       borderBottomColor: Colors.textGreyColor,
-                      fontSize: Platform.OS == "android" ? 20 : 22,
+                      fontSize: Platform.OS == "android" ? 20 : 20,
                       alignSelf: "flex-start",
                       width: 230,
                     }}
                   >
                     {boxData.client}
                   </Text> 
-                  <Text style={{fontSize: 13, marginTop: 2 ,
-                  width:Platform.OS=="android"? 240:240,
+                  <Text style={{fontSize: 13, fontWeight:'600' }}>Order No: </Text>
+                  <Text style={{fontSize: 13, marginTop: 2 , marginRight:'3%',
+                  width:Platform.OS=="android"? '80%':'80%',
                 alignSelf: "flex-start",
                 }}>
-                    Order No: {boxData.purchase_order_no}
+                     {boxData.purchase_order_no}
+                     {/* fghvcsdfjsbfdsjfbdfnfbjhsbfjsfbksjdbfksdjbfjsdkfbkjdsfbkjsfbsdfbjsdbfjdsbfksfnjksnjfkdsn */}
+                     {/* 12323344455555557756544534535646758687696756456233434343434343 */}
                   </Text>
                 </View>
               </View>
@@ -434,14 +400,18 @@ setButtonLoading(true);
                 alignSelf: "center",
               }}
             >
+
               <View
                 style={{
-                  height: 90,
-                  width: 90,
+                  // height: 100,
+                  // width: '30%',
+                  height: 110,
+                 width: 110,
                   borderRadius: 120,
                   borderColor: Colors.textGreyColor,
                   borderWidth: 5,
                   marginTop: "3%",
+                  
                   marginBottom: 10,
                 }}
               >
@@ -452,11 +422,26 @@ setButtonLoading(true);
                     marginTop: "35%",
                     fontWeight: "bold",
                     fontSize: 12,
+                    margin:'2%'
                   }}
                 >
-                  {boxData.order_delivery_datetime}
+                  {boxData?.order_delivery_datetime?.split(" ")[0]}
+                  {/* {boxData.order_delivery_datetime} */}
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "35%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%'
+                  }}
+                >
+                  {boxData?.order_delivery_datetime?.split(" ")[1]}
                 </Text>
               </View>
+
               <View style={{ alignSelf: "center", marginLeft: "5%" }}>
                 <View
                   style={{
@@ -569,11 +554,7 @@ setButtonLoading(true);
           </Content>
         )}
 
-        {/* )}
-        {/* <View style={{flexDirection:'row'}}>
-            <Text style={{color:Colors.themeColor,marginLeft:"35%"}}>Total Price:</Text>
-            <Text style={{color:Colors.themeColor,marginLeft:50}}>78656/-</Text>
-        </View> */}
+        
       </ScrollView>
     </View>
   );
@@ -587,10 +568,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#EE0202',
   },
   activityIndicator: {
-    // backgroundColor:'#FFF',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // alignSelf:"center",
     fontSize: 25,
     width: "60%",
     color: Colors.accentColor,
@@ -605,9 +582,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    // paddingTop: 30,
-    //backgroundColor: '#ecf0f1',
-    //padding: 8,
+  
   },
 
   signupContianer: {
@@ -640,10 +615,7 @@ const styles = StyleSheet.create({
 
   footer: {
     backgroundColor: "#ffffff",
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
-    //paddingVertical: 10,
-    // paddingHorizontal: 60,
+  
   },
   g_container: {
     // flexGrow: 1,

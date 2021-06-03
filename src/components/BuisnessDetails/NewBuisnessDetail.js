@@ -261,7 +261,7 @@ const NewBuisnessDetail = ({ navigation }) => {
             setAddress("");
            
             // dropDownAlertRef.alertWithType('success', '', 'Bussiness Details are added successfully.');
-            alert("Bussiness Details are added successfully")
+            alert("Bussiness details are added successfully")
             // Toast.show("Bussiness Details are added successfully", Toast.LONG);
             setButtonCheck(false);
 

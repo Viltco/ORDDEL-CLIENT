@@ -132,7 +132,7 @@ const Profile = ({ navigation,route }) => {
 
 
       console.log(res, "Imageee.......");
-      alert('Image Updated successfully')
+      alert('Image updated successfully')
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -194,7 +194,13 @@ const handleChoosePhoto = () => {
 
     uploadImage(response);
     console.log(response, "Imageee");
-    alert("Image Updated Successfully");
+    //  alert("Image updated successfully");
+
+    // if(Platform.OS==='ios' )
+    // {
+    //   setPhotoState({ photo: response });
+    // dispatch(ApiDataAction.SetImage(response.fileName));
+    // }
     //console.log("base64", response.base64, "____________sh");
     //console.log(response.uri, "----------------res");
     // setCheckImage(true);
@@ -208,6 +214,7 @@ const handleChoosePhoto = () => {
     var formdata = new FormData();
     formdata.append("image", response);
     formdata.append("id", ClientId);
+    console.log(response.uri,'......uri.......');
 //------------new add----------------//
     formdata.append("name", "image");
     formdata.append("image", {
@@ -215,19 +222,6 @@ const handleChoosePhoto = () => {
       type: response.type,
       name: response.fileName,
     });
-
-
-    // formdata.append("name", "image");
-    // formdata.append("image", {
-    //   uri: response.uri,
-    //   type: response.type,
-    //   name: response.fileName,
-    // });
-    // // formdata.append("file", (response.uri, response.fileName, response.type));
-
-    // // formdata.append("image", response);
-    // formdata.append("id", RiderId);
-
 
 
     var requestOptions = {
@@ -239,9 +233,24 @@ const handleChoosePhoto = () => {
       },
     };
 
+    // alert("Image updated successfully");
     fetch(URL + "/client_app/upload_client_logo/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response) => response.json())
+      .then((result) =>
+      {
+      console.log(result,"----------true")
+      //const { id } = result
+      
+      if(result.message == "Image uploaded successfully"){
+        // console.log(result.message, "wefnewnifeif")
+    alert(result.message);
+
+      }
+      else{
+    //alert("Image size is very big!");
+    alert("Image not selected!");
+      }
+      })
       .catch((error) => console.log("error", error));
   };
 
@@ -293,12 +302,12 @@ const handleChoosePhoto = () => {
     if (newPass != "" && oldPass != "" && confirmPass != "") {
       if (newPass == confirmPass) {
         if(newPass==oldPass){
-          alert("There No Change Between Old and New Password");
+          alert("There no change between old and new password");
           
         }
         else if (newPass.length < 8) {
           // setToastMessage("Password limit should be Greater than 6 Digits");
-          alert("Password limit should be Greater than 7 Digits");
+          alert("Password limit should be greater than 7 digits");
         }
         else{
           fetch(URL + "/api/change-password/", {
@@ -327,7 +336,7 @@ const handleChoosePhoto = () => {
                 alert(data.message)
                 // Toast.show(data.message, Toast.LONG);
               } else {
-                alert("Your Old Password Is Invalid");
+                alert("Your old password is invalid");
                 // Toast.show("Your Old Password Is Invalid", Toast.LONG);
               }
             })
@@ -335,11 +344,11 @@ const handleChoosePhoto = () => {
         } 
         
       } else {
-        alert("Password and Confirm Password Doesnot Match")
+        alert("Password and confirm password does not match")
         // Toast.show("Password and Confirm Password Doesnot Match", Toast.LONG);
       }
     } else {
-      alert("All Fields Are Required");
+      alert("All fields are required");
       // Toast.show("All Fields Are Required", Toast.LONG);
     }
   };
@@ -364,7 +373,7 @@ const handleChoosePhoto = () => {
 
         if (json != "Verification code resent") {
           alert(
-            "Please wait, there is request load on our server while sending Verification code"
+            "Please wait, there is request load on our server while sending verification code"
           );
         }
 
@@ -379,7 +388,7 @@ const handleChoosePhoto = () => {
     console.log(firstName, "-------------------Old Last Name");
 
     if(lastName==""&&firstName==""){
-      alert("Nothing to Change");
+      alert("Nothing to change");
     }
     // else if(lastName==""&&firstName==FirstName){
 
@@ -410,14 +419,14 @@ const handleChoosePhoto = () => {
                 setLastName("");
                 setPhoneNo("");
                 navigation.navigate("Dashboard")
-                alert("Successfully Updated the record");
+                alert("Successfully updated the record");
                 // Toast.show("Successfully Updated the record", Toast.LONG);
                 //console.log(PhoneNumber, phoneNo);
               } else {
                 setFirstName("");
                 setLastName("");
                 setPhoneNo("");
-                alert("Error Updating Profile");
+                alert("Error updating profile");
                 // Toast.show("Error Updating Profile", Toast.LONG);
     
                 // console.log("status code",response.status)
@@ -435,7 +444,7 @@ const handleChoosePhoto = () => {
         // }
         
       } else {
-        alert("Nothing to Update");
+        alert("Nothing to update");
         // Toast.show("Nothing to Update", Toast.LONG);
       }
     }

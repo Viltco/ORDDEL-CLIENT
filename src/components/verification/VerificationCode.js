@@ -68,17 +68,17 @@ if(counter!=3)
 
     if(json!='Verification code resent')
     {
-      alert("Please wait, there is request load on our server while sending Verification code")
+      alert("Please wait, there is request load on our server while sending verification code")
     }
     else{
-      alert("Code Send Successfully");
+      alert("Code send successfully");
     }
     
     setResponse(json)
   }).catch((error)=>console.log(error))
 }
 else {
-  alert("Maximum Attempts Reached");
+  alert("Maximum attempts reached");
 }
   
 } 
@@ -202,7 +202,7 @@ else {
     else{
      setLoading(false);
 
-      alert("Please Enter Code")
+      alert("Please enter code")
     }
     
     

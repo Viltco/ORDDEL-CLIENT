@@ -83,7 +83,7 @@ const ForgotPasswordVerification = ({ navigation }) => {
         })
         .catch((error) => console.log(error));
     } else {
-      alert("Please Enter Your Email")
+      alert("Please enter your email")
       // Toast.show("Please Enter Your Email", Toast.LONG);
     }
   };

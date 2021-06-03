@@ -47,7 +47,7 @@ const ChangePassword = ({route}) =>{
     console.log("shaheefr")
   })
 }else{
-  alert("Incorrect Password")
+  alert("Incorrect password")
 }
    
    }

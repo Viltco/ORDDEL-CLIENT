@@ -97,7 +97,7 @@ function CompletedOrderInvoice({ navigation, route }) {
         if (response.status == 201) {
           // dispatch(DeliveryNoteAction.AllClear(1)),
           console.log("Its work");
-          alert("Your Detail was Submitted");
+          alert("Your detail was submitted");
           navigation.navigate("Dashboard");
 
           // setCount(0);
@@ -109,26 +109,7 @@ function CompletedOrderInvoice({ navigation, route }) {
       })
       .catch((error) => console.log("Something went wrong", error));
   };
-  // const newTotalQty=useSelector(state=>state.DeliveryNote.totalQtty);
-
-  // const cartItems = useSelector(state => {
-  // const transformedCartItems = [];
-  // for (const key in state.DeliveryNote.items) {
-  // transformedCartItems.push({
-  // product_id: key,
-  // // id:items[key],
-  // // product_id:state.DeliveryNote.items[key].product_id,
-  // purchased_qty: state.DeliveryNote.items[key].purchased_qty,
-
-  // });
-  // }
-  // return transformedCartItems.sort((a, b) =>
-  // a.id > b.id ? 1 : -1
-  // );
-
-  // }
   
-  // );
 
 
   const reorder=()=>{
@@ -232,15 +213,7 @@ function CompletedOrderInvoice({ navigation, route }) {
                 // setIsLoading(false);
               })
               .catch((error) => console.error(error));
-          // navigation.navigate("ReOrder", {
-          //   OID: orderId,
-          //   orderBoxId: d_orderBoxId,
-          //   Quantity: invoiceData.total_qty,
-          //   id:invoiceData.delivery_person_id,
-          //   name:invoiceData.delivery_person_name,
-          //   address:invoiceData.delivery_person_address
-          // })
-          // setButtonLoading(false);
+          
         }
        
     
@@ -253,45 +226,6 @@ function CompletedOrderInvoice({ navigation, route }) {
 
 
 
-  // const reorder=()=>{
-  //   fetch(URL + "/order/get_order_box/" + ClientId + "/")
-  //     // fetch(URL+'/client_app/clients_list/33/')
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {
-  //       // console.log(
-  //       //   "Dashboard:",
-  //       //   responseJson
-  //       // );
-  //       console.log("OrderBoxId:", responseJson);
-  //       setOrderBoxId(responseJson.order_box);
-  //       if(responseJson.order_box!=""){
-  //         fetch(URL + "/order/get_po_number/" + responseJson.po_number + "/")
-  //         // fetch(URL+'/client_app/clients_list/33/')
-  //         .then((response) => response.json())
-  //         .then((responseJson) => {
-
-  //           dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
-  //           // state.PoNumber=responseJson.po_number;
-  //           navigation.navigate("ReOrder", {
-  //             OID: orderId,
-  //             orderBoxId: d_orderBoxId,
-  //             Quantity: invoiceData.total_qty,
-  //             id:invoiceData.delivery_person_id,
-  //             name:invoiceData.delivery_person_name,
-  //             address:invoiceData.delivery_person_address
-  //           })
-  //           setPoNumber(responseJson.po_number);
-  //           console.log("PO number:",responseJson.po_number);
-  //         });
-  //       // .catch((error) => console.error("be careful",error));
-  //         dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
-
-  //       }
-       
-        
-  //     })
-  //     .catch((error) => console.error(error));
-  // }
 
 
   const getClientImage=(id)=>{
@@ -359,25 +293,7 @@ function CompletedOrderInvoice({ navigation, route }) {
       .catch((error) => console.error(error));
     }
 
-    // if(d_orderBoxId!=""){
-    // fetch(URL+'/payment/generate_invoice/'+d_orderBoxId+'/')
-    // // fetch(URL+'/client_app/clients_list/33/')
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-
-    // console.log("Invoic================:",responseJson.order);
-    // setInvoiceData(responseJson.order);
-    // setOrderList(responseJson.order.order_products);
-    // setTotalAmount(responseJson.order)
-
-    // })
-    // .catch((error) => console.error(error))
-    // }
-
-    // setDisvisible(false)
-    // .finally(() => setIsLoading(false));
-
-    //console.log(data)
+    
   }, [orderId]);
   // console.log("Order Box Id:",OrderBoxId);
   // console.log("Order Box Id:",boxDetail);
@@ -581,14 +497,19 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                 justifyContent: "center",
               }}
             >
-              <View
+
+              
+
+            {/* <View
                 style={{
-                  height: 80,
-                  width: 80,
-                  borderRadius: 100,
+                  height: 100,
+                  width: 100,
+                  borderRadius: 120,
                   borderColor: Colors.textGreyColor,
                   borderWidth: 5,
                   marginTop: "3%",
+                  
+                  marginBottom: 10,
                 }}
               >
                 <Text
@@ -598,11 +519,63 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                     marginTop: "35%",
                     fontWeight: "bold",
                     fontSize: 12,
+                    margin:'2%'
                   }}
                 >
                   {invoiceData.order_delivery_datetime}
                 </Text>
+              </View> */}
+
+
+{/* //=================== NEW UPDATION=======================// */}
+
+<View
+                style={{
+                  // height: 120,
+                  // width: '33%',
+                  height: 110,
+                 width: 110,
+                  borderRadius: 120,
+                  borderColor: Colors.textGreyColor,
+                  borderWidth: 5,
+                  marginTop: "3%",
+                  
+                  marginBottom: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    marginTop: "35%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%'
+                  }}
+                >
+                  {invoiceData?.order_delivery_datetime?.split(" ")[0]}
+                  {/* {boxData.order_delivery_datetime} */}
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "35%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%'
+                  }}
+                >
+                  {invoiceData?.order_delivery_datetime?.split(" ")[1]}
+                </Text>
               </View>
+
+
+
+
+
+
+
               <View style={{ alignSelf: "center", marginLeft: "5%" }}>
                 <Text style={{ color: Colors.productGrey, fontSize: 14 }}>
                   Delivery Address:{" "}

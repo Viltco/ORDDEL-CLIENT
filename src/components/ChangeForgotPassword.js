@@ -34,7 +34,7 @@ const ChangeForgotPassword = ({ navigation }) => {
     if (password != "" && confirmPass != "") {
       if (password == confirmPass) {
         if (password.length < 8) {
-          alert("Password limit should be Greater than 8 Digits");
+          alert("Password limit should be greater than 8 digits");
         setIsLoading(false);
 
         } 
@@ -79,11 +79,11 @@ const ChangeForgotPassword = ({ navigation }) => {
         }
         
       } else {
-        alert("Password And Confirm Password Not Match")
+        alert("Password and confirm password not match")
         // Toast.show("Password And Confirm Password Not Match", Toast.LONG);
       }
     } else {
-      alert("All Fields Are Required")
+      alert("All fields are required")
       // Toast.show("All Fields Are Required", Toast.LONG);
     }
   };

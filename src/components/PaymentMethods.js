@@ -181,7 +181,7 @@ useEffect(() => {
            console.log("MAke Payment",data)
            console.log("Make PAyment Code",response.status)
            if(response.status==200){
-               alert("Transaction is Successful");
+               alert("Transaction is successful");
             //  dispatch(DeliveryNoteAction.AllClear(1)),
             // checkPermission();
         // Linking.openURL(downloadInvoice);
@@ -198,7 +198,7 @@ useEffect(() => {
            else{
             setIsLoading(false);
 
-               alert("There was a Request Load on Server, Please Try Again Later")
+               alert("There was a request load on server, please try again later")
            }
         
            //send_Verification_Code()
@@ -222,25 +222,25 @@ useEffect(() => {
         if(check!=true){
             if(month>12||month<1){
                 setIsLoading(false);
-                alert("Invalid Month");
+                alert("Invalid month");
                 
             }
             else if(year<21){
                 setIsLoading(false);
-                alert("Invalid Year");
+                alert("Invalid year");
                 
             }
             else if(month<monthh&&"20"+year==yearr){
                 setIsLoading(false);
-                alert("Invalid Expiry Date");
+                alert("Invalid expiry date");
             }
             else if(cardNumber.length < 16){
                 setIsLoading(false);
-                alert("Invalid Card Number");
+                alert("Invalid card number");
             }
             else if(cvc.length < 3){
                 setIsLoading(false);
-                alert("Invalid CVC Number");
+                alert("Invalid cvc number");
             }
             else if(cardNumber!=""&&cvc!=""&&month!=""&&year!=""){
                 fetch(URL+'/payment/save_stripe_info/', {
@@ -290,7 +290,7 @@ useEffect(() => {
                   )
             }
             else{
-                alert("Please Enter All Fields");
+                alert("Please enter all fields");
             }
             
         }

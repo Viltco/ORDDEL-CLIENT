@@ -55,8 +55,7 @@ import Card from "../components/Card";
 import { useRoute, useFocusEffect } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
 import DropdownAlert from 'react-native-dropdownalert';
-//import { format } from "date-fns";
-//import MyDropDown from './MyDropDown';
+
 import AsyncStorage from "@react-native-community/async-storage";
 import CartItem from "../components/CartItem";
 import * as cartActions from "../store/actions/OrderBox";
@@ -64,12 +63,8 @@ import { connect } from "react-redux";
 import { BottomSheet } from "react-native-btr";
 import MyHeader from "../components/MyHeader";
 import PreviewCart from '../components/PreviewCart';
-// import useStateWithCallback from "../components/DatePickerHelper";
-// import { tr } from "date-fns/locale";
-// import Toast from 'react-native-simple-toast'
-// import { color } from "react-native-reanimated";
- 
-//import AddNewRow from '../components/AddNewRow';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 
 function CreateNewOrder({ navigation ,route }) {
   const isFocused = useIsFocused();
@@ -80,22 +75,7 @@ function CreateNewOrder({ navigation ,route }) {
   const count = useSelector((state) => state.OrderBox.count);
   const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
   const cardItemsArray = useSelector((state) => {return state.OrderBox.cardItemsArray});
-  // const cartItems = useSelector((state) => 
-  // {
-  //   const transformedCartItems = [];
-  //   for (const key in state.OrderBox.items) {
-  //     transformedCartItems.unshift({
-  //       id: key,
-  //       // id:items[key],
-  //       quantity: state.OrderBox.items[key].quantity,
-  //       total_amount: state.OrderBox.items[key].total_amount,
-  //       name: state.OrderBox.items[key].name,
-  //       unit: state.OrderBox.items[key].unit,
-  //       price: state.OrderBox.items[key].price,
-  //     });
-  //   }
-  //   return [...transformedCartItems]
-  // });
+ 
   
   var Count = 0;
 
@@ -169,103 +149,49 @@ function CreateNewOrder({ navigation ,route }) {
   var minn;
   var secc;
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const backAction = () => {
-  //       navigation.navigate("Dashboard");
-  //       // dispatch(cartActions.allClear(1));
-  //       // BackHandler.exitApp()
-
-  //       // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-  //       //   {
-  //       //     text: "Cancel",
-  //       //     onPress: () => null,
-  //       //     style: "cancel"
-  //       //   },
-  //       //   { text: "YES", onPress: () => BackHandler.exitApp() }
-  //       // ]);
-  //       return false;
-  //     };
-  
-  //     const backHandler = BackHandler.addEventListener(
-  //       "hardwareBackPress",
-  //       backAction
-  //     );
-  
-  //     return () => backHandler.remove();
-  //   }, [route])
-  // );
-  //const [dateData, setDateData] = useState("");
-  //const [mode, setMode] = useState('date');
-  //const [show, setShow] = useState(false);
-  //var date = new Date().getDate();
-  // var month = new Date().getMonth();
-  // var year = new Date().getFullYear();
+ 
   const [date, setDate] = useState(new Date());
   const [wakt, setWakt] = useState(new Date());
   const [mode, setMode] = useState("datetime");
   const [show, setShow] = useState(false);
+  const [showDate, setShowDate] = useState(new Date());
+  const [showTime, setShowTime] = useState(new Date());
+
+  // ---------------Date--------------//
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    //console.warn("A date has been picked: ", date);
+    setShowDate(date);
+    //console.log(showDate ,'------- date ------')
+    hideDatePicker();
+  };
+
+// ---------------time--------------//
+const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+const showTimePickers = () => {
+  setTimePickerVisibility(true);
+  };
+
+  const hideDatePickerTime = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleConfirmTime = (date) => {
+    //console.warn("A date has been picked: ", date);
+    setShowTime(date);
+    //console.log(showDate ,'------- date ------')
+    hideDatePickerTime();
+  };
 
 
-
-
-
-  // const onChange = (event, selectedDate) => {
-  // const currentDate = selectedDate || date;
-  // console.log("currentDate", currentDate);
-  // setShow(Platform.OS === "ios");
-  // if (
-  // parseInt(currentDate.getFullYear()) < parseInt(yearr) ||
-  // currentDate.getMonth() + 1 < monthh ||
-  // (currentDate.getMonth() + 1 == monthh && currentDate.getDate() < datee)
-  // ) {
-  // alert("Selected Date is Invalid!");
-  // } else {
-  // setDate(currentDate);
-
-  // setFormattedDate(
-  // currentDate.getDate() +
-  // "-" +
-  // (currentDate.getMonth() + 1) +
-  // "-" +
-  // currentDate.getFullYear()
-  // );
-  // console.log("date", formattedDate);
-  // }
-  // };
-
-  // const onChangee = (event, selectedDate) => {
-  // const currentDate = selectedDate || date;
-  // console.log("currentTime", currentDate);
-  // setShow(Platform.OS === "ios");
-
-  // setTime(currentDate);
-
-  // setFormattedTime(
-  // +" "+
-  // currentDate.getHours() +
-  // ":" +
-  // currentDate.getMinutes() +
-  // ":" +
-  // currentDate.getSeconds()
-  // );
-  // console.log("date", formattedTime);
-
-  // };
-
-  // const showMode = (currentMode) => {
-  // setShow(true);
-  // setMode(currentMode);
-
-  // };
-
-  // const showDatepicker = () => {
-  // showMode("date");
-  // };
-
-  // const showTimepicker = () => {
-  // showMode("time");
-  // };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -286,6 +212,21 @@ function CreateNewOrder({ navigation ,route }) {
       console.log("updates Time",formattedTime);
     // console.log("Timeeeeeeeee: ",Time);
   };
+
+  const onChange1 = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+    // console.log("Dateeeeeeeee: ",currentDate.getDate());
+   
+      setFormattedTime(
+        currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
+      );
+      // console.log("updates Date",formattedDate);
+      console.log("updates Time",formattedTime);
+    // console.log("Timeeeeeeeee: ",Time);
+  };
+
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -343,18 +284,17 @@ function CreateNewOrder({ navigation ,route }) {
           console.log("(Oreder is added to order box)");
           // dispatch(ApiDataActions.SetLoginData(data));
           // navigation.navigate("MyDrawer");
-        }else{
+        }
+        else{
     setSendButtonCheck(false);
           alert(data.message)
-        //  Toast.show(data.message, Toast.LONG);
           
         }
 
-        // code that can access both here
       })
       .catch((error) => {
         setSendButtonCheck(false);
-        console.log("Something went wrong from add to orderBox", error);
+        console.log("Something went wrong from add to order box", error);
       });
   }
 
@@ -383,17 +323,14 @@ function CreateNewOrder({ navigation ,route }) {
     })
       .then(async (response) => {
         let data = await response.json();
-        // console.log("status code", response.status);
-        // console.log("status code", data);
+        
         if (response.status == 201) {
-          // console.log("Create response",data.order.order_products)
+         
 
           setLoading(false);
           // Alert.showAlert();
           alert("Thanks, your order has been placed.");
-          // dropDownAlertRef.alertWithType('success', 'Success', 'Your Order Has Been Placed.');
-          // Toast.show("Your Order Has Been Placed.", Toast.LONG);
-          dispatch(cartActions.allClear(1));
+          
           dispatch(ApiDataAction.Clear(1));
           setSelectedValue([{}]);
           setNote("");
@@ -406,13 +343,10 @@ function CreateNewOrder({ navigation ,route }) {
 
           setSendButtonCheck(false);
 
-          // dispatch(ApiDataActions.SetLoginData(data));
-          // navigation.navigate("MyDrawer");
+          
         } else {
           alert(data.message)
-          // Toast.show(data.message, Toast.LONG);
-
-          // alert("Unable to Create Order");
+          
           setLoading(false);
           setSendButtonCheck(false);
         }
@@ -420,7 +354,7 @@ function CreateNewOrder({ navigation ,route }) {
         // code that can access both here
       })
       .catch((error) => {
-        console.log("Something went wrong at create Order Box", error);
+        console.log("Something went wrong at create order Box", error);
         setLoading(false);
         setSendButtonCheck(false);
       });
@@ -443,9 +377,7 @@ function CreateNewOrder({ navigation ,route }) {
       );
       console.log("updates Dateeeeeeeeeeeeeeeeeeeeeee   ",formattedDate);
       console.log("updates Timeeeeeeeeeeeeeeeeeeeeeee   ",formattedTime);
-    // AsyncStorage.clear();
-    // dispatch(ApiDataAction.SetOrderBoxId(1));
-    // console.log("value",selectedValue.id);
+    
     if (cardItemsArray == "") {
       
       alert("Kindly place an order.");
@@ -458,34 +390,13 @@ function CreateNewOrder({ navigation ,route }) {
       }
       else{
         setModalVisible(!modalVisible)
-        // if (formattedDate == "") {
-        //   setFormattedDate(
-        //     date.getDate() +
-        //       "-" +
-        //       (date.getMonth() + 1) +
-        //       "-" +
-        //       date.getFullYear()
-        //   );
-        //   setFormattedTime(
-        //     date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-        //   );
-          
-        //   alert("Are you sure About your order?");
-         
-        // } else {
-          
-         
-            
-          
-
-          // console.log("before create",OrderId);
-        //}
+       
       }
         
       
     }
 
-    // alert("Thanks,Your Order is Placed,")
+    
   };
 
   
@@ -537,11 +448,7 @@ function CreateNewOrder({ navigation ,route }) {
       // fetch(URL+'/client_app/clients_list/33/')
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log("Buisness Detail:",responseJson);
-        // console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-        // if (json["response"] == "Record does not exist or not found") {
-        // setLoading(true);
-        // } else {
+        
         setBusinessData(responseJson.client_businesses);
         setAddressCheck(false);
 
@@ -554,23 +461,7 @@ function CreateNewOrder({ navigation ,route }) {
       })
       .catch((error) => console.error(error));
 
-    // console.log("Effect PoNumber",PoNumber)
-    // console.log("Effect OrderId",OrderId)
-    // getToken();
-    // console.log("yup",OrderId)
-
-    
-    // if (OrderId != "" || OrderId != null) {
-    //   fetch(URL + "/order/get_po_number/" + OrderId + "/")
-    //     // fetch(URL+'/client_app/clients_list/33/')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
-    //       // state.PoNumber=responseJson.po_number;
-    //       // console.log("PO number:",responseJson.po_number);
-    //     });
-    //   // .catch((error) => console.error("be careful",error));
-    // }
+   
 
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
@@ -587,45 +478,12 @@ function CreateNewOrder({ navigation ,route }) {
           setRiderData(responseJson.delivery_person);
         }
 
-        // console.log("Dashboard:",responseJson.client_dashboard.client_name);
-        //console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-        // if (json["response"] == "Record does not exist or not found") {
-        // setLoading(true);
-        // } else {
-        // dispatch(ApiDataAction.SetListData(responseJson));
-        // dataa=responseJson;
-        // setData(responseJson);
-        // //console.log(json);
-
-        // }
+        
       })
       .catch((error) => console.error(error));
 
       
-      //Default Delivery Person
-      // fetch(URL + "/client_app/clients_list/"+ClientId+"/")
-      // // fetch(URL+'/client_app/clients_list/33/')
-      // .then((response) => response.json())
-      // .then((responseJson) => {
-      //   if (responseJson.delivery_person == "") {
-      //     setRiderLoading(true);
-      //   } else {
-      //     setRiderData(responseJson.delivery_person);
-      //   }
-
-      //   // console.log("Dashboard:",responseJson.client_dashboard.client_name);
-      //   //console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-      //   // if (json["response"] == "Record does not exist or not found") {
-      //   // setLoading(true);
-      //   // } else {
-      //   // dispatch(ApiDataAction.SetListData(responseJson));
-      //   // dataa=responseJson;
-      //   // setData(responseJson);
-      //   // //console.log(json);
-
-      //   // }
-      // })
-      // .catch((error) => console.error(error));
+      
 
 
       
@@ -648,19 +506,6 @@ function CreateNewOrder({ navigation ,route }) {
       setTodayTime(
         hourss + ":" + minn + ":" + secc
       );
-
-
-
-
-      
-
-
-      
-
-
-
-
-
 
   }, [checkRow, count, OrderId, isFocused, formattedDate, date]);
 
@@ -978,15 +823,7 @@ function CreateNewOrder({ navigation ,route }) {
                                   // overflow: "hidden",
 
                                   flexDirection: "column",
-                                  // justifyContent: "flex-start",
-                                  // alignSelf: "center",
-
-                                  // marginTop: 10,
-                                  // shadowColor: "#000",
-                                  // shadowOffset: { width: 0, height: 2 },
-                                  // shadowOpacity: 0.25,
-                                  // shadowRadius: 3.84,
-                                  // elevation: 5,
+                                
                                 }}
                               >
                                 <View style={{ flexDirection: "row" }}>
@@ -1196,11 +1033,13 @@ padding:10,
             textAlign: "center",
           }}
         >
-          {("0" + date.getDate()).slice(-2) +
+          
+
+          {("0" + showDate.getDate()).slice(-2) +
             "-" +
-            ("0" + (date.getMonth() + 1)).slice(-2)+
+            ("0" + (showDate.getMonth() + 1)).slice(-2)+
             "-" +
-            date.getFullYear()}
+            showDate.getFullYear()}
         </Text>
       
     </View>
@@ -1227,8 +1066,9 @@ marginLeft:5
             textAlign: "center",
           }}
         >
-          {/* {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)} */}
-          {("0" + wakt.getHours()).slice(-2) + ":" + ("0" + wakt.getMinutes()).slice(-2)}
+         
+          {("0" + showTime.getHours()).slice(-2) + ":" + ("0" + showTime.getMinutes()).slice(-2)}
+          
         </Text>
       
     </View>
@@ -1371,169 +1211,10 @@ marginLeft:5
                 {currentDate}
               </Text>
               
-                {/* <Card
-  style={{
-  padding: 0,
-  width: "50%",
-  backgroundColor: "#F2F2F2",
-  elevation: 0,
-  }}
-  >
-  <View style={{ padding: 5 }}>
-  <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-  Order Date:
-  </Text>
-  <Text
-  style={{
-  fontSize: 16,
-  fontWeight: "bold",
-  textAlign: "center",
-  }}
-  >
-  {currentDate}
-  </Text>
-  </View>
-  </Card> */}
+  
 
 
-{ Platform.OS==='ios'? (
-
-<View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: 'center',
-                  //padding: 5,
-                }}
-              >
-
-    {/* //-------------------------------------Delivery Date ----------------------------// */}            
-<Card
-                  style={{
-                    padding: 5,
-                    // marginLeft: 10,
-                    width: "90%",
-                    backgroundColor: "#F2F2F2",
-                    elevation: 0,
-                    flexDirection:'row',
-                    marginBottom:'5%',
-                    marginTop:'5%'
-                  }}
-                >
-                  <View style={{ padding: 7 ,
-                    marginRight:'8%' 
-                    }}>
-                    <TouchableOpacity onPress={showDatepicker}>
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Date
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {("0" + date.getDate()).slice(-2) +
-                          "-" +
-                          ("0" + (date.getMonth() + 1)).slice(-2)+
-                          "-" +
-                          date.getFullYear()}
-                      </Text>
-                    </TouchableOpacity>
-                    {/* {show && (
-                      
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        // defaultDate={new Date()}
-                        minimumDate={new Date()}
-                        is24Hour={true}
-                        style={{ color: Colors.themeColor }}
-                        display="default"
-                        // dateFormat="day month year"
-                        onChange={onChange}
-                      />
-                    )} */}
-                  </View>
-                {/* </Card> */}
-
-                {/* //-------------------------------------Delivery Time ----------------------------// */}
-                {/* <Card
-                  style={{
-                    padding: 5,
-                    marginLeft: 10,
-                    width: "50%",
-                    backgroundColor: "#F2F2F2",
-                    elevation: 0,
-                  }}
-                > */}
-
-                  {/* <View style={{ padding: 5 }}> */}
-
-                  <View style={{ alignSelf:'flex-end', width:'30%'  }}>
-                  {show && (
-                      
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        // defaultDate={new Date()}
-                        minimumDate={new Date()}
-                        is24Hour={true}
-                        style={{ color: Colors.themeColor }}
-                        display="default"
-                        // dateFormat="day month year"
-                        onChange={onChange}
-                      />
-                    )}
-                  </View>
-
-
-
-                  <View
-                style={{
-                  flexDirection: "row",
-                  //alignSelf: 'flex-start',
-                  marginLeft:'5%',
-                  padding: 7,
-                }}
-              >
-                    <TouchableOpacity onPress={showTimepicker}>
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Time
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
-                      </Text>
-                    </TouchableOpacity>
-                    {/* {show && (
-                      
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        // defaultDate={new Date()}
-                        minimumDate={new Date()}
-                        is24Hour={true}
-                        style={{ color: Colors.themeColor }}
-                        display="default"
-                        // dateFormat="day month year"
-                        onChange={onChange}
-                      />
-                    )} */}
-                  </View>
-                </Card>
-
-              </View>
-
-):(
+{/* -------------------------    DATE TIME PICKER        ---------------------- */}
 
 <View
                 style={{
@@ -1554,39 +1235,40 @@ marginLeft:5
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    <TouchableOpacity onPress={showDatepicker}>
+                    
+
+              <TouchableOpacity onPress={showDatePicker}>
+                    
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Date:
+                        Delivery Date
                       </Text>
+                     
+
+              <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              />
                       <Text
                         style={{
                           fontSize: 16,
                           fontWeight: "bold",
                           textAlign: "center",
                         }}
-                      >
-                        {("0" + date.getDate()).slice(-2) +
+                      > 
+
+                        
+                        {("0" + showDate.getDate()).slice(-2) +
                           "-" +
-                          ("0" + (date.getMonth() + 1)).slice(-2)+
+                          ("0" + (showDate.getMonth() + 1)).slice(-2)+
                           "-" +
-                          date.getFullYear()}
-                      </Text>
+                          showDate.getFullYear()}
+               
+                          
+                      </Text> 
                     </TouchableOpacity>
-                    {show && (
-                      
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        // defaultDate={new Date()}
-                        minimumDate={new Date()}
-                        is24Hour={true}
-                        style={{ color: Colors.themeColor }}
-                        display="default"
-                        // dateFormat="day month year"
-                        onChange={onChange}
-                      />
-                    )}
+
                   </View>
                 </Card>
 
@@ -1601,10 +1283,23 @@ marginLeft:5
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    <TouchableOpacity onPress={showTimepicker}>
+                    
+
+          <TouchableOpacity onPress={showTimePickers}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Time:
+                        Delivery Time
                       </Text>
+
+                      <DateTimePickerModal
+              
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleConfirmTime}
+              onCancel={hideDatePickerTime}
+              />
+
+
+
                       <Text
                         style={{
                           fontSize: 16,
@@ -1612,116 +1307,19 @@ marginLeft:5
                           textAlign: "center",
                         }}
                       >
-                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
+                        {("0" + showTime.getHours()).slice(-2) + ":" + ("0" + showTime.getMinutes()).slice(-2)}
                       </Text>
                     </TouchableOpacity>
+
+
                   </View>
                 </Card>
 
               </View>
 
-) }
 
-{/* <View
-                style={{
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  padding: 5,
-                }}
-              > */}
-{/* //-------------------------------------Delivery Date ----------------------------// */}
-                {/* <Card
-                  style={{
-                    padding: 5,
-                    // marginLeft: 10,
-                    width: "50%",
-                    backgroundColor: "#F2F2F2",
-                    elevation: 0,
-                  }}
-                >
-                  <View style={{ padding: 5 }}>
-                    <TouchableOpacity onPress={showDatepicker}>
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Date:
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {("0" + date.getDate()).slice(-2) +
-                          "-" +
-                          ("0" + (date.getMonth() + 1)).slice(-2)+
-                          "-" +
-                          date.getFullYear()}
-                      </Text>
-                    </TouchableOpacity>
-                    {show && (
-                      // <DatePicker
-                      // defaultDate={new Date(yearr, monthh, datee)}
-                      // minimumDate={new Date(yearr, monthh, datee)}
-                      // maximumDate={new Date(2021, 12, 31)}
-                      // // formatChosenDate={(date) => {
-                      // // return moment(date).format("YYYY-MM-DD");
-                      // // }}
-                      // locale={"en"}
-                      // timeZoneOffsetInMinutes={undefined}
-                      // modalTransparent={false}
-                      // animationType={"fade"}
-                      // androidMode={"default"}
-                      // textStyle={{ color: "green" }}
-                      // placeHolderTextStyle={{ color: "#d3d3d3" }}
-                      // onDateChange={(itemValue, itemIndex) => {
-                      // setPickUpDate(itemValue);
-                      // }}
-                      // disabled={false}
-                      // />
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        // defaultDate={new Date()}
-                        minimumDate={new Date()}
-                        is24Hour={true}
-                        style={{ color: Colors.themeColor }}
-                        display="default"
-                        // dateFormat="day month year"
-                        onChange={onChange}
-                      />
-                    )}
-                  </View>
-                </Card> */}
-{/* //-------------------------------------Delivery Time ----------------------------// */}
-                {/* <Card
-                  style={{
-                    padding: 5,
-                    marginLeft: 10,
-                    width: "50%",
-                    backgroundColor: "#F2F2F2",
-                    elevation: 0,
-                  }}
-                >
-                  <View style={{ padding: 5 }}>
-                    <TouchableOpacity onPress={showTimepicker}>
-                      <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                        Delivery Time:
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                      >
-                        {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Card>
 
-              </View> */}
+
 
               
               <Text
@@ -1907,7 +1505,7 @@ marginLeft:5
                         if (userExists) {
                             // dropDownAlertRef.alertWithType('error', '', "Already Inserted");
                           // console.log('status',status);
-                          alert("Already Inserted");
+                          alert("Already inserted");
                         } else {
                           if (qtty == "") {
                             // dropDownAlertRef.alertWithType('error', '', "Please Enter Quantity.");
@@ -1916,13 +1514,13 @@ marginLeft:5
                           }
                           else if(reg.test(qtty) === false) {
 
-                            alert("Invalid Quantity");
+                            alert("Invalid quantity");
                             setQtty("");
                               return false;
                           }
                           else if(qtty==0) {
 
-                            alert("Invalid Quantity");
+                            alert("Invalid quantity");
                             setQtty("");
                           }
                           else {
@@ -2042,37 +1640,7 @@ marginLeft:5
                     <View style={{}}>
                       {/* <ScrollView nestedScrollEnabled > */}
                      {checkRow ?  (
-                        // R_cartItems.map((item, index) => (
-                        //   // <View style={{flexDirection:"column-reverse"}}>
-                        //   <CartItem
-                        //   id={item.id}
-                        //   quantity={item.quantity}
-                        //   total_amount={item.total_amount}
-                        //   name={item.name}
-                        //   unit={item.unit}
-                        //   price={item.price}
-                          
-                         
-                        //   onAddPress={() => {
-                        //     dispatch(
-                        //       cartActions.addToQtty(item.id)
-                        //     );
-                        //   }}
-                         
-                        //   onRemove={() => {
-                        //     dispatch(
-                        //       cartActions.removeFromCart(item.id)
-                        //     );
-                        //   }}
                         
-                        //   onDelete={() => {
-                        //     dispatch(
-                        //       cartActions.deleteProduct(item.id)
-                        //     );
-                        //   }}
-                        // />
-                        // // </View>
-                        // ))
                         <FlatList
                           nestedScrollEnabled
                           // inverted

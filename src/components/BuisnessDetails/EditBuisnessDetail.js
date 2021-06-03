@@ -171,10 +171,10 @@ const EditBuisnessDetail = ({ navigation, route }) => {
       
     }
     if(BusinessName==""&&BusinessNature==""&&BusinessType==""&&address==""){
-      alert("Nothing to Change");
+      alert("Nothing to change");
     }
     else if(BusinessName==" "||BusinessNature==" "||BusinessType==" "||address==" "){
-      alert("Nothing to Change");
+      alert("Nothing to change");
     }
     else{
       setLoading(true);

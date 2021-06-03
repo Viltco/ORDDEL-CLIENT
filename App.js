@@ -22,6 +22,7 @@ import ApiData from "./src/store/reducers/ApiData";
 import MyStack from "./src/navigation/MyStack";
 import OrderBox from "./src/store/reducers/OrderBox";
 import NewScreen from "./NewScreen";
+import DateTime from "./src/components/DateTime";
 // import BusinessData from "./src/store/reducers/BusinessData";
 
 
@@ -69,7 +70,8 @@ const styles = StyleSheet.create({
 
 // const App = () => {
 //   return (
-// <NewScreen/>
+
+// <DateTime/>
 //   )
 
 // }

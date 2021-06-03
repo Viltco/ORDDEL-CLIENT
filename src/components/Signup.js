@@ -294,7 +294,7 @@ const Signup = ({navigation}) => {
             password: password,
             riderId: riderId,
             gender:selectedValue=="key"?"male":"female",
-            packageId:45
+            packageId:'gold'
              })
             //  setEmail('');
             //  setFormattedValue('');
@@ -341,7 +341,7 @@ const Signup = ({navigation}) => {
         if(isEmail!=true){
           setLoading(false);
 
-           alert("This Email Already Exists, Please Change the Email")
+           alert("This email already exists, please change the email")
            setToastMessage("");
          }
          else{
@@ -354,7 +354,7 @@ const Signup = ({navigation}) => {
             else{
             setLoading(false);
   
-              setToastMessage("Please Accept Terms & Conditions")
+              setToastMessage("Please accept terms & conditions")
             }
           
 
@@ -389,45 +389,45 @@ const Signup = ({navigation}) => {
 
     console.log("phone Number",formattedValue);
     if (firstName=="" && lastName=="" &&email == '' && password == '' &&  confirmPassword == '' && formattedValue == ''&&riderId=="") {
-      alert("Please Enter Signup Details")
+      alert("Please enter signup details")
     }
     else{
       if(email==""){
-        setToastMessage("Please Enter Email")
+        setToastMessage("Please enter email")
       }
       else{
         if (reg.test(email) === false) {
-          setToastMessage("Email is Not Correct");
+          setToastMessage("Email is not correct");
       
           return false;
         }
         else if (password != confirmPassword) {
-          setToastMessage("Password Doesnot match");
+          setToastMessage("Password doesnot match");
         } else {
           if(firstName==""){
-            setToastMessage("Please Enter First Name");
+            setToastMessage("Please enter first name");
           }
           else if(lastName==""){
-            setToastMessage("Please Enter Last Name");
+            setToastMessage("Please enter last name");
           }
           else if(riderAddress==""){
-            setToastMessage("Please Select Delivery Person");
+            setToastMessage("Please select delivery person");
           }
           // else if(packageId==""){
           //   setToastMessage("Please Select Package");
           // }
           else if(formattedValue==""){
-            setToastMessage("Please Enter Phone Number");
+            setToastMessage("Please enter phone number");
           }
           else if(formattedValue==""){
-            setToastMessage("Please Enter Phone Number");
+            setToastMessage("Please enter phone number");
           }
           else if(password=="") {
-            setToastMessage("Please Enter Password");
+            setToastMessage("Please enter password");
   
           }
           else if(password.length < 8) {
-            setToastMessage("Password limit should be Greater than 7 Digits");
+            setToastMessage("Password limit should be greater than 7 digits");
   
           }
           else{
@@ -609,7 +609,7 @@ const Signup = ({navigation}) => {
             required={true}
             placeholderTextColor={Colors.textGreyColor}
             minLength={6}
-            errorMessage="Please enter Minimum 6 characters password"
+            errorMessage="Please enter minimum 6 characters password"
             value={confirmPassword}
             onChangeText={(value) => setConfirmPassword(value)}
             initialValue=""

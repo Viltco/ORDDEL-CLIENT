@@ -55,7 +55,7 @@ const ChangePasswordByEmail = ({ navigation }) => {
               setIsLoading(false);
               // Toast.show("Password Successfully Updated", Toast.LONG);
 
-              alert("Password Updated Successfully");
+              alert("Password updated successfully");
               // Toast.show(data.password, Toast.LONG);
               setNewPass("");
               setConfirmNewPass("");
@@ -66,7 +66,7 @@ const ChangePasswordByEmail = ({ navigation }) => {
                 // if(data.status="notfound"){
               setIsLoading(false);
 
-                  alert(data.status=="notfound"?"Incorrect Tokken":data.password);
+                  alert(data.status=="notfound"?"incorrect tokken":data.password);
                 // Toast.show(data.password, Toast.LONG);
               setTokken("");
 
@@ -94,12 +94,12 @@ const ChangePasswordByEmail = ({ navigation }) => {
           .catch((error) => console.log(error));
       } else {
         setIsLoading(false);
-        alert("Password And Confirm Password Doesnot Match")
+        alert("Password and confirm password does not match")
         // Toast.show("Password And Confirm Password Doesnot Match", Toast.LONG);
       }
     } else {
       setIsLoading(false);
-      alert("All Fields Are Required")
+      alert("All fields are required")
       // Toast.show("All Fields Are Required", Toast.LONG);
     }
   };
