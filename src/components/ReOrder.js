@@ -486,28 +486,7 @@ const handleConfirmTime = (date) => {
       }
       else{
         setModalVisible(!modalVisible)
-        // if (formattedDate == "") {
-        //   setFormattedDate(
-        //     date.getDate() +
-        //       "-" +
-        //       (date.getMonth() + 1) +
-        //       "-" +
-        //       date.getFullYear()
-        //   );
-        //   setFormattedTime(
-        //     date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-        //   );
-          
-        //   alert("Are you sure About your order?");
-         
-        // } else {
-          
-         
-            
-          
-
-          // console.log("before create",OrderId);
-        //}
+        
       }
         
       
@@ -655,9 +634,7 @@ return (
 
   
   <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
-    {/* <FlashMessage position="top" /> */}
-    {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-    {/* <MyHeader name="REORDER" nav={navigation} /> */}
+   
     <KeyboardAvoidingView style={{ flex: 1 }}
       behavior={Platform.OS == "ios" ? "padding" : null} >
     <ScrollView
@@ -1034,26 +1011,6 @@ return (
 
 
 
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
           </View>
         </View>
         <Modal
@@ -1254,7 +1211,7 @@ return (
             </View>
             <View style={{ flexDirection: "row", }}>
                   <Text
-                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
+                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2.5%",textAlign:"left"}}
                   >
                     Total:
                   </Text>
@@ -1337,106 +1294,7 @@ return (
 
 
 
-            {/* <View
-              style={{
-                flexDirection: "row",
-                alignSelf: "center",
-                padding: 5,
-              }}
-            >
-              
-
-              <Card
-                style={{
-                  padding: 5,
-                  // marginLeft: 10,
-                  width: "50%",
-                  backgroundColor: "#F2F2F2",
-                  elevation: 0,
-                }}
-              >
-                <View style={{ padding: 5 }}>
-                  <TouchableOpacity onPress={showDatepicker}>
-                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                      Delivery Date:
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      {("0" + date.getDate()).slice(-2) +
-                        "-" +
-                        ("0" + (date.getMonth() + 1)).slice(-2)+
-                        "-" +
-                        date.getFullYear()}
-                    </Text>
-                  </TouchableOpacity>
-                  {show && (
-                    // <DatePicker
-                    // defaultDate={new Date(yearr, monthh, datee)}
-                    // minimumDate={new Date(yearr, monthh, datee)}
-                    // maximumDate={new Date(2021, 12, 31)}
-                    // // formatChosenDate={(date) => {
-                    // // return moment(date).format("YYYY-MM-DD");
-                    // // }}
-                    // locale={"en"}
-                    // timeZoneOffsetInMinutes={undefined}
-                    // modalTransparent={false}
-                    // animationType={"fade"}
-                    // androidMode={"default"}
-                    // textStyle={{ color: "green" }}
-                    // placeHolderTextStyle={{ color: "#d3d3d3" }}
-                    // onDateChange={(itemValue, itemIndex) => {
-                    // setPickUpDate(itemValue);
-                    // }}
-                    // disabled={false}
-                    // />
-                    <DateTimePicker
-                      testID="dateTimePicker"
-                      value={date}
-                      mode={mode}
-                      // defaultDate={new Date()}
-                      minimumDate={new Date()}
-                      is24Hour={true}
-                      style={{ color: Colors.themeColor }}
-                      display="default"
-                      // dateFormat="day month year"
-                      onChange={onChange}
-                    />
-                  )}
-                </View>
-              </Card>
-
-              <Card
-                style={{
-                  padding: 5,
-                  marginLeft: 10,
-                  width: "50%",
-                  backgroundColor: "#F2F2F2",
-                  elevation: 0,
-                }}
-              >
-                <View style={{ padding: 5 }}>
-                  <TouchableOpacity onPress={showTimepicker}>
-                    <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
-                      Delivery Time:
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </Card>
-            </View> */}
+            
 
 
 
@@ -1472,6 +1330,8 @@ return (
 
               <DateTimePickerModal
               isVisible={isDatePickerVisible}
+              minimumDate={new Date()}
+              //maximumDate={new Date(2021, 12, 31)}
               mode="date"
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
@@ -1517,7 +1377,7 @@ return (
                       </Text>
 
                       <DateTimePickerModal
-              
+              minimumDate={new Date()}
               isVisible={isTimePickerVisible}
               mode="time"
               onConfirm={handleConfirmTime}
@@ -1596,7 +1456,7 @@ return (
                   }}
                   style={{
                     // backgroundColor: "#e6e6e6",
-                    paddingBottom: 7,
+                    //paddingBottom: 7,
                     color: "black",
                     width: "100%",
                   }}
@@ -1620,7 +1480,8 @@ return (
                   // which will trigger the findFilm method
                   // to show the suggestions
                   onChangeText={(text) => findName(text)}
-                  placeholder="Add Item"
+                  // placeholder="Add Item"
+                  placeholder="      Add Item"
                   placeholderTextColor="black"
                   renderItem={({ item }) => (
                     <ScrollView>
@@ -1670,7 +1531,7 @@ return (
               <View style={{ width: "15%", paddingTop: 0 }}>
                 <TextInput
                   style={styles.o_inputArea}
-                  placeholder="Qty"
+                  placeholder=" Qty"
                   autoCapitalize="none"
                   keyboardType="numeric"
                   maxLength={2}
@@ -1900,7 +1761,8 @@ return (
                     ) : null}
                      <View style={{ flexDirection: "row", paddingTop:10,paddingBottom:0 }}>
                   <Text
-                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
+                    style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",
+                    marginLeft:"7.5%",}}
                   >
                     Total:
                   </Text>
@@ -1927,44 +1789,7 @@ return (
               </Card>
             </View>
 
-            {/* <TouchableOpacity onPress={()=>setShow(true)}
-          style = {{alignSelf:'center',marginTop:5,marginBottom:10}}
-          >
-           <View style={{flexDirection:'column'}}>
-          <Text style={{alignSelf:'center',fontWeight:'bold',color:'#666666',paddingTop:5}}>Select Delivery Date:</Text>
-          <Text style={{alignSelf:'center',fontWeight:'bold',color:Colors.themeColor}}>{pickUpDate}</Text>
-          
-         
-          
-          </View>
-          </TouchableOpacity> */}
-            {/* {show && ( */}
-
-            {/* <View>
-      <DatePicker
-          defaultDate={""}
-          minimumDate={new Date(year, month, date)}
-          maximumDate={new Date(2021, 12, 31)}
-          
-          // formatChosenDate={(date) => {
-          //   return moment(date).format("YYYY-MM-DD");
-          // }}
-          locale={"en"}
-          timeZoneOffsetInMinutes={undefined}
-          modalTransparent={false}
-          animationType={"fade"}
-          androidMode={"default"}
-          textStyle={{ color: Colors.themeColor,fontWeight:'bold',alignSelf:'center' }}
-          placeHolderTextStyle={{ color: Colors.themeColor }}
-          onDateChange={(itemValue, itemIndex) => {
-            setPickUpDate(itemValue);
-            // setShow(false);
-          }}
-          disabled={false}
-        />
-        </View> */}
-            {/* ) */}
-            {/* }  */}
+       
           </Card>
         </View>
         <View style={{ height: "4%", bottom: 40, }}>

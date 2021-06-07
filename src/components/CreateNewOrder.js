@@ -1126,11 +1126,13 @@ marginLeft:5
               </View>
               <View style={{ flexDirection: "row", }}>
                     <Text
-                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",marginLeft:"2%",textAlign:"left"}}
+                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"51%",
+                       marginLeft:"2.5%",
+                      textAlign:"left"}}
                     >
                       Total:
                     </Text>
-                    <Text style={{ color: Colors.themeColor, fontWeight:'bold',width:"15%",textAlign:"center" }}>
+                    <Text style={{ color: Colors.themeColor, fontWeight:'bold' ,width:"16%",textAlign:"center" }}>
                       {cartTotalPackages}
                     </Text>
                     {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"26%",textAlign:"right" }}>
@@ -1246,6 +1248,7 @@ marginLeft:5
 
               <DateTimePickerModal
               isVisible={isDatePickerVisible}
+              minimumDate={new Date()}
               mode="date"
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
@@ -1291,7 +1294,7 @@ marginLeft:5
                       </Text>
 
                       <DateTimePickerModal
-              
+              minimumDate={new Date()}
               isVisible={isTimePickerVisible}
               mode="time"
               onConfirm={handleConfirmTime}
@@ -1371,15 +1374,24 @@ marginLeft:5
                     }}
                     style={{
                       // backgroundColor: "#e6e6e6",
-                      paddingBottom: 7,
+                      // paddingBottom: 7,
                       color: "black",
                       width: "100%",
+                      //padding:selectedValue != "" ? 0 : 20 
+                      //padding:cardItemsArray != "" ? 0 : 20 ,
+                      //padding:filteredProducts != "" ? 0 : 20 
+                      paddingRight:2
+                      //alignItems:'center'
+
                     }}
                     inputContainerStyle={{
                       backgroundColor: "#F2F2F2",
                       height: Platform.OS == "android" ? 45 : 40,
                       justifyContent: "center",
-
+                      //paddingRight:10
+                      //alignItems:'flex-end'
+                      //alignContent:'flex-end',
+                      // marginRight:5
                       //borderColor: "#e6e6e6",
                       //borderBottomColor: Colors.textGreyColor,
                     }}
@@ -1395,7 +1407,8 @@ marginLeft:5
                     // which will trigger the findFilm method
                     // to show the suggestions
                     onChangeText={(text) => findName(text)}
-                    placeholder="Add Item"
+                    placeholder="      Add Item"
+                    //placeholder="Add Item"
                     placeholderTextColor="black"
                     renderItem={({ item }) => (
                       <ScrollView keyboardShouldPersistTaps="always">
@@ -1442,10 +1455,14 @@ marginLeft:5
                     </Text>
                   )}
                 </View>
-                <View style={{ width: "15%", paddingTop: 0 }}>
+                <View style={{ width: "15%", paddingTop: 0 ,
+              //padding:cardItemsArray != "" ? 0 : 10 
+                paddingLeft:'3%'
+              }}>
                   <TextInput
                     style={styles.o_inputArea}
-                    placeholder="Qty"
+                    placeholder=" Qty"
+                    
                     autoCapitalize="none"
                     keyboardType="numeric"
                     maxLength={2}
@@ -1689,7 +1706,7 @@ marginLeft:5
                       {/* </ScrollView> */}
                       <View style={{flexDirection: "row", paddingTop:10,paddingBottom:0 ,borderBottomWidth:.5 , borderBottomColor:'gray' }}>
                     <Text
-                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"8%"}}
+                      style={{ color: Colors.themeColor,fontWeight:'bold',width:"45%",marginLeft:"7%"}}
                     >
                       Total:
                     </Text>

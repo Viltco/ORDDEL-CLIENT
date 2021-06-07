@@ -477,18 +477,28 @@ console.log(RemainingInvoices,"Remaining ---------------------------- Invoices")
       </View> */}
               <View
                 style={{
+                  paddingTop:10,
                    paddingLeft: '2%',
                    marginRight:'3%',
                   alignSelf: "center",
                   marginBottom: 20,
+                  //height:30,
+                  // marginRight:20,
+                  // borderColor:'white',
+                  //borderWidth:1,
+                  borderBottomWidth: 3,
+                  borderBottomColor: Colors.yellowColor,
+
+
                 }}
               >
                 <Text
                   style={{
                     color: "white",
                     fontWeight: "bold",
-                    borderBottomWidth: 3,
-                    borderBottomColor: Colors.yellowColor,
+                    // borderBottomWidth: 3,
+                    // borderBottomColor: Colors.yellowColor,
+                    
                     fontSize: Platform.OS == "android" ? 20 : 20,
                     //numberOfLines='2'
                     alignSelf: "flex-start",

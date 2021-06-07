@@ -281,6 +281,18 @@ const RejectedOrders = ({ navigation, route }) => {
                         >
                           {item.client_name}
                         </Text>
+                        <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "bold",
+                              color: Colors.productGrey,
+                              //   marginTop: "4%",
+                            }}
+                          >
+                         
+
+                            {item.order_delivery_datetime.split(" ")[0]}
+                          </Text>
                       </View>
                       <View
                         style={{
