@@ -1,50 +1,3 @@
-// import React,{useState ,useEffect} from 'react';
-// import { StyleSheet, View,ImageBackground , TouchableOpacity,Image, ScrollView,StatusBar,SafeAreaView} from 'react-native'
-// import { Container,Card,CardItem,Header,Content,Left,Footer ,Body,Icon, Right, Button,Drawer, Title,Text , Item,Input } from 'native-base';
-
-// import URL from '../api/ApiURL';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Colors from '../ColorCodes/Colors';
-
-// function BuisnessDetail({route ,navigation}) {
-//     return (
-//         <View style = {{height:"15%"}}>
-//         <Header iosBarStyle="light-content"
-//              androidStatusBarColor={Colors.themeColor} style = {{backgroundColor:Colors.themeColor,borderBottomColor:'#ffffff00',marginTop:Platform.OS=='android'? null:null,height:150}}>
-
-//                <Left>
-//                  <Button
-//                  onPress={() => navigation.openDrawer()}
-//                  transparent>
-//                 <Ionicons name="menu" size={35} color="white" />
-//                  </Button>
-//                </Left>
-//                {/* <Body> */}
-//                  <Title style = {{color:'white',fontWeight:'bold',alignSelf:'center',justifyContent:'center'}}>BUISNESS DETAILS</Title>
-//                {/* </Body> */}
-//               <Right>
-//                 <Image source={require('../assets/colorLogo.png')} style={{width:Platform.OS=='ios'? 50:40,height:Platform.OS=='ios'? 50:40}} />
-//               </Right>
-
-//              </Header>
-//              {/* <Header searchBar rounded>
-//           <Item>
-//             <Icon name="ios-search" />
-//             <Input placeholder="Search" />
-//             <Icon name="ios-people" />
-//           </Item>
-//           <Button transparent>
-//             <Text>Search</Text>
-//           </Button>
-//         </Header> */}
-//          </View>
-//     )
-// }
-
-// export default BuisnessDetail
-
 import React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -97,14 +50,7 @@ const BuisnessDetail = ({ navigation,route }) => {
     React.useCallback(() => {
       const backAction = () => {
         navigation.navigate("Dashboard")
-        // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        //   {
-        //     text: "Cancel",
-        //     onPress: () => null,
-        //     style: "cancel"
-        //   },
-        //   { text: "YES", onPress: () => BackHandler.exitApp() }
-        // ]);
+        
         return true;
       };
   
@@ -150,10 +96,7 @@ const BuisnessDetail = ({ navigation,route }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("Buisness Detail:", responseJson);
-        // console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-        // if (json["response"] == "Record does not exist or not found") {
-        //   setLoading(true);
-        // } else {
+        
         setData(responseJson.client_businesses);
         if (responseJson.client_businesses == "") {
           setIsLoading(false);
@@ -162,13 +105,10 @@ const BuisnessDetail = ({ navigation,route }) => {
           setLoading(false);
         }
         setIsLoading(false);
-        //   //console.log(json);
-        // }
+        
       })
       .catch((error) => console.error(error));
-    // .finally(() => setIsLoading(false));
-
-    //console.log(data)
+    
   }, [isFocused]);
 
   return (
@@ -231,14 +171,7 @@ const BuisnessDetail = ({ navigation,route }) => {
                     <TouchableOpacity
                       style={{ width: "100%" }}
                       onPress={() => {
-                        // dispatch(
-                        //   BusinessDate.updateBuisnessDetail(
-                        //     item.name,
-                        //     item.nature,
-                        //     item.type,
-                        //     item.address
-                        //   )
-                        // );
+                        
                         navigation.navigate("EditBuisnessDetail", {
                           BName: item.name,
                           BAdress: item.address,
@@ -248,39 +181,14 @@ const BuisnessDetail = ({ navigation,route }) => {
                         });
                       }}
 
-                      // onPress={()=>{
-                      //     console.log("Id",item.id)
-                      //     // navigation.navigate({
-                      //     //     routeName: ('OrderStatus'),
-                      //     //     params: {
-                      //     //         OrderBox:item.order_box
-
-                      //     //     }
-                      //     //   });
-                      //     navigation.navigate("OrderStatus",{OrderBox:item.order_box,OrderId:item.id,Packages:item.no_of_items});
-                      // }}
-                      // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                      //   onPress={() =>
-                      //     navigation.navigate("PaymentHistoryDetail")
-                      //   }
                     >
                       {/* {console.log("Business_name",item.business_details[0]['name'])} */}
                       <View
                         style={{
-                          //   borderRadius: 10,
-                          //   backgroundColor: "white",
-                          //   overflow: "hidden",
+                          
 
                           flexDirection: "column",
-                          //   justifyContent: "flex-start",
-                          //   alignSelf: "center",
-
-                          //   marginTop: 10,
-                          //   shadowColor: "#000",
-                          //   shadowOffset: { width: 0, height: 2 },
-                          //   shadowOpacity: 0.25,
-                          //   shadowRadius: 3.84,
-                          //   elevation: 5,
+                         
                         }}
                       >
                         {/* <View style={{flexDirection: "column"}}> */}
@@ -289,8 +197,6 @@ const BuisnessDetail = ({ navigation,route }) => {
                             style={{
                               padding: 10,
                               width: "100%",
-                              // alignSelf: "center",
-                              // alignItems: "center",
                               justifyContent: "flex-start",
                             }}
                           >
@@ -325,150 +231,16 @@ const BuisnessDetail = ({ navigation,route }) => {
                               </Text>
                             </View>
 
-                            {/* </View> */}
-                            {/* <View
-                    style={{
-                      width: "80%",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: -5,
-                    }}
-                  >
-                    
-                  </View> */}
+                            
                           </View>
                           <View style={{ alignSelf: "center" }}>
-                            {/* <Text style={{marginBottom:3,fontSize:14,alignSelf:'flex-end',marginRight:10,fontWeight:'bold'}}>{item.type}</Text> */}
-                            {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
-                        {item.status}
-                    </Text> */}
+                            
                           </View>
                         </View>
                       </View>
                     </TouchableOpacity>
                   </Card>
-                  //       <Card style={{borderRadius:15}}>
-                  //       <TouchableOpacity
-                  //       style={{width:"85%"}}
-                  //       >
-                  //           {/* {console.log("Business_name",item.business_details[0]['name'])} */}
-                  //         <View
-                  //           style={{
-                  //             flexDirection: "column",
-                  //             width:'100%'
-                  //           }}
-                  //         >
-                  //             {/* <View style={{flexDirection: "column"}}> */}
-                  //           <View style={{flexDirection:'row',width:'100%'}}>
-                  //           <View
-                  //             style={{
-                  //               padding: 10,
-                  //               width: "80%",
-                  //               // alignSelf: "center",
-                  //               // alignItems: "center",
-                  //               justifyContent: "flex-start",
-                  //             }}
-                  //           >
-
-                  //             <Text
-                  //               style={{
-                  //                 fontSize: 20,
-                  //                 fontWeight: "bold",
-                  //                 color:Colors.darkRedColor
-                  //               //   marginTop: "4%",
-                  //               }}
-                  //             >
-
-                  //               {item.name}
-                  //             </Text>
-
-                  //             <View
-                  //               style={{
-                  //                 // width: 200,
-                  //                  flexDirection: "row",
-                  //                 alignItems: "center",
-
-                  //                 marginTop: "1.5%",
-                  //               }}
-                  //             >
-                  //               <Text style={{ fontSize: 14, color: "grey",width:200 }}>
-
-                  //                 {item.nature}
-                  //               </Text>
-
-                  //             </View>
-
-                  //               {/* </View> */}
-                  //             {/* <View
-                  //               style={{
-                  //                 width: "80%",
-                  //                 flexDirection: "row",
-                  //                 alignItems: "center",
-                  //                 justifyContent: "center",
-                  //                 marginTop: -5,
-                  //               }}
-                  //             >
-
-                  //             </View> */}
-
-                  //           </View>
-                  //           <View style={{padding:10,width:'25%'}}>
-                  //                 <Text style={{marginBottom:3,fontSize:14,textAlign:"center",color:Colors.textGreyColor}}>Type</Text>
-                  //               <Text style={{ fontSize:14,textAlign:"center", color: "white",backgroundColor:Colors.darkRedColor,borderRadius:5,paddingHorizontal:5,}}>
-                  //                   {item.type}
-                  //               </Text>
-                  //               </View>
-                  //         </View>
-                  //         </View>
-
-                  //         {/* <Card>
-                  //       <CardItem>
-                  //         <Left>
-                  //         <Text style = {{color:'#0f70b7',fontSize:19,fontWeight:'bold'}}>{item.carrier_company}</Text>
-
-                  //          </Left>
-                  //           <Body>
-
-                  //           </Body>
-
-                  //         <Right><Text style =  {{fontSize:12,fontWeight:'bold'}}>Rs:{item.grand_total}/-</Text></Right>
-                  //       </CardItem>
-
-                  //       <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}>
-                  //         <Left>
-                  //         <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-
-                  //         </Left>
-                  //         <Body>
-
-                  //         <Image
-                  //   style={{height:15,width:150,alignSelf:'center'}}
-                  //   source={require('../../assets/route.png')}
-                  // />
-
-                  //         </Body>
-                  //         <Right>
-                  //         <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-
-                  //         </Right>
-                  //       </CardItem>
-
-                  //       {/* <CardItem>
-                  //         <Left>
-                  //         <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-                  //         </Left>
-                  //         <Body>
-
-                  //         </Body>
-                  //         <Right>
-                  //         <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-                  //         </Right>
-                  //       </CardItem> */}
-
-                  //          {/* </Card>   */}
-                  //       </TouchableOpacity>
-                  //       </Card>
+                 
                 )}
               />
             </View>

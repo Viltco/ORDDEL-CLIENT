@@ -628,10 +628,7 @@ const showTimePickers = () => {
                               item.id
                             )
                           }}
-                           // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                          // onPress={() => 
-                           // navigation.navigate("PaymentHistoryDetail")
-                          // }
+                          
                         >
                           <Card 
                              style={{
@@ -641,20 +638,11 @@ const showTimePickers = () => {
                           > 
                              <View
                               style={{ 
-                               // borderRadius: 10,
-                                // backgroundColor: "white",
-                                // overflow: "hidden",
-
+                               
                                 flexDirection: "column",
-                                // justifyContent: "flex-start",
-                                // alignSelf: "center",
+                                
 
-                                // marginTop: 10,
-                                // shadowColor: "#000",
-                                // shadowOffset: { width: 0, height: 2 },
-                                // shadowOpacity: 0.25,
-                                // shadowRadius: 3.84,
-                                // elevation: 5,
+                              
                               }}
                             > 
                               <View style={{ flexDirection: "row" }}>
@@ -1294,7 +1282,7 @@ marginLeft:5
                       </Text>
 
                       <DateTimePickerModal
-              minimumDate={new Date()}
+              //minimumDate={new Date()}
               isVisible={isTimePickerVisible}
               mode="time"
               onConfirm={handleConfirmTime}

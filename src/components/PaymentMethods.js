@@ -371,12 +371,7 @@ Enter Your Bank Card Details
         elevation: 5,
         justifyContent:'space-around'
     }}>
-        {/* <TouchableOpacity onPress={togglePaypal}>
-            {paypal?
-            <Image source={require("../assets/c_paypal.png")} style={{width:60,height:60}} />:
-            <Image source={require("../assets/paypal.png")} style={{width:60,height:60}} />}
-
-        </TouchableOpacity> */}
+        
         <TouchableOpacity disabled={check} onPress={toggleMaster}>
             {master?
             <Image source={require("../assets/c_master.png")} style={{width:60,height:60}} />:
@@ -389,12 +384,7 @@ Enter Your Bank Card Details
             <Image source={require("../assets/visa.png")} style={{width:60,height:60}} />}
 
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={toggleStripe}>
-        {stripe?
-            <Image source={require("../assets/c_stripe.png")} style={{width:60,height:60}} />:
-            <Image source={require("../assets/stripe.png")} style={{width:60,height:60}} />}
-
-        </TouchableOpacity> */}
+        
 
     </View>
 
@@ -406,42 +396,7 @@ Enter Your Bank Card Details
        
 <ScrollView style={{marginTop:'10%'}} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
 
-{/* <View style={styles.inputArea}>
-<TextInput
-style={{ width: 250 }}
-placeholder="Bank Name"
-autoCapitalize="none"
-required={true}
-placeholderTextColor={Colors.productGrey}
-minLength={6}
-errorMessage="Please enter Minimum 6 characters password"
-initialValue=""
-/>
-</View>
-<View style={styles.inputArea}>
-<TextInput
-style={{ width: 250 }}
-placeholder="Branch Code"
-autoCapitalize="none"
-required={true}
-placeholderTextColor={Colors.productGrey}
-minLength={6}
-errorMessage="Please enter Minimum 6 characters password"
-initialValue=""
-/>
-</View> */}
 
-{/* <TextInputMask
-                  placeholder="NTN"
-                  // refInput={ref => { this.input = ref }}
-                  onChangeText={(formatted, extracted) => {
-                 //   console.log(formatted) // +1 (123) 456-78-90
-                    console.log(extracted) // 1234567890
-                    setNTNNo(extracted)
-                  }}
-                  style={{ fontWeight: 'bold', fontSize: 16, marginLeft: 5,width:'100%' }}
-                  mask={"[0000000]-[0]"}
-                /> */}
     <View style={styles.inputArea}>
         <TextInput
         editable={disable}

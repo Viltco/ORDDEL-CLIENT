@@ -110,16 +110,7 @@ const CartItem = (props,{route}) => {
         
       }}
     >
-      {/* <TouchableOpacity
-            onPress={props.onDelete}
-            // style={styles.deleteButton}
-          >
-            <Ionicons
-              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-              size={23}
-              color="#EE0202"
-            />
-          </TouchableOpacity> */}
+      
       <View style={{ width: "30%", justifyContent: "center" }}>
         <Text
           style={{
@@ -157,22 +148,9 @@ onChangeText={(value) => {
 //   setCheck(true);
    
 }}
-// onPressOut={updateQuantity}
-// disableFullscreenUI={true}
-// onChange={updateQuantity}
-// clearTextOnFocus={true}
-selectTextOnFocus={true}
-// onPressOut={updateQuantity}
-// onKeyPress={updateQuantity}
-// onKeyPress={alert("Key Press")}
-//onEndEditin={bobo}
-// onEndEditing= {updateTotalAmount}
-// onEndEditing= {alert("Editing Press")}
 
-// onTouchMove={updateQuantity}
-// onTouchStart={updateQuantity}
-// onSubmitEditing={updateQuantity}
-// onKeyPress={updateQuantity}
+selectTextOnFocus={true}
+
 initialValue=""
 />
 </View>
@@ -201,40 +179,7 @@ initialValue=""
       {/* )}  */}
     </View>
 
-    // <View style={styles.cartItem}>
-    //   <View style={styles.itemData}>
-    //     <Text style={styles.quantity}>{props.quantity} </Text>
-    //     <Text style={styles.title}>{props.name}  </Text>
-
-    //   </View>
-    //   <View style={styles.itemData}>
-    //     <Text style={styles.rupees}> Rs.{props.amount.toFixed(2)}</Text>
-
-    //     {props.deletable && (
-    //       <TouchableOpacity
-    //         onPress={props.onRemove}
-    //         style={styles.deleteButton}
-    //       >
-    //         <Ionicons
-    //           name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-    //           size={23}
-    //           color="#EE0202"
-    //         />
-    //         {/* {MyIcon1} */}
-    //       </TouchableOpacity>
-    //     )}
-
-    //     {/* {props.addable && (
-    //       <TouchableOpacity
-    //         onPress={props.onAddPress}
-    //         style={styles.deleteButton}
-    //       >
-    //         {MyIcon2}
-    //       </TouchableOpacity>
-    //     )} */}
-
-    //   </View>
-    // </View>
+    
   );
 };
 

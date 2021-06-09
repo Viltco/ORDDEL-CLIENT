@@ -151,36 +151,7 @@ function Reorder({ navigation ,route }) {
   var minn;
   var secc;
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const backAction = () => {
-  //       dispatch(cartActions.allClear(1));
-
-  //       // Alert.alert("Hold on!", "Are you sure you want to go back?", [
-  //       //   {
-  //       //     text: "Cancel",
-  //       //     onPress: () => null,
-  //       //     style: "cancel"
-  //       //   },
-  //       //   { text: "YES", onPress: () => BackHandler.exitApp() }
-  //       // ]);
-  //       return false;
-  //     };
   
-  //     const backHandler = BackHandler.addEventListener(
-  //       "hardwareBackPress",
-  //       backAction
-  //     );
-  
-  //     return () => backHandler.remove();
-  //   }, [])
-  // );
-  //const [dateData, setDateData] = useState("");
-  //const [mode, setMode] = useState('date');
-  //const [show, setShow] = useState(false);
-  //var date = new Date().getDate();
-  // var month = new Date().getMonth();
-  // var year = new Date().getFullYear();
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -224,64 +195,6 @@ const handleConfirmTime = (date) => {
   hideDatePickerTime();
 };
 
-
-
-  // const onChange = (event, selectedDate) => {
-  // const currentDate = selectedDate || date;
-  // console.log("currentDate", currentDate);
-  // setShow(Platform.OS === "ios");
-  // if (
-  // parseInt(currentDate.getFullYear()) < parseInt(yearr) ||
-  // currentDate.getMonth() + 1 < monthh ||
-  // (currentDate.getMonth() + 1 == monthh && currentDate.getDate() < datee)
-  // ) {
-  // alert("Selected Date is Invalid!");
-  // } else {
-  // setDate(currentDate);
-
-  // setFormattedDate(
-  // currentDate.getDate() +
-  // "-" +
-  // (currentDate.getMonth() + 1) +
-  // "-" +
-  // currentDate.getFullYear()
-  // );
-  // console.log("date", formattedDate);
-  // }
-  // };
-
-  // const onChangee = (event, selectedDate) => {
-  // const currentDate = selectedDate || date;
-  // console.log("currentTime", currentDate);
-  // setShow(Platform.OS === "ios");
-
-  // setTime(currentDate);
-
-  // setFormattedTime(
-  // +" "+
-  // currentDate.getHours() +
-  // ":" +
-  // currentDate.getMinutes() +
-  // ":" +
-  // currentDate.getSeconds()
-  // );
-  // console.log("date", formattedTime);
-
-  // };
-
-  // const showMode = (currentMode) => {
-  // setShow(true);
-  // setMode(currentMode);
-
-  // };
-
-  // const showDatepicker = () => {
-  // showMode("date");
-  // };
-
-  // const showTimepicker = () => {
-  // showMode("time");
-  // };
 
 
   
@@ -1377,7 +1290,7 @@ return (
                       </Text>
 
                       <DateTimePickerModal
-              minimumDate={new Date()}
+              //minimumDate={new Date()}
               isVisible={isTimePickerVisible}
               mode="time"
               onConfirm={handleConfirmTime}
@@ -2154,9 +2067,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(Reorder);
 
 
 
+//   "filename" : "ItunesArtwork@2x.png",
 
-
-
+// {
+        //   "size" : "1024x1024",
+        //   "idiom" : "ios-marketing",
+        //   "scale" : "1x",
+        //   "filename" : "ItunesArtwork@2x.png"
+          
+          
+        // }
 
 
 

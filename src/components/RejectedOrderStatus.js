@@ -81,21 +81,7 @@ function RejectedOrdersStatus({ navigation ,route }) {
   const count = useSelector((state) => state.OrderBox.count);
   const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
   const cartItems = useSelector((state) => {return state.OrderBox.cardItemsArray});
-  // const cartItems = useSelector((state) => {
-  //   const transformedCartItems = [];
-  //   for (const key in state.OrderBox.items) {
-  //     transformedCartItems.push({
-  //       id: key,
-  //       // id:items[key],
-  //       quantity: state.OrderBox.items[key].quantity,
-  //       total_amount: state.OrderBox.items[key].total_amount,
-  //       name: state.OrderBox.items[key].name,
-  //       unit: state.OrderBox.items[key].unit,
-  //       price: state.OrderBox.items[key].price,
-  //     });
-  //   }
-  //   return transformedCartItems.sort((a, b) => (a.id > b.id ? 1 : -1));
-  // });
+ 
   var Count = 0;
 
   const dispatch = useDispatch();
@@ -256,51 +242,6 @@ const handleConfirmTime = (date) => {
     setS_visible(!s_visible);
   };
 
-  
-
-
-
-  // const addOrderBox=()=>{
-  //   setLoading(true);
-  //   console.log("before Order box", OrderId);
-  //   Count = Count + 1;
-  //   setSendButtonCheck(true);
-  //   setModalVisible(!modalVisible);
-  //   fetch(URL + "/order/add_to_order_box/", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       order_box: OrderId,
-  //       order_products: cartItems,
-        
-  //     }),
-  //   })
-  //     .then(async (response) => {
-  //       let data = await response.json();
-        
-  //       if (response.status == 201) {
-          
-          
-  //         CreateOrder();
-  //         console.log("(Order is added to order box)");
-          
-  //       }else{
-  //   setSendButtonCheck(false);
-  //         alert(data.message)
-  //       //  Toast.show(data.message, Toast.LONG);
-          
-  //       }
-
-  //       // code that can access both here
-  //     })
-  //     .catch((error) => {
-  //       setSendButtonCheck(false);
-  //       console.log("Something went wrong from add to order box", error);
-  //     });
-  // }
 
 
   const CreateOrder = () => {
@@ -616,9 +557,7 @@ return (
 
   
   <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
-    {/* <FlashMessage position="top" /> */}
-    {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
-    {/* <MyHeader name="RESEND ORDER" nav={navigation} /> */}
+    
     <KeyboardAvoidingView style={{ flex: 1 }}
       behavior={Platform.OS == "ios" ? "padding" : null} >
    
@@ -994,28 +933,6 @@ return (
             </BottomSheet>
 
 
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
           </View>
         </View>
         <Modal
@@ -1386,7 +1303,7 @@ return (
                       </Text>
 
                       <DateTimePickerModal
-              minimumDate={new Date()}
+              //minimumDate={new Date()}
               isVisible={isTimePickerVisible}
               mode="time"
               onConfirm={handleConfirmTime}
