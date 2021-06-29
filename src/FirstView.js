@@ -27,13 +27,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  BackHandler
+  BackHandler,
 } from "react-native";
 import styles from "./FirstView.style";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import * as ApiDataActions from "../src/store/actions/ApiData";
-import URL from './api/ApiURL';
+import URL from "./api/ApiURL";
 import Colors from "../src/ColorCodes/Colors";
 const FirstView = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -60,26 +60,24 @@ const FirstView = ({ navigation }) => {
       // console.log(email)
 
       let datap = JSON.parse(userPass);
-      if(datal&&dataR){
-      setLoading(true)
+      if (datal && dataR) {
+        setLoading(true);
 
-        fetch(URL+"/client_app/client_login/",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: datae,
-              password: datap,
-            }),
-          }
-        )
+        fetch(URL + "/client_app/client_login/", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: datae,
+            password: datap,
+          }),
+        })
           .then(async (response) => {
             let data = await response.json();
             console.log("Response", data.message);
-  
+
             console.log("status code", response.status);
             console.log("status code", data);
             if (data.message != "The account is not verified via email") {
@@ -100,13 +98,13 @@ const FirstView = ({ navigation }) => {
               // code that can access both here
             } else {
               setLoading(false);
-  
+
               // alert(data.message);
             }
           })
           .catch((error) => console.log("Something went wrong", error));
       }
-      
+
       // setPassword(datap);
       // console.log(datae, "from my stack -------------------------");
       // let datap = JSON.parse(userPass);
@@ -126,38 +124,27 @@ const FirstView = ({ navigation }) => {
     getToken();
 
     fetch(URL + "/version_control/?apk_version=1.3")
-    // fetch(URL+'/client_app/clients_list/33/')
-    .then( async (response) => {
+      // fetch(URL+'/client_app/clients_list/33/')
+      .then(async (response) => {
         let data = await response.json();
-        console.log("Show Card",data)
-        console.log("Show Card Code",response.status)
-        if(response.status==200){
-// dispatch(ApiDataAction.SetCard(data.card.card_brand,data.card.last4));
-           
-      
+        console.log("Show Card", data);
+        console.log("Show Card Code", response.status);
+        if (response.status == 200) {
+          // dispatch(ApiDataAction.SetCard(data.card.card_brand,data.card.last4));
+        } else {
+          setLoading(false);
+          Alert.alert("Hold on!", data.message, [
+            {
+              // text: "Cancel",
+              // onPress: () => null,
+              // style: "cancel"
+            },
+            { text: "Ok", onPress: () => BackHandler.exitApp() },
+          ]);
         }
-        else{
-            setLoading(false)
-            Alert.alert("Hold on!", data.message, [
-              {
-                // text: "Cancel",
-                // onPress: () => null,
-                // style: "cancel"
-              },
-              { text: "Ok", onPress: () => BackHandler.exitApp() }
-            ]);
-            
-        }
-        
-    })
-    .catch((error) => console.error(error));
-
-
-
+      })
+      .catch((error) => console.error(error));
   }, []);
-
-
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -177,102 +164,103 @@ const FirstView = ({ navigation }) => {
           />
         </View>
       ) : (
-
-      <ImageBackground
-        source={require("./assets/Splash.jpg")}
-        style={styles.image}
-      >
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.topContainer}>
-            <Image
-              style={styles.tinyLogo}
-              source={require("./assets/colorLogo.png")}
-            />
-            <View style = {{  
-        //  borderColor:'white',
-        // borderWidth:1,
-        width:'100%'}}>
-      <Text 
-      style = {{
-        // borderColor:'white',
-        // borderWidth:1,
-        marginLeft:'7%',
-        width: "100%",
-        // padding:20,
-                  color: "white",
-                  fontSize: 20,
-                  fontWeight: "700",
-                  textAlign: "center",
-                  letterSpacing: 2,
-      }}
-      >
-    Customer App
-      </Text>
-      </View>
-        
-      </View>
-      
-          {/* </View> */}
-
-          {/* <View style = {{flex:3}}> */}
-          <View
-            style={{
-              width: "100%",
-              height: "40%",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Signup")}
-              style={{
-                width: "80%",
-                borderRadius: 30,
-                backgroundColor: Colors.darkRedColor,
-              }}
-              style={{
-                ...styles.secondSubmitButton,
-                backgroundColor: "white",
-                borderWidth: 1,
-                borderColor: Colors.darkRedColor,
-              }}
-            >
-              <Text
+        <ImageBackground
+          source={require("./assets/Splash.jpg")}
+          style={styles.image}
+        >
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.topContainer}>
+              <Image
+                style={styles.tinyLogo}
+                source={require("./assets/colorLogo.png")}
+              />
+              <View
                 style={{
-                  fontWeight: "bold",
-                  color: Colors.darkRedColor,
-                  fontSize: 16,
-                  textAlign: "center",
+                  //  borderColor:'white',
+                  // borderWidth:1,
+                  width: "100%",
                 }}
               >
-                Register Yourself
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    // borderColor:'white',
+                    // borderWidth:1,
+                    marginLeft: "7%",
+                    width: "100%",
+                    // padding:20,
+                    color: "white",
+                    fontSize: 20,
+                    fontWeight: "700",
+                    textAlign: "center",
+                    letterSpacing: 2,
+                  }}
+                >
+                  Customer App
+                </Text>
+              </View>
+            </View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Login")}
+            {/* </View> */}
+
+            {/* <View style = {{flex:3}}> */}
+            <View
               style={{
-                ...styles.secondSubmitButton,
-                backgroundColor: "white",
-                borderWidth: 1,
-                borderColor: Colors.darkRedColor,
-                marginTop: 20,
+                width: "100%",
+                height: "40%",
               }}
             >
-              <Text
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Signup")}
                 style={{
-                  fontWeight: "bold",
-                  color: Colors.darkRedColor,
-                  fontSize: 16,
-                  textAlign: "center",
+                  width: "80%",
+                  borderRadius: 30,
+                  backgroundColor: Colors.darkRedColor,
+                }}
+                style={{
+                  ...styles.secondSubmitButton,
+                  backgroundColor: "white",
+                  borderWidth: 1,
+                  borderColor: Colors.darkRedColor,
                 }}
               >
-                Login
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: Colors.darkRedColor,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  Register Yourself
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Login")}
+                style={{
+                  ...styles.secondSubmitButton,
+                  backgroundColor: "white",
+                  borderWidth: 1,
+                  borderColor: Colors.darkRedColor,
+                  marginTop: 20,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: Colors.darkRedColor,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {/* </View> */}
-      </ImageBackground>
+          {/* </View> */}
+        </ImageBackground>
       )}
     </View>
   );

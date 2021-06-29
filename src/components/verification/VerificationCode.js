@@ -1,5 +1,5 @@
 import React, { useState } from "react";  
-import { Platform, SafeAreaView,StyleSheet, View,Text,Image, Button, TextInput,TouchableOpacity, ImageBackground} from "react-native";  
+import { Platform, SafeAreaView,StyleSheet, View,Text,Image, Button, TextInput,TouchableOpacity, ImageBackground,KeyboardAvoidingView,ScrollView} from "react-native";  
 import { Card , CardItem ,Right,Input} from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -230,8 +230,12 @@ else {
 
 
 return (  
+
+  // <KeyboardAvoidingView style={{ flex: 1 }}
+  // behavior={Platform.OS == "ios" ? "padding" : null} >
 <View style={styles.container}>  
 
+{/* <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}> */}
 
 <View style={styles.header}>
   <ImageBackground
@@ -253,6 +257,7 @@ return (
   
  
   <View style={styles.footer}>
+  <ScrollView>
   <Image source={require('../../assets/verification.png')} 
         style={{ height:80,width:80,alignSelf:'center'}}
           />
@@ -330,13 +335,16 @@ style = {{
                 
     </View>
 
+  </ScrollView>
 
 
   {/* </View> */}
 
 </View>
+ {/* </ScrollView> */}
   
 </View>  
+// </KeyboardAvoidingView>
 );  
 
 }  
@@ -403,6 +411,7 @@ signupContianer:{
 justifyContent: 'center',
 alignItems: 'center',
 flexDirection: 'row',
+marginTop:80
 
 }
 });

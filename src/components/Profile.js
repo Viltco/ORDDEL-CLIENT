@@ -188,12 +188,17 @@ const handleChoosePhoto = () => {
   launchImageLibrary(Options, (response) => {
     // setPhotoState({ photo: response });
     // imageBase64 = response.base64;
+    if (response.didCancel) {
+      // alert('User cancelled image picker');
+    }
+    else{
 
     setPhotoState({ photo: response });
     dispatch(ApiDataAction.SetImage(response.uri));
 
     uploadImage(response);
     console.log(response, "Imageee");
+    }
     //  alert("Image updated successfully");
 
     // if(Platform.OS==='ios' )

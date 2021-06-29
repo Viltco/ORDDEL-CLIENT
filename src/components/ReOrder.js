@@ -152,7 +152,7 @@ function Reorder({ navigation ,route }) {
   var secc;
 
   
-  const [date, setDate] = useState(new Date());
+  //const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [showDate, setShowDate] = useState(new Date());
@@ -206,7 +206,8 @@ const handleConfirmTime = (date) => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    setShowDate(currentDate);
+
     // console.log("Dateeeeeeeee: ",currentDate.getDate());
     setFormattedDate(
       currentDate.getDate() +
@@ -373,14 +374,14 @@ const handleConfirmTime = (date) => {
   const sendOrder = () => {
    
     setFormattedDate(
-        date.getDate() +
+      showDate.getDate() +
           "-" +
-          (date.getMonth() + 1) +
+          (showDate.getMonth() + 1) +
           "-" +
-          date.getFullYear()
+          showDate.getFullYear()
       );
       setFormattedTime(
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+        showTime.getHours() + ":" + showTime.getMinutes() + ":" + showTime.getSeconds()
       );
       console.log("updates Dateeeeeeeeeeeeeeeeeeeeeee   ",formattedDate);
       console.log("updates Timeeeeeeeeeeeeeeeeeeeeeee   ",formattedTime);
@@ -514,7 +515,7 @@ const handleConfirmTime = (date) => {
     // if(monthh<10){
     //   monthh="0"+monthh;
     // }
-    console.log("Monthhhhhhhhhhhhhhhhhhhhh :",date)
+    //console.log("Monthhhhhhhhhhhhhhhhhhhhh :",date)
     yearr = new Date().getFullYear(); //Current Year
     hourss = new Date().getHours(); //Current Hours
     minn = new Date().getMinutes(); //Current Minutes
@@ -525,7 +526,7 @@ const handleConfirmTime = (date) => {
       setTodayTime(
         hourss + ":" + minn + ":" + secc
       );
-  }, [checkRow, count, OrderId, isFocused, formattedDate, date]);
+  }, [checkRow, count, OrderId, isFocused, formattedDate, showDate]);
   useEffect(() => {
 
     return () => {
