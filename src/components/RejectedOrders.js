@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import {
   Image,
   ScrollView,
@@ -75,7 +75,7 @@ const RejectedOrders = ({ navigation, route }) => {
     //           .then((responseJson) => {
     //             console.log("OrderBoxDetail:", responseJson.order);
     //             // setBoxData(responseJson.order);
-                
+
     //             dispatch(
     //               cartActions.resend(responseJson.order.order_products)
     //             )
@@ -151,22 +151,7 @@ const RejectedOrders = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      {/* <MyHeader name="REJECTED ORDERS" nav={navigation} /> */}
 
-      {/* {loading && (
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "20%",
-          }}
-        >
-          <FontAwesome name="exclamation-circle" color={Colors.themeColor} size={150} />
-          <Text style={{ color: Colors.themeColor, fontWeight: "bold",marginTop:20, fontSize: 25 }}>
-            NO RECORD
-          </Text>
-        </View>
-      )} */}
 
       {isLoading ? (
         <Spinner color={Colors.themeColor} />
@@ -202,15 +187,13 @@ const RejectedOrders = ({ navigation, route }) => {
             ) : (
               <FlatList
                 data={data.response}
-                inverted
+                // inverted={true}
                 style={{ alignSelf: "center" }}
                 showsVerticalScrollIndicator={false}
                 // keyExtractor={item => item.index_id.toString()}
                 keyExtractor={({ id }, index) => id}
                 renderItem={({ item }) => (
 
-
-                  // { loadingIt?():()}
                   <TouchableOpacity
                     style={{ marginTop: 5, marginBottom: 5 }}
                     disabled={handleIt? true: false}
@@ -235,19 +218,12 @@ const RejectedOrders = ({ navigation, route }) => {
                   name:RiderName,
                   address:RiderAddress
                 })
-                // setButtonLoading(false);
-                // setIsLoading(false);
-                // setDataStatus(responseJson.order.status);
-                // console.log(boxDetail, "-------");
-                // setIsLoading(false);
+
               })
               .catch((error) => console.error(error));
                     }}
 
-                    // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                    //   onPress={() =>
-                    //     navigation.navigate("PaymentHistoryDetail")
-                    //   }
+
                   >
                     <View
                       style={{
@@ -289,7 +265,7 @@ const RejectedOrders = ({ navigation, route }) => {
                               //   marginTop: "4%",
                             }}
                           >
-                         
+
 
                             {item.order_delivery_datetime.split(" ")[0]}
                           </Text>
@@ -325,176 +301,9 @@ const RejectedOrders = ({ navigation, route }) => {
                       </View>
                     </View>
                   </TouchableOpacity>
-                 
-                 
-                 
-                 // <Card style={{ borderRadius: 15 }}>
-                  //   <TouchableOpacity
-                  //     style={{ width: "75%" }}
-                  // onPress={()=>{
-                  //     console.log("Id",item.id)
-                  //     // navigation.navigate({
-                  //     //     routeName: ('OrderStatus'),
-                  //     //     params: {
-                  //     //         OrderBox:item.order_box
 
-                  //     //     }
-                  //     //   });
-                  //     navigation.navigate("OrderStatus",{OrderBox:item.order_box,OrderId:item.id,Packages:item.no_of_items});
-                  // }}
-                  // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                  //   onPress={() =>
-                  //     navigation.navigate("PaymentHistoryDetail")
-                  //   }
-                  //>
-                  /* {console.log("Business_name",item.business_details[0]['name'])} */
-                  /* <View
-                        style={{ */
-                  /* //   borderRadius: 10,
-                          //   backgroundColor: "white",
-                          //   overflow: "hidden",
 
-                          // flexDirection: "column",
-                          //   justifyContent: "flex-start",
-                          //   alignSelf: "center",
 
-                          //   marginTop: 10,
-                          //   shadowColor: "#000",
-                          //   shadowOffset: { width: 0, height: 2 },
-                          //   shadowOpacity: 0.25,
-                          //   shadowRadius: 3.84,
-                          //   elevation: 5,
-                        }}
-                      > */
-                  /* <View style={{flexDirection: "column"}}> */
-                  /* <View style={{ flexDirection: "row" }}>
-                          <View
-                            style={{
-                              padding: 10,
-                              width: "100%",
-                              // alignSelf: "center",
-                              // alignItems: "center",
-                              justifyContent: "flex-start",
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontSize: 20,
-                                fontWeight: "bold",
-                                color: Colors.darkRedColor,
-                                //   marginTop: "4%",
-                              }}
-                            >
-                              {item.delivery_person_name}
-                            </Text> */
-
-                  /* <View
-                              style={{
-                                // width: 200,
-                                flexDirection: "row",
-                                alignItems: "center",
-
-                                marginTop: "1.5%",
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  fontSize: 14,
-                                  color: "grey",
-                                  width: 240,
-                                }}
-                              >
-                                {item.shipment_address}
-                              </Text>
-                            </View> */
-
-                  /* </View> */
-                  /* <View
-                    style={{
-                      width: "80%",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: -5,
-                    }}
-                  >
-                    
-                  </View> */
-                  /* </View>
-                          <View style={{ alignSelf: "center" }}>
-                            <Text
-                              style={{
-                                marginBottom: 3,
-                                fontSize: 14,
-                                alignSelf: "flex-end",
-                                marginRight: 10,
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {item.no_of_items} items
-                            </Text> */
-                  /* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
-                        {item.status}
-                    </Text> */
-                  /* </View>
-                        </View>
-                      </View> */
-
-                  /* <Card>
-            <CardItem>
-              <Left>
-              <Text style = {{color:'#0f70b7',fontSize:19,fontWeight:'bold'}}>{item.carrier_company}</Text>
-
-               </Left>
-                <Body>
-
-                </Body>
-              
-              <Right><Text style =  {{fontSize:12,fontWeight:'bold'}}>Rs:{item.grand_total}/-</Text></Right>
-            </CardItem>
-
-    
-           
-           
-            <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}> 
-              <Left>
-              <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-      
-              </Left>
-              <Body>
-               
-                 
-              <Image
-        style={{height:15,width:150,alignSelf:'center'}}
-        source={require('../../assets/route.png')}
-      />
-               
-                
-              </Body>
-              <Right>
-              <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-           
-              </Right>
-            </CardItem>
-
-            {/* <CardItem> 
-              <Left>
-              <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-              </Left>
-              <Body>
-               
-                 
-    
-                
-              </Body>
-              <Right>
-              <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-              </Right>
-            </CardItem> */
-
-                  /* </Card>   */
-                  /* </TouchableOpacity>
-                  </Card> */
                 )}
               />
             )}

@@ -17,7 +17,9 @@ import {
   KeyboardAvoidingView,
   Alert,
   Modal,
-  Pressable
+  Pressable,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 import {
   Container,
@@ -35,6 +37,7 @@ import {
   Item,
   Input,
   Spinner,
+
 } from "native-base";
 // import { Icon } from 'react-native-elements';
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -68,9 +71,17 @@ import PreviewCart from '../components/PreviewCart';
 // import { tr } from "date-fns/locale";
 // import Toast from 'react-native-simple-toast'
 // import { color } from "react-native-reanimated";
- 
+
 //import AddNewRow from '../components/AddNewRow';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback
+  onPress={() => Keyboard.dismiss()}>
+   {children}
+  </TouchableWithoutFeedback>
+  );
 
 function RejectedOrdersStatus({ navigation ,route }) {
   const isFocused = useIsFocused();
@@ -81,7 +92,7 @@ function RejectedOrdersStatus({ navigation ,route }) {
   const count = useSelector((state) => state.OrderBox.count);
   const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
   const cartItems = useSelector((state) => {return state.OrderBox.cardItemsArray});
- 
+
   var Count = 0;
 
   const dispatch = useDispatch();
@@ -134,9 +145,9 @@ const {id, name ,address} = route.params
   const [modalVisible, setModalVisible] = useState(false);
   const [showDate, setShowDate] = useState(new Date());
   const [showTime, setShowTime] = useState(new Date());
- 
+
   // const [sendButtonCheck, setSendButtonCheck] = useState("");
-  
+
 
   var Datee;
   var Month;
@@ -153,7 +164,7 @@ const {id, name ,address} = route.params
   var minn;
   var secc;
 
-  
+
   //const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -195,7 +206,7 @@ const handleConfirmTime = (date) => {
 
 
 
- 
+
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -288,7 +299,7 @@ const handleConfirmTime = (date) => {
           setQtty("");
           setFormattedDate("");
           // AsyncStorage.clear();
-          
+
           navigation.navigate("Dashboard");
 
           setSendButtonCheck(false);
@@ -316,7 +327,7 @@ const handleConfirmTime = (date) => {
 
 
 
-  
+
 
 
   const resend = () => {
@@ -326,7 +337,7 @@ const handleConfirmTime = (date) => {
     console.log("Order Box Id:",selectedBusinessId);
     console.log("DP Id :",id);
     console.log("dateeeeeeeee",formattedDate+" "+formattedTime)
-   
+
         fetch(URL + "/order/update_order/", {
           method: "POST   ",
           headers: {
@@ -340,7 +351,7 @@ const handleConfirmTime = (date) => {
             delivery_datetime: formattedDate + " " + formattedTime,
             order_products: cartItems,
             delivery_note:note,
-  
+
           }),
         })
           .then(async (response) => {
@@ -375,15 +386,15 @@ const handleConfirmTime = (date) => {
               setLoading(false);
 
             }
-  
+
             // code that can access both here
           })
           .catch((error) => {
             setLoading(false);
             console.log("errrrr", error);
           });
-     
-    
+
+
 
     // console.log("before create",OrderId);
 
@@ -391,10 +402,10 @@ const handleConfirmTime = (date) => {
   };
 
 
-  
+
 
   const sendOrder = () => {
-   
+
     setFormattedDate(
       showDate.getDate() +
           "-" +
@@ -411,22 +422,22 @@ const handleConfirmTime = (date) => {
     // dispatch(ApiDataAction.SetOrderBoxId(1));
     // console.log("value",selectedValue.id);
     if (cartItems == "") {
-      
+
       alert("Kindly Place an Order.");
     } else {
-    
+
       if (selectedBusinessId == "") {
-       
+
         alert("Please Select Delivery Address");
 
       }
       else{
         // console.log("cartitems: ",cartItems);
         setModalVisible(!modalVisible)
-        
+
       }
-        
-      
+
+
     }
 
     // alert("Thanks,Your Order is Placed,")
@@ -472,12 +483,12 @@ const handleConfirmTime = (date) => {
   useEffect(() => {
 
 
-    
+
     fetch(URL + "/client_app/list_business/client/" + ClientId + "/")
       // fetch(URL+'/client_app/clients_list/33/')
       .then((response) => response.json())
       .then((responseJson) => {
-      
+
         setBusinessData(responseJson.client_businesses);
         setAddressCheck(false);
 
@@ -485,21 +496,21 @@ const handleConfirmTime = (date) => {
           setAddressCheck(true);
            setLoading(true);
         }
-    
+
       })
       .catch((error) => console.error(error));
 
-    
+
       console.log("OID",OID)
-    
+
       fetch(URL + "/order/get_po_number/" + orderBoxId + "/")
-        
+
         .then((response) => response.json())
         .then((responseJson) => {
          setPoNumber(responseJson.po_number);
-          
+
         });
-     
+
 
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
@@ -516,18 +527,18 @@ const handleConfirmTime = (date) => {
           setRiderData(responseJson.delivery_person);
         }
 
-       
+
       })
       .catch((error) => console.error(error));
 
-      
-      
 
-      
+
+
+
     datee = ("0" + new Date().getDate()).slice(-2); //Current Date
-    
+
     monthh = ("0" + (new Date().getMonth() + 1)).slice(-2)//Current Month
-    
+
     //console.log("Monthhhhhhhhhhhhhhhhhhhhh :",date)
     yearr = new Date().getFullYear(); //Current Year
     hourss = new Date().getHours(); //Current Hours
@@ -549,20 +560,20 @@ const handleConfirmTime = (date) => {
    },[]);
 
   var reg = /^\d+$/;
-  
+
 
 //--------------------------------------------------------//
 
 return (
-  <>
-  
 
-  
+
+
+<DismissKeyboard>
   <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
-    
+
     <KeyboardAvoidingView style={{ flex: 1 }}
       behavior={Platform.OS == "ios" ? "padding" : null} >
-   
+
     <ScrollView
       style={{ padding: 0 }}
       nestedScrollEnabled={true}
@@ -617,7 +628,7 @@ return (
               onBackButtonPress={toggleBottomNavigationView}
               onBackdropPress={toggleBottomNavigationView}
             >
-             
+
               <View style={styles.bottomNavigationView}>
                 {riderLoading ? (
                   <View
@@ -663,18 +674,18 @@ return (
                           )
                         }}
                          // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                        // onPress={() => 
+                        // onPress={() =>
                          // navigation.navigate("PaymentHistoryDetail")
                         // }
                       >
-                        <Card 
+                        <Card
                            style={{
                             borderRadius: 15,
                             padding: 10,
                           }}
-                        > 
+                        >
                            <View
-                            style={{ 
+                            style={{
                              // borderRadius: 10,
                               // backgroundColor: "white",
                               // overflow: "hidden",
@@ -690,7 +701,7 @@ return (
                               // shadowRadius: 3.84,
                               // elevation: 5,
                             }}
-                          > 
+                          >
                             <View style={{ flexDirection: "row" }}>
                               <View
                                 style={{
@@ -700,7 +711,7 @@ return (
                                   // alignItems: "center",
                                   justifyContent: "flex-start",
                                 }}
-                              > 
+                              >
                                  <Text
                                   style={{
                                     fontSize: 20,
@@ -710,7 +721,7 @@ return (
                                   }}
                                 >
                                   {item.first_name} {item.last_name}
-                                </Text> 
+                                </Text>
 
                                  <View
                                   style={{
@@ -729,7 +740,7 @@ return (
                                     }}
                                   >
                                     {item.address}
-                                  </Text> 
+                                  </Text>
                                  </View>
                               </View>
                               <View style={{ alignSelf: "center" }}>
@@ -741,7 +752,7 @@ return (
                                     marginRight: 10,
                                     fontWeight: "bold",
                                   }}
-                                ></Text> 
+                                ></Text>
                                  {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
 {item.status}
 </Text>  */}
@@ -754,7 +765,7 @@ return (
                   />
                 )}
               </View>
-            </BottomSheet> 
+            </BottomSheet>
 
             <Card
               style={{
@@ -939,7 +950,7 @@ return (
         </View>
         <Modal
       animationType="slide"
-      
+
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
@@ -970,7 +981,7 @@ return (
         elevation: 0,
         padding:10
         }}>
-          
+
           {/* <Card
               style={{
                 padding: 10,
@@ -979,7 +990,7 @@ return (
                 elevation: 0,
               }}
             > */}
-              
+
                 <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                   Delivery Person:
                 </Text>
@@ -995,7 +1006,7 @@ return (
                 <Text style={{ fontSize: 12, color: "#666666" }}>
                   {riderAddress}
                 </Text>}
-              
+
             </View>
             <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
         shadowColor: "#000",
@@ -1006,7 +1017,7 @@ return (
         padding:10,
         marginLeft:5
         }}>
-              
+
                 <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                   Delivery Address:
                 </Text>
@@ -1016,7 +1027,7 @@ return (
                 <Text style={{ fontSize: 12, color: "#666666" }}>
                   {AddressName}
                 </Text>
-              
+
             </View>
             </View>
 
@@ -1028,7 +1039,7 @@ return (
                 paddingTop:0
               }}
             >
-              
+
 
               <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
         shadowColor: "#000",
@@ -1037,10 +1048,10 @@ return (
         shadowRadius: 3.84,
         elevation: 0,
         padding:10,
-        
+
         }}>
                 <View style={{ padding: 5 }}>
-                  
+
                     <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                       Delivery Date:
                     </Text>
@@ -1057,7 +1068,7 @@ return (
             "-" +
             showDate.getFullYear()}
                     </Text>
-                  
+
                 </View>
               </View>
 
@@ -1071,7 +1082,7 @@ return (
         marginLeft:5
         }}>
                 <View style={{ padding: 5 }}>
-                  
+
                     <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                       Delivery Time:
                     </Text>
@@ -1085,12 +1096,12 @@ return (
                       {/* {("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)} */}
                       {("0" + showTime.getHours()).slice(-2) + ":" + ("0" + showTime.getMinutes()).slice(-2)}
                     </Text>
-                  
+
                 </View>
               </View>
             </View>
 
-            
+
             <View style={{flexDirection:'row',marginTop:10}}>
       <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
       <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
@@ -1180,9 +1191,9 @@ return (
           </View>
           </ScrollView>
          </View>
-      
 
-          
+
+
         </View>
       </View>
     </Modal>
@@ -1248,14 +1259,14 @@ return (
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
               <TouchableOpacity onPress={showDatePicker}>
-                    
+
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                         Delivery Date
                       </Text>
-                     
+
 
               <DateTimePickerModal
               minimumDate={new Date()}
@@ -1270,17 +1281,17 @@ return (
                           fontWeight: "bold",
                           textAlign: "center",
                         }}
-                      > 
+                      >
 
-                        
+
                         {("0" + showDate.getDate()).slice(-2) +
                           "-" +
                           ("0" + (showDate.getMonth() + 1)).slice(-2)+
                           "-" +
                           showDate.getFullYear()}
-               
-                          
-                      </Text> 
+
+
+                      </Text>
                     </TouchableOpacity>
 
                   </View>
@@ -1297,7 +1308,7 @@ return (
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
           <TouchableOpacity onPress={showTimePickers}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
@@ -1359,7 +1370,7 @@ return (
               <View
                 style={{
                   width: Platform.OS == "android" ? "30%" : "30%",
-                  
+
                 }}
               >
                 <Autocomplete
@@ -1580,7 +1591,7 @@ return (
                 zIndex:-1
               }}
             >
-              
+
               <Card
                 style={{
                   height: "60%",
@@ -1700,12 +1711,12 @@ return (
                   </Text>
                   {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
                   £ {cartTotalAmount}
-          
+
                   </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
                   £ {parseFloat(cartTotalAmount).toFixed(2)}
-          
+
                   </Text>}
-                  
+
                 </View>
                   </View>
 
@@ -1714,11 +1725,11 @@ return (
                  } */}
                 </View>
 
-                
+
               </Card>
             </View>
 
-           
+
           </Card>
         </View>
         <View style={{ height: "4%", bottom: 40, }}>
@@ -1760,7 +1771,7 @@ return (
     </ScrollView>
     </KeyboardAvoidingView>
   </View>
-  </>
+</DismissKeyboard>
 );
 
 }
@@ -1771,7 +1782,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "bold",
     textAlign: "center",
-    
+
 
     //marginTop: 5,
   },
@@ -2003,7 +2014,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     // marginTop: 60,
-    
+
 
   },
   modalView2: {

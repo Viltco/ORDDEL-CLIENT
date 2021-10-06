@@ -106,7 +106,7 @@ setButtonLoading(true);
       })
         .then(async (response) => {
           let data = await response.json();
-  
+
           console.log(response)
           console.log("Create",data )
           // console.log("status code",response.status)
@@ -114,7 +114,7 @@ setButtonLoading(true);
           // setStatusCode(response.status)
           if (response.status == 201) {
               // setResMessage("")
-              
+
               dispatch(ApiDataAction.SetOrderBoxId(data.cart.id));
               fetch(URL + "/order/list_order/" + OrderBoxId + "/")
               // fetch(URL+'/client_app/clients_list/33/')
@@ -122,7 +122,7 @@ setButtonLoading(true);
               .then((responseJson) => {
                 console.log("OrderBoxDetail:", responseJson.order);
                 // setBoxData(responseJson.order);
-                
+
                 dispatch(
                   cartActions.resend(responseJson.order.order_products)
                 )
@@ -150,17 +150,17 @@ setButtonLoading(true);
               //   address:"142-Allama Iqbal Road"
               // })
               // setButtonLoading(false);
-              
+
           } else {
             console.log("execption: ",data.message);
             alert(data.message);
             setButtonLoading(false);
             // Toast.show(data.message, Toast.LONG);
             // setResMessage(data.message)
-         
+
           }
-        
-  
+
+
           // code that can access both here
         })
         .catch((error) => console.log("Something went wrong", error));
@@ -172,7 +172,7 @@ setButtonLoading(true);
               .then((responseJson) => {
                 console.log("OrderBoxDetail:", responseJson.order);
                 // setBoxData(responseJson.order);
-                
+
                 dispatch(
                   cartActions.resend(responseJson.order.order_products)
                 )
@@ -201,10 +201,10 @@ setButtonLoading(true);
       // })
       // setButtonLoading(false);
     }
-   
 
 
-   
+
+
   }
 
 
@@ -292,11 +292,11 @@ setButtonLoading(true);
           dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
 
         }
-        
+
       })
       .catch((error) => console.error(error));
     }
-    
+
 
 
 
@@ -312,7 +312,7 @@ setButtonLoading(true);
         setDataStatus(responseJson.order.status);
         console.log(boxDetail, "-------");
         setIsLoading(false);
-        
+
       })
       .catch((error) => console.error(error));
     setDisvisible(false);
@@ -325,7 +325,7 @@ setButtonLoading(true);
   return (
     <View style={{ flex: 1 }}>
       {/* <MyHeader name="ORDERS STATUS" nav={navigation} /> */}
-      
+
       <ScrollView>
         {isLoading ? (
           <Spinner color={Colors.themeColor} />
@@ -378,7 +378,7 @@ setButtonLoading(true);
                     }}
                   >
                     {boxData.client}
-                  </Text> 
+                  </Text>
                   <Text style={{fontSize: 13, fontWeight:'600' }}>Order No: </Text>
                   <Text style={{fontSize: 13, marginTop: 2 , marginRight:'3%',
                   width:Platform.OS=="android"? '80%':'80%',
@@ -401,7 +401,7 @@ setButtonLoading(true);
               }}
             >
 
-              <View
+              {/* <View
                 style={{
                   // height: 100,
                   // width: '30%',
@@ -411,7 +411,7 @@ setButtonLoading(true);
                   borderColor: Colors.textGreyColor,
                   borderWidth: 5,
                   marginTop: "3%",
-                  
+                  //borderWidth:5,
                   marginBottom: 10,
                 }}
               >
@@ -427,21 +427,21 @@ setButtonLoading(true);
                   }}
                 >
                     Date & Time
-                  {/* {boxData.order_delivery_datetime} */}
+
                 </Text>
                 <Text
                   style={{
                     textAlign: "center",
                     color: Colors.themeColor,
-                    
+
                     fontWeight: "bold",
                     fontSize: 12,
                     margin:'2%'
                   }}
                 >
-                    
+
                   {boxData?.order_delivery_datetime?.split(" ")[0]}
-                  {/* {boxData.order_delivery_datetime} */}
+
                 </Text>
                 <Text
                   style={{
@@ -453,10 +453,73 @@ setButtonLoading(true);
                     margin:'2%'
                   }}
                 >
-               
+
                   {boxData?.order_delivery_datetime?.split(" ")[1]}
                 </Text>
+              </View> */}
+
+
+
+
+              <View
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 100,
+                  borderColor: Colors.textGreyColor,
+                  borderWidth: 5,
+                  marginTop: "3%",
+                  marginBottom: 12,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    marginTop: "12%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%',
+
+                  }}
+                >
+
+                Delivery
+
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "20%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%',
+
+                  }}
+                >
+                Date & Time
+
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "35%",
+                    //fontWeight: "bold",
+                    fontSize: Platform.OS == "android" ? 12 : 11,
+                  }}
+                >
+                  {boxData.order_delivery_datetime}
+                </Text>
               </View>
+
+
+
+
+
+
+              {/* -------------------------- */}
 
               <View style={{ alignSelf: "center", marginLeft: "5%" }}>
                 <View
@@ -547,7 +610,7 @@ setButtonLoading(true);
                   {totalQuantity}
                 </Text>
 
-                
+
               </View>
               {/* <View style={{ flexDirection: "row" }}>
                 <Text style={{ color: Colors.themeColor, marginLeft: "5%" }}>
@@ -558,7 +621,7 @@ setButtonLoading(true);
                 </Text>
               </View> */}
 
-              
+
             </View>
             {boxData.status=="in progress"?
             <TouchableOpacity onPress={reorder} style={styles.button}>
@@ -570,7 +633,7 @@ setButtonLoading(true);
           </Content>
         )}
 
-        
+
       </ScrollView>
     </View>
   );
@@ -598,7 +661,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-  
+
   },
 
   signupContianer: {
@@ -631,7 +694,7 @@ const styles = StyleSheet.create({
 
   footer: {
     backgroundColor: "#ffffff",
-  
+
   },
   g_container: {
     // flexGrow: 1,

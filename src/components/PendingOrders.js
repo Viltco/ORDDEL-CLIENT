@@ -209,7 +209,7 @@ const PendingOrders = ({ navigation, route }) => {
                               //   marginTop: "4%",
                             }}
                           >
-                         
+
 
                             {item.order_delivery_datetime.split(" ")[0]}
                           </Text>
@@ -335,7 +335,7 @@ const PendingOrders = ({ navigation, route }) => {
                       marginTop: -5,
                     }}
                   >
-                    
+
                   </View> */
                   /* </View>
                           <View style={{ alignSelf: "center" }}>
@@ -366,43 +366,43 @@ const PendingOrders = ({ navigation, route }) => {
                 <Body>
 
                 </Body>
-              
+
               <Right><Text style =  {{fontSize:12,fontWeight:'bold'}}>Rs:{item.grand_total}/-</Text></Right>
             </CardItem>
 
-    
-           
-           
-            <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}> 
+
+
+
+            <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}>
               <Left>
               <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-      
+
               </Left>
               <Body>
-               
-                 
+
+
               <Image
         style={{height:15,width:150,alignSelf:'center'}}
         source={require('../../assets/route.png')}
       />
-               
-                
+
+
               </Body>
               <Right>
               <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-           
+
               </Right>
             </CardItem>
 
-            {/* <CardItem> 
+            {/* <CardItem>
               <Left>
               <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
               </Left>
               <Body>
-               
-                 
-    
-                
+
+
+
+
               </Body>
               <Right>
               <Text style = {{color:'gray'}}>{item.Destination_city}</Text>

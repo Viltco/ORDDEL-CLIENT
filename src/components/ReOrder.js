@@ -17,7 +17,9 @@ import {
   KeyboardAvoidingView,
   Alert,
   Modal,
-  Pressable
+  Pressable,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import {
   Container,
@@ -69,12 +71,18 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 // import { tr } from "date-fns/locale";
 // import Toast from 'react-native-simple-toast'
 // import { color } from "react-native-reanimated";
- 
+
 //import AddNewRow from '../components/AddNewRow';
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback
+  onPress={() => Keyboard.dismiss()}>
+   {children}
+  </TouchableWithoutFeedback>
+  );
 
 function Reorder({ navigation ,route }) {
   const isFocused = useIsFocused();
-  
+
   const cartTotalAmount = useSelector((state) => state.OrderBox.totalAmount);
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
@@ -132,9 +140,9 @@ function Reorder({ navigation ,route }) {
   const [todayTime,setTodayTime]=useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
- 
+
   // const [sendButtonCheck, setSendButtonCheck] = useState("");
-  
+
 
   var Datee;
   var Month;
@@ -151,7 +159,7 @@ function Reorder({ navigation ,route }) {
   var minn;
   var secc;
 
-  
+
   //const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -197,7 +205,7 @@ const handleConfirmTime = (date) => {
 
 
 
-  
+
 
 
 
@@ -266,7 +274,7 @@ const handleConfirmTime = (date) => {
       body: JSON.stringify({
         order_box: OrderId,
         order_products: cartItems,
-        
+
       }),
     })
       .then(async (response) => {
@@ -276,7 +284,7 @@ const handleConfirmTime = (date) => {
         if (response.status == 201) {
           // console.log("data",data)
           // dispatch(ApiDataAction.CreateOrder(1));
-          
+
           CreateOrder();
           console.log("(Oreder is added to order box)");
           // dispatch(ApiDataActions.SetLoginData(data));
@@ -285,7 +293,7 @@ const handleConfirmTime = (date) => {
     setSendButtonCheck(false);
           alert(data.message)
         //  Toast.show(data.message, Toast.LONG);
-          
+
         }
 
         // code that can access both here
@@ -298,7 +306,7 @@ const handleConfirmTime = (date) => {
 
 
 
-  
+
 
 
   const CreateOrder = () => {
@@ -343,7 +351,7 @@ const handleConfirmTime = (date) => {
           setQtty("");
           setFormattedDate("");
           // AsyncStorage.clear();
-          
+
           navigation.navigate("Dashboard");
 
           setSendButtonCheck(false);
@@ -372,7 +380,7 @@ const handleConfirmTime = (date) => {
 
 
   const sendOrder = () => {
-   
+
     setFormattedDate(
       showDate.getDate() +
           "-" +
@@ -389,21 +397,21 @@ const handleConfirmTime = (date) => {
     // dispatch(ApiDataAction.SetOrderBoxId(1));
     // console.log("value",selectedValue.id);
     if (cartItems == "") {
-      
+
       alert("Kindly place an order.");
     } else {
-    
+
       if (selectedBusinessId == "") {
-       
+
         alert("Please select delivery address");
 
       }
       else{
         setModalVisible(!modalVisible)
-        
+
       }
-        
-      
+
+
     }
 
     // alert("Thanks,Your Order is Placed,")
@@ -455,7 +463,7 @@ const handleConfirmTime = (date) => {
                       .then((responseJson) => {
                         dispatch(ApiDataAction.SetPoNumber(responseJson.po_number));
                         // state.PoNumber=responseJson.po_number;
-                        
+
                         console.log("PO number:",responseJson.po_number);
                       });
                     // .catch((error) => console.error("be careful",error));
@@ -481,7 +489,7 @@ const handleConfirmTime = (date) => {
       })
       .catch((error) => console.error(error));
 
-  
+
 
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
@@ -498,15 +506,15 @@ const handleConfirmTime = (date) => {
           setRiderData(responseJson.delivery_person);
         }
 
-        
+
       })
       .catch((error) => console.error(error));
 
-      
-      
 
 
-      
+
+
+
     datee = ("0" + new Date().getDate()).slice(-2); //Current Date
     // if(datee<10){
     //   datee="0"+datee;
@@ -536,19 +544,17 @@ const handleConfirmTime = (date) => {
    },[]);
 
   var reg = /^\d+$/;
-  
+
 
 
 //===========================================================================//
 
 
 return (
-  <>
-  
 
-  
+  <DismissKeyboard>
   <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
-   
+
     <KeyboardAvoidingView style={{ flex: 1 }}
       behavior={Platform.OS == "ios" ? "padding" : null} >
     <ScrollView
@@ -605,7 +611,7 @@ return (
               onBackButtonPress={toggleBottomNavigationView}
               onBackdropPress={toggleBottomNavigationView}
             >
-             
+
               <View style={styles.bottomNavigationView}>
                 {riderLoading ? (
                   <View
@@ -651,18 +657,18 @@ return (
                           )
                         }}
                          // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                        // onPress={() => 
+                        // onPress={() =>
                          // navigation.navigate("PaymentHistoryDetail")
                         // }
                       >
-                        <Card 
+                        <Card
                            style={{
                             borderRadius: 15,
                             padding: 10,
                           }}
-                        > 
+                        >
                            <View
-                            style={{ 
+                            style={{
                              // borderRadius: 10,
                               // backgroundColor: "white",
                               // overflow: "hidden",
@@ -678,7 +684,7 @@ return (
                               // shadowRadius: 3.84,
                               // elevation: 5,
                             }}
-                          > 
+                          >
                             <View style={{ flexDirection: "row" }}>
                               <View
                                 style={{
@@ -688,7 +694,7 @@ return (
                                   // alignItems: "center",
                                   justifyContent: "flex-start",
                                 }}
-                              > 
+                              >
                                  <Text
                                   style={{
                                     fontSize: 20,
@@ -698,7 +704,7 @@ return (
                                   }}
                                 >
                                   {item.first_name} {item.last_name}
-                                </Text> 
+                                </Text>
 
                                  <View
                                   style={{
@@ -717,7 +723,7 @@ return (
                                     }}
                                   >
                                     {item.address}
-                                  </Text> 
+                                  </Text>
                                  </View>
                               </View>
                               <View style={{ alignSelf: "center" }}>
@@ -729,7 +735,7 @@ return (
                                     marginRight: 10,
                                     fontWeight: "bold",
                                   }}
-                                ></Text> 
+                                ></Text>
                                  {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
 {item.status}
 </Text>  */}
@@ -742,7 +748,7 @@ return (
                   />
                 )}
               </View>
-            </BottomSheet> 
+            </BottomSheet>
 
             <Card
               style={{
@@ -929,7 +935,7 @@ return (
         </View>
         <Modal
       animationType="slide"
-      
+
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
@@ -960,7 +966,7 @@ return (
         elevation: 0,
         padding:10
         }}>
-          
+
           {/* <Card
               style={{
                 padding: 10,
@@ -969,7 +975,7 @@ return (
                 elevation: 0,
               }}
             > */}
-              
+
                 <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                   Delivery Person:
                 </Text>
@@ -985,7 +991,7 @@ return (
                 <Text style={{ fontSize: 12, color: "#666666" }}>
                   {riderAddress}
                 </Text>}
-              
+
             </View>
             <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
         shadowColor: "#000",
@@ -996,7 +1002,7 @@ return (
         padding:10,
         marginLeft:5
         }}>
-              
+
                 <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                   Delivery Address:
                 </Text>
@@ -1006,7 +1012,7 @@ return (
                 <Text style={{ fontSize: 12, color: "#666666" }}>
                   {AddressName}
                 </Text>
-              
+
             </View>
             </View>
 
@@ -1018,7 +1024,7 @@ return (
                 paddingTop:0
               }}
             >
-              
+
 
               <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
         shadowColor: "#000",
@@ -1027,10 +1033,10 @@ return (
         shadowRadius: 3.84,
         elevation: 0,
         padding:10,
-        
+
         }}>
                 <View style={{ padding: 5 }}>
-                  
+
                     <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                       Delivery Date:
                     </Text>
@@ -1047,7 +1053,7 @@ return (
             "-" +
             showDate.getFullYear()}
                     </Text>
-                  
+
                 </View>
               </View>
 
@@ -1061,7 +1067,7 @@ return (
         marginLeft:5
         }}>
                 <View style={{ padding: 5 }}>
-                  
+
                     <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                       Delivery Time:
                     </Text>
@@ -1074,12 +1080,12 @@ return (
                     >
                       {("0" + showTime.getHours()).slice(-2) + ":" + ("0" + showTime.getMinutes()).slice(-2)}
                     </Text>
-                  
+
                 </View>
               </View>
             </View>
 
-            
+
             <View style={{flexDirection:'row',marginTop:10}}>
       <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
       <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
@@ -1168,9 +1174,9 @@ return (
           </View>
           </ScrollView>
          </View>
-      
 
-          
+
+
         </View>
       </View>
     </Modal>
@@ -1208,7 +1214,7 @@ return (
 
 
 
-            
+
 
 
 
@@ -1233,14 +1239,14 @@ return (
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
               <TouchableOpacity onPress={showDatePicker}>
-                    
+
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                         Delivery Date
                       </Text>
-                     
+
 
               <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -1256,17 +1262,17 @@ return (
                           fontWeight: "bold",
                           textAlign: "center",
                         }}
-                      > 
+                      >
 
-                        
+
                         {("0" + showDate.getDate()).slice(-2) +
                           "-" +
                           ("0" + (showDate.getMonth() + 1)).slice(-2)+
                           "-" +
                           showDate.getFullYear()}
-               
-                          
-                      </Text> 
+
+
+                      </Text>
                     </TouchableOpacity>
 
                   </View>
@@ -1283,7 +1289,7 @@ return (
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
           <TouchableOpacity onPress={showTimePickers}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
@@ -1344,7 +1350,7 @@ return (
               <View
                 style={{
                   width: Platform.OS == "android" ? "30%" : "30%",
-                  
+
                 }}
               >
                 <Autocomplete
@@ -1565,7 +1571,7 @@ return (
                 zIndex:-1
               }}
             >
-              
+
               <Card
                 style={{
                   height: "60%",
@@ -1685,12 +1691,12 @@ return (
                   </Text>
                   {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
                   £ {cartTotalAmount}
-          
+
                   </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
                   £ {parseFloat(cartTotalAmount).toFixed(2)}
-          
+
                   </Text>}
-                  
+
                 </View>
                   </View>
 
@@ -1699,11 +1705,11 @@ return (
                  } */}
                 </View>
 
-                
+
               </Card>
             </View>
 
-       
+
           </Card>
         </View>
         <View style={{ height: "4%", bottom: 40, }}>
@@ -1739,7 +1745,8 @@ return (
     </ScrollView>
     </KeyboardAvoidingView>
   </View>
-  </>
+  </DismissKeyboard>
+
 );
             }
 
@@ -1758,7 +1765,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "bold",
     textAlign: "center",
-    
+
 
     //marginTop: 5,
   },
@@ -1990,7 +1997,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     // marginTop: 60,
-    
+
 
   },
   modalView2: {
@@ -2075,8 +2082,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Reorder);
         //   "idiom" : "ios-marketing",
         //   "scale" : "1x",
         //   "filename" : "ItunesArtwork@2x.png"
-          
-          
+
+
         // }
 
 

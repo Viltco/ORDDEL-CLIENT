@@ -17,7 +17,9 @@ import {
   KeyboardAvoidingView,
   Alert,
   Modal,
-  Pressable
+  Pressable,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 import {
   Container,
@@ -35,6 +37,7 @@ import {
   Item,
   Input,
   Spinner,
+
 } from "native-base";
 // import { Icon } from 'react-native-elements';
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -66,17 +69,25 @@ import PreviewCart from '../components/PreviewCart';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback
+  onPress={() => Keyboard.dismiss()}>
+   {children}
+  </TouchableWithoutFeedback>
+  );
+
+
 function CreateNewOrder({ navigation ,route }) {
   const isFocused = useIsFocused();
   const {id, name ,address} = route.params
-  
+
   const cartTotalAmount = useSelector((state) => state.OrderBox.totalAmount);
   const cartTotalPackages = useSelector((state) => state.OrderBox.totalPackages);
   const count = useSelector((state) => state.OrderBox.count);
   const CheckId = useSelector((state) => state.OrderBox.cardItemsArray);
   const cardItemsArray = useSelector((state) => {return state.OrderBox.cardItemsArray});
- 
-  
+
+
   var Count = 0;
 
   const dispatch = useDispatch();
@@ -130,9 +141,9 @@ function CreateNewOrder({ navigation ,route }) {
   const [todayTime,setTodayTime]=useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
- 
+
   // const [sendButtonCheck, setSendButtonCheck] = useState("");
-  
+
 
   var Datee;
   var Month;
@@ -149,7 +160,7 @@ function CreateNewOrder({ navigation ,route }) {
   var minn;
   var secc;
 
- 
+
   //const [date, setDate] = useState(new Date());
   const [wakt, setWakt] = useState(new Date());
   const [mode, setMode] = useState("datetime");
@@ -218,7 +229,7 @@ const showTimePickers = () => {
     setShow(Platform.OS === "ios");
     setDate(currentDate);
     // console.log("Dateeeeeeeee: ",currentDate.getDate());
-   
+
       setFormattedTime(
         currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
       );
@@ -268,7 +279,7 @@ const showTimePickers = () => {
       body: JSON.stringify({
         order_box: OrderId,
         order_products: cardItemsArray,
-        
+
       }),
     })
       .then(async (response) => {
@@ -279,7 +290,7 @@ const showTimePickers = () => {
         if (response.status == 201) {
           // console.log("data",data)
           // dispatch(ApiDataAction.CreateOrder(1));
-          
+
           CreateOrder();
           console.log("(Oreder is added to order box)");
           // dispatch(ApiDataActions.SetLoginData(data));
@@ -288,7 +299,7 @@ const showTimePickers = () => {
         else{
     setSendButtonCheck(false);
           alert(data.message)
-          
+
         }
 
       })
@@ -323,14 +334,14 @@ const showTimePickers = () => {
     })
       .then(async (response) => {
         let data = await response.json();
-        
+
         if (response.status == 201) {
-         
+
 
           setLoading(false);
           // Alert.showAlert();
           alert("Thanks, your order has been placed.");
-          
+
           dispatch(ApiDataAction.Clear(1));
           setSelectedValue([{}]);
           setNote("");
@@ -338,15 +349,15 @@ const showTimePickers = () => {
           setQtty("");
           setFormattedDate("");
           // AsyncStorage.clear();
-          
+
           navigation.navigate("Dashboard");
 
           setSendButtonCheck(false);
 
-          
+
         } else {
           alert(data.message)
-          
+
           setLoading(false);
           setSendButtonCheck(false);
         }
@@ -364,7 +375,7 @@ const showTimePickers = () => {
 
 
   const sendOrder = () => {
-   
+
     setFormattedDate(
       showDate.getDate() +
           "-" +
@@ -377,29 +388,29 @@ const showTimePickers = () => {
       );
       console.log("updates Dateeeeeeeeeeeeeeeeeeeeeee   ",formattedDate);
       console.log("updates Timeeeeeeeeeeeeeeeeeeeeeee   ",formattedTime);
-    
+
     if (cardItemsArray == "") {
-      
+
       alert("Kindly place an order.");
     } else {
-    
+
       if (selectedBusinessId == "") {
-       
+
         alert("Please select delivery address");
 
       }
       else{
         setModalVisible(!modalVisible)
-       
+
       }
-        
-      
+
+
     }
 
-    
+
   };
 
-  
+
 
 
   const findName = (query) => {
@@ -448,7 +459,7 @@ const showTimePickers = () => {
       // fetch(URL+'/client_app/clients_list/33/')
       .then((response) => response.json())
       .then((responseJson) => {
-        
+
         setBusinessData(responseJson.client_businesses);
         setAddressCheck(false);
 
@@ -461,7 +472,7 @@ const showTimePickers = () => {
       })
       .catch((error) => console.error(error));
 
-   
+
 
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
@@ -478,15 +489,15 @@ const showTimePickers = () => {
           setRiderData(responseJson.delivery_person);
         }
 
-        
+
       })
       .catch((error) => console.error(error));
 
-      
-      
+
+console.log(' new order list ...... ', riderData);
 
 
-      
+
     datee = ("0" + new Date().getDate()).slice(-2); //Current Date
     // if(datee<10){
     //   datee="0"+datee;
@@ -520,8 +531,10 @@ const showTimePickers = () => {
 
   var reg = /^\d+$/;
   return (
-    <>
-    
+
+     <DismissKeyboard>
+
+
     <View style={{ flex: 1, backgroundColor: "white", height: "100%" }}>
       {/* <FlashMessage position="top" /> */}
       {/* <DropdownAlert ref={ref => dropDownAlertRef = ref} updateStatusBar={false} tapToCloseEnabled={true} errorColor={Colors.themeColor} containerStyle={{width:"80%"}} /> */}
@@ -582,7 +595,7 @@ const showTimePickers = () => {
                 onBackButtonPress={toggleBottomNavigationView}
                 onBackdropPress={toggleBottomNavigationView}
               >
-               
+
                 <View style={styles.bottomNavigationView}>
                   {riderLoading ? (
                     <View
@@ -607,6 +620,7 @@ const showTimePickers = () => {
                     </View>
                   ) : (
                     <FlatList
+                    inverted={true}
                       // nestedScrollEnabled={true}
                       data={riderData}
                       style={{ padding: 10,marginTop:Platform.OS=="android"?0:"12%" }}
@@ -619,7 +633,7 @@ const showTimePickers = () => {
                             width: "95%",
                             marginBottom: 15,
                             alignSelf: "center",
-                            
+
                           }}
                           onPress={() =>{
                             rider(
@@ -628,23 +642,23 @@ const showTimePickers = () => {
                               item.id
                             )
                           }}
-                          
+
                         >
-                          <Card 
+                          <Card
                              style={{
                               borderRadius: 15,
                               padding: 10,
                             }}
-                          > 
+                          >
                              <View
-                              style={{ 
-                               
-                                flexDirection: "column",
-                                
+                              style={{
 
-                              
+                                flexDirection: "column",
+
+
+
                               }}
-                            > 
+                            >
                               <View style={{ flexDirection: "row" }}>
                                 <View
                                   style={{
@@ -654,7 +668,7 @@ const showTimePickers = () => {
                                     // alignItems: "center",
                                     justifyContent: "flex-start",
                                   }}
-                                > 
+                                >
                                    <Text
                                     style={{
                                       fontSize: 20,
@@ -664,7 +678,7 @@ const showTimePickers = () => {
                                     }}
                                   >
                                     {item.first_name} {item.last_name}
-                                  </Text> 
+                                  </Text>
 
                                    <View
                                     style={{
@@ -683,7 +697,7 @@ const showTimePickers = () => {
                                       }}
                                     >
                                       {item.address}
-                                    </Text> 
+                                    </Text>
                                    </View>
                                 </View>
                                 <View style={{ alignSelf: "center" }}>
@@ -695,7 +709,7 @@ const showTimePickers = () => {
                                       marginRight: 10,
                                       fontWeight: "bold",
                                     }}
-                                  ></Text> 
+                                  ></Text>
                                    {/* <Text style={{ fontSize:12,alignSelf:'flex-end', color: "white",backgroundColor:Colors.darkRedColor,borderRadius:10,padding:5,}}>
   {item.status}
   </Text>  */}
@@ -708,7 +722,7 @@ const showTimePickers = () => {
                     />
                   )}
                 </View>
-              </BottomSheet> 
+              </BottomSheet>
 
               <Card
                 style={{
@@ -811,7 +825,7 @@ const showTimePickers = () => {
                                   // overflow: "hidden",
 
                                   flexDirection: "column",
-                                
+
                                 }}
                               >
                                 <View style={{ flexDirection: "row" }}>
@@ -889,7 +903,7 @@ const showTimePickers = () => {
 
 
 
-              
+
 
 
 
@@ -907,7 +921,7 @@ const showTimePickers = () => {
           </View>
           <Modal
         animationType="slide"
-        
+
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -938,7 +952,7 @@ const showTimePickers = () => {
           elevation: 0,
           padding:10
           }}>
-            
+
             {/* <Card
                 style={{
                   padding: 10,
@@ -947,7 +961,7 @@ const showTimePickers = () => {
                   elevation: 0,
                 }}
               > */}
-                
+
                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                     Delivery Person:
                   </Text>
@@ -963,7 +977,7 @@ const showTimePickers = () => {
                   <Text style={{ fontSize: 12, color: "#666666" }}>
                     {riderAddress}
                   </Text>}
-                
+
               </View>
               <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
           shadowColor: "#000",
@@ -974,7 +988,7 @@ const showTimePickers = () => {
           padding:10,
           marginLeft:5
           }}>
-                
+
                   <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                     Delivery Address:
                   </Text>
@@ -984,7 +998,7 @@ const showTimePickers = () => {
                   <Text style={{ fontSize: 12, color: "#666666" }}>
                     {AddressName}
                   </Text>
-                
+
               </View>
               </View>
 
@@ -998,7 +1012,7 @@ const showTimePickers = () => {
     paddingTop:0
   }}
 >
-  
+
 
   <View style = {{width:"50%",backgroundColor:'#e6e6e6',alignSelf:"center",borderRadius:10,
 shadowColor: "#000",
@@ -1010,7 +1024,7 @@ padding:10,
 
 }}>
     <View style={{ padding: 5 }}>
-      
+
         <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
           Delivery Date:
         </Text>
@@ -1021,7 +1035,7 @@ padding:10,
             textAlign: "center",
           }}
         >
-          
+
 
           {("0" + showDate.getDate()).slice(-2) +
             "-" +
@@ -1029,7 +1043,7 @@ padding:10,
             "-" +
             showDate.getFullYear()}
         </Text>
-      
+
     </View>
   </View>
 
@@ -1043,7 +1057,7 @@ padding:10,
 marginLeft:5
 }}>
     <View style={{ padding: 5 }}>
-      
+
         <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
           Delivery Time:
         </Text>
@@ -1054,20 +1068,20 @@ marginLeft:5
             textAlign: "center",
           }}
         >
-         
+
           {("0" + showTime.getHours()).slice(-2) + ":" + ("0" + showTime.getMinutes()).slice(-2)}
-          
+
         </Text>
-      
+
     </View>
   </View>
 </View>
- 
- 
 
-              
 
-              
+
+
+
+
               <View style={{flexDirection:'row',marginTop:10}}>
         <Text style={{color:Colors.themeColor,fontWeight:"bold",marginLeft:"2%",width:"31%",textAlign:"left"}}>Product</Text>
         <Text style={{color:Colors.themeColor,fontWeight:"bold",textAlign:"center",width:"15%"}}>Unit</Text>
@@ -1162,9 +1176,9 @@ marginLeft:5
             </View>
             </ScrollView>
            </View>
-        
- 
-            
+
+
+
           </View>
         </View>
       </Modal>
@@ -1200,8 +1214,8 @@ marginLeft:5
               >
                 {currentDate}
               </Text>
-              
-  
+
+
 
 
 {/* -------------------------    DATE TIME PICKER        ---------------------- */}
@@ -1225,14 +1239,14 @@ marginLeft:5
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
               <TouchableOpacity onPress={showDatePicker}>
-                    
+
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
                         Delivery Date
                       </Text>
-                     
+
 
               <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -1247,17 +1261,17 @@ marginLeft:5
                           fontWeight: "bold",
                           textAlign: "center",
                         }}
-                      > 
+                      >
 
-                        
+
                         {("0" + showDate.getDate()).slice(-2) +
                           "-" +
                           ("0" + (showDate.getMonth() + 1)).slice(-2)+
                           "-" +
                           showDate.getFullYear()}
-               
-                          
-                      </Text> 
+
+
+                      </Text>
                     </TouchableOpacity>
 
                   </View>
@@ -1274,7 +1288,7 @@ marginLeft:5
                   }}
                 >
                   <View style={{ padding: 5 }}>
-                    
+
 
           <TouchableOpacity onPress={showTimePickers}>
                       <Text style={{ color: Colors.themeColor, fontSize: 12 }}>
@@ -1312,7 +1326,7 @@ marginLeft:5
 
 
 
-              
+
               <Text
                 style={{
                   color: Colors.themeColor,
@@ -1335,7 +1349,7 @@ marginLeft:5
                <View
                   style={{
                     width: Platform.OS == "android" ? "30%" : "30%",
-                    
+
                   }}
                 >
                   <Autocomplete
@@ -1344,7 +1358,7 @@ marginLeft:5
                     autoCorrect={false}
                     flatListProps={{ nestedScrollEnabled: true}}
                     // containerStyle={{}}
-                   
+
                     listContainerStyle={{
                       backgroundColor: "#e6e6e6",
                       width: 250,
@@ -1365,9 +1379,9 @@ marginLeft:5
                       // paddingBottom: 7,
                       color: "black",
                       width: "100%",
-                      //padding:selectedValue != "" ? 0 : 20 
+                      //padding:selectedValue != "" ? 0 : 20
                       //padding:cardItemsArray != "" ? 0 : 20 ,
-                      //padding:filteredProducts != "" ? 0 : 20 
+                      //padding:filteredProducts != "" ? 0 : 20
                       paddingRight:2
                       //alignItems:'center'
 
@@ -1444,13 +1458,13 @@ marginLeft:5
                   )}
                 </View>
                 <View style={{ width: "15%", paddingTop: 0 ,
-              //padding:cardItemsArray != "" ? 0 : 10 
+              //padding:cardItemsArray != "" ? 0 : 10
                 paddingLeft:'3%'
               }}>
                   <TextInput
                     style={styles.o_inputArea}
                     placeholder=" Qty"
-                    
+
                     autoCapitalize="none"
                     keyboardType="numeric"
                     maxLength={2}
@@ -1571,7 +1585,7 @@ marginLeft:5
                   zIndex:-1
                 }}
               >
-                
+
                 <View style = {{height:"60%",backgroundColor:'#F2F2F2',alignSelf:"center",borderRadius:10,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
@@ -1579,7 +1593,7 @@ marginLeft:5
           shadowRadius: 3.84,
           elevation: 0,
           padding:10,
-          
+
           // marginLeft:5
           }}>
                   <View>
@@ -1645,7 +1659,7 @@ marginLeft:5
                     <View style={{}}>
                       {/* <ScrollView nestedScrollEnabled > */}
                      {checkRow ?  (
-                        
+
                         <FlatList
                           nestedScrollEnabled
                           // inverted
@@ -1666,7 +1680,7 @@ marginLeft:5
                               name={itemData.item.name}
                               unit={itemData.item.unit}
                               price={itemData.item.price}
-                              
+
                               // addable
                               onAddPress={() => {
                                 dispatch(
@@ -1703,25 +1717,25 @@ marginLeft:5
                     </Text>
                     {cartTotalAmount==0?<Text style={{ color: Colors.textGreyColor,width:"21%",textAlign:"right" }}>
                     £ {cartTotalAmount}
-            
+
                     </Text>:<Text style={{ color: Colors.textGreyColor,width:"27%",textAlign:"right" }}>
                     £ {parseFloat(cartTotalAmount).toFixed(2)}
-            
+
                     </Text>}
-                    
+
                   </View>
                     </View>
 
-                    
+
                   </View>
 
-                  
+
                 </View>
-                
+
               </View>
 
-              
-             
+
+
             </Card>
           </View>
           <View style={{ height: "4%", bottom: 40, }}>
@@ -1757,7 +1771,9 @@ marginLeft:5
       </ScrollView>
       </KeyboardAvoidingView>
     </View>
-    </>
+
+     </DismissKeyboard>
+
   );
 }
 
@@ -1767,7 +1783,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "bold",
     textAlign: "center",
-    
+
 
     //marginTop: 5,
   },
@@ -1999,7 +2015,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     // marginTop: 60,
-    
+
 
   },
   modalView2: {

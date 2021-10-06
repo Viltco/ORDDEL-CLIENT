@@ -1,0 +1,14 @@
+com/orddel/MainActivity.java
+ com.orddel.MainActivity
+com/orddel/ReactNativeFlipper.java
+ com.orddel.ReactNativeFlipper
+ com.orddel.ReactNativeFlipper$1
+ com.orddel.ReactNativeFlipper$2
+ com.orddel.ReactNativeFlipper$2$1
+com/orddel/MainApplication.java
+ com.orddel.MainApplication
+ com.orddel.MainApplication$1
+com/orddel/BuildConfig.java
+ com.orddel.BuildConfig
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList

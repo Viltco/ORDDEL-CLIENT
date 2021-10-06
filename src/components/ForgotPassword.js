@@ -165,16 +165,21 @@ const ForgotPassword = ({ navigation, route }) => {
         </Text>
       </View>
       <View
+
         style={{
           width: "80%",
-          height: "20%",
+          height: 170,
+          justifyContent:'center',
           alignSelf: "center",
+          // alignContent:'center',
           borderRadius: 10,
-
+          marginTop: 20,
+          //borderWidth:1,
           flexDirection: "row",
           backgroundColor: "#E2E2E2",
-          justifyContent: "center",
+          //justifyContent: "center",
         }}
+
       >
         {loading ? (
           <Spinner color={Colors.themeColor} style={{alignSelf:'center'}} />
@@ -182,10 +187,11 @@ const ForgotPassword = ({ navigation, route }) => {
           <TouchableOpacity
             onPress={send_Verification_Code}
             style={{
-              width: "80%",
+              width: "90%",
               height: "25%",
               alignSelf: "center",
               borderRadius: 10,
+              //borderWidth:1,
 
               flexDirection: "row",
               backgroundColor: "#E2E2E2",
@@ -196,6 +202,7 @@ const ForgotPassword = ({ navigation, route }) => {
               style={{
                 width: "15%",
                 height: "100%",
+               //borderWidth:1,
 
                 justifyContent: "center",
                 alignItems: "center",
@@ -237,14 +244,16 @@ const ForgotPassword = ({ navigation, route }) => {
       <View
         style={{
           width: "80%",
-          height: "20%",
+          height: 170,
+          justifyContent:'center',
           alignSelf: "center",
+          // alignContent:'center',
           borderRadius: 10,
-          marginTop: 20,
-
+          marginTop: 30,
+          //borderWidth:1,
           flexDirection: "row",
           backgroundColor: "#E2E2E2",
-          justifyContent: "center",
+          //justifyContent: "center",
         }}
       >
         {isLoading ? (
@@ -254,22 +263,24 @@ const ForgotPassword = ({ navigation, route }) => {
             onPress={send_Email}
             style={{
               width: "80%",
-              height: "15%",
+              height: 80,
               alignSelf: "center",
               borderRadius: 10,
               marginTop: 20,
+              //borderWidth:1,
 
               flexDirection: "row",
               backgroundColor: "#E2E2E2",
-              justifyContent: "center",
+              // justifyContent: "center",
             }}
           >
             <View
               style={{
-                width: "15%",
-                height: "100%",
+                width: "20%",
+                //height: "100%",
+                //borderWidth:1,
 
-                justifyContent: "center",
+                justifyContent: 'flex-start',
                 alignItems: "center",
               }}
             >
@@ -283,18 +294,19 @@ const ForgotPassword = ({ navigation, route }) => {
             </View>
             <View
               style={{
-                width: "70%",
+                width: "80%",
                 height: "100%",
                 paddingLeft: 20,
+                //borderWidth:1,
 
-                justifyContent: "center",
+                justifyContent: 'flex-start',
               }}
             >
               <Text style={{ color: Colors.textGreyColor }}>Via Email</Text>
               <Text
                 style={{
                   color: Colors.productGrey,
-                  fontSize: 18,
+                  fontSize: 16,
                   width: "100%",
                   fontWeight: "bold",
                   marginBottom:15

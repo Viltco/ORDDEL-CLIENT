@@ -94,13 +94,7 @@ const CompletedOrderList = ({ navigation, route }) => {
           setIsLoading(false);
         }
 
-        // console.log("Buisness Detail:",responseJson.client_businesses[0]['name']);
-        // if (json["response"] == "Record does not exist or not found") {
-        //   setLoading(true);
-        // } else {
 
-        //   //console.log(json);
-        // }
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
@@ -161,7 +155,7 @@ const CompletedOrderList = ({ navigation, route }) => {
             ) : (
               <FlatList
                 data={data.response}
-                //inverted
+                //inverted={true}
                 style={{ alignSelf: "center" }}
                 showsVerticalScrollIndicator={false}
                 // keyExtractor={item => item.index_id.toString()}
@@ -179,10 +173,6 @@ const CompletedOrderList = ({ navigation, route }) => {
 
                     }}
 
-                    // onPress = {() => navigation.navigate("PendingDetails" , {Due_Date : item.due_date , Invoice_Total : item.grand_total,Carrier_Name : item.carrier_company ,Load_Type : item.load_type,Origin_City : item.Origin_city,Destination_City : item.Destination_city,Delivery_Option : item.Delivery_Option,Cargo_Amount : item.Cargo_amount,Cargo_Type : item.Cargo_Type,Cargo_Product_Type : item.Cargo_Product_type,Cargo_Product_List : item.Cargo_Product_List,Booking_Status : item.booking_status})}
-                    //   onPress={() =>
-                    //     navigation.navigate("PaymentHistoryDetail")
-                    //   }
                   >
                     <View
                       style={{
@@ -225,7 +215,7 @@ const CompletedOrderList = ({ navigation, route }) => {
                               //   marginTop: "4%",
                             }}
                           >
-                         
+
 
                             {item.order_delivery_datetime.split(" ")[0]}
                           </Text>
@@ -351,7 +341,7 @@ const CompletedOrderList = ({ navigation, route }) => {
                       marginTop: -5,
                     }}
                   >
-                    
+
                   </View> */
                   /* </View>
                           <View style={{ alignSelf: "center" }}>
@@ -382,43 +372,43 @@ const CompletedOrderList = ({ navigation, route }) => {
                 <Body>
 
                 </Body>
-              
+
               <Right><Text style =  {{fontSize:12,fontWeight:'bold'}}>Rs:{item.grand_total}/-</Text></Right>
             </CardItem>
 
-    
-           
-           
-            <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}> 
+
+
+
+            <CardItem style = {{borderTopWidth:1,borderTopColor:'lightgray'}}>
               <Left>
               <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
-      
+
               </Left>
               <Body>
-               
-                 
+
+
               <Image
         style={{height:15,width:150,alignSelf:'center'}}
         source={require('../../assets/route.png')}
       />
-               
-                
+
+
               </Body>
               <Right>
               <Text style = {{color:'gray'}}>{item.Destination_city}</Text>
-           
+
               </Right>
             </CardItem>
 
-            {/* <CardItem> 
+            {/* <CardItem>
               <Left>
               <Text style = {{color:'gray'}}>{item.Origin_city}</Text>
               </Left>
               <Body>
-               
-                 
-    
-                
+
+
+
+
               </Body>
               <Right>
               <Text style = {{color:'gray'}}>{item.Destination_city}</Text>

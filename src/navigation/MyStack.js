@@ -143,14 +143,16 @@ function MyStack() {
           component={ChangeForgotPassword}
           options={{ headerShown: false,
           //   header: ({ goBack }) => ({
-          //     left: ( <Icon name={'chevron-left'} onPress={ () => { goBack() } }  /> ),  
+          //     left: ( <Icon name={'chevron-left'} onPress={ () => { goBack() } }  /> ),
           // }),
+          // headerBackTitleVisible: false
           }}
         />
         <Drawer.Screen
           name="ChangePasswordByEmail"
           component={ChangePasswordByEmail}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false}}
         />
         {/* <Drawer.Screen
           name="EditBuisnessDetail"
@@ -182,12 +184,14 @@ function MyStack() {
         <Drawer.Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,
+            headerBackTitleVisible: false }}
         />
         <Drawer.Screen
           name="ForgotPasswordVerification"
           component={ForgotPasswordVerification}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,
+            headerBackTitleVisible: false }}
         />
         {/* <Drawer.Screen
           name="CompletedOrderInvoice"
@@ -305,6 +309,7 @@ function MyStack() {
           options={{
             headerShown: true,
             title: "RESET PASSWORD",
+            headerBackTitleVisible: false,
             headerTitleStyle: {
               color: "white",
               alignSelf: "center",
@@ -327,13 +332,15 @@ function MyStack() {
         <Stack.Screen
           name="VerificationCode"
           component={VerificationCode}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,
+            headerBackTitleVisible: false }}
         />
         <Stack.Screen
           name="ChangePasswordByEmail"
           component={ChangePasswordByEmail}
           options={{
             headerShown: true,
+            headerBackTitleVisible: false,
             title: "CHANGE PASSWORD",
             headerTitleStyle: {
               color: "white",
@@ -360,6 +367,7 @@ function MyStack() {
           options={{
             headerShown: true,
             title: "CHANGE PASSWORD",
+            headerBackTitleVisible: false,
             headerTitleStyle: {
               color: "white",
               alignSelf: "center",
@@ -413,22 +421,25 @@ function MyStack() {
        color:"white",
        alignSelf:'center'
      },
+     headerBackTitleVisible: false,
      headerStyle:{
       backgroundColor:Colors.themeColor,
     },
     headerTintColor: '#ffffff',
     headerRight: ()=><Image source={require('../assets/colorLogo.png')} style={{width:Platform.OS=='ios'? 40:50,height:Platform.OS=='ios'? 40:50}} />
- 
+
    }}/>
         <Stack.Screen
           name="EmailVerification"
           component={EmailVerification}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
         <Stack.Screen
           name="LandingScreen"
           component={LandingScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
         <Stack.Screen
           name="CreateNewOrder"
@@ -567,17 +578,17 @@ function MyStack() {
             ),
             // headerLeft: ()=>
             //   ({
-                
+
             //     labelVisible={false}
             //   })
-            
+
           //   header: () => ({
-          //     left: (  onPress={  goBack()  }   ),  
+          //     left: (  onPress={  goBack()  }   ),
           // }),
 
           }}
         />
-        <Stack.Screen name="TermCondition" component={TermCondition} 
+        <Stack.Screen name="TermCondition" component={TermCondition}
    options={{
      headerShown: true,
      title:"TERMS & CONDITIONS",
@@ -585,6 +596,7 @@ function MyStack() {
        color:"white",
        alignSelf:'center'
      },
+     headerBackTitleVisible: false,
      headerStyle:{
       backgroundColor:Colors.themeColor,
     },
@@ -593,8 +605,8 @@ function MyStack() {
       // <View style={{height:'100%',width:'20%',justifyContent:'center'}}>
         ()=><Image source={require('../assets/colorLogo.png')} style={{width:Platform.OS=='ios'? 40:50,height:Platform.OS=='ios'? 40:50}} />
 
-        // </View> 
-    
+        // </View>
+
    }}/>
         <Stack.Screen
           name="ForgotPassword"
@@ -602,6 +614,7 @@ function MyStack() {
           options={{
             headerShown: true,
             title: "RESET PASSWORD",
+            headerBackTitleVisible: false,
             headerTitleStyle: {
               color: "white",
               alignSelf: "center",
@@ -652,7 +665,8 @@ function MyStack() {
         <Stack.Screen
           name="ShippmentAddresses"
           component={ShippmentAddresses}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
         <Stack.Screen
           name="RejectedOrders"
@@ -787,13 +801,15 @@ function MyStack() {
         <Stack.Screen
           name="OrderCartItem"
           component={OrderCartItem}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
 
         <Stack.Screen
           name="NewShippmentAddress"
           component={NewShippmentAddress}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,
+            headerBackTitleVisible: false, }}
         />
         {/* <Stack.Screen
           name="BankDetail"
@@ -831,6 +847,7 @@ function MyStack() {
               color: "white",
               alignSelf: "center",
             },
+            headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: Colors.themeColor,
             },
@@ -875,15 +892,17 @@ function MyStack() {
         <Stack.Screen
           name="NewBankDetail"
           component={NewBankDetail}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
         <Stack.Screen
           name="MyDrawer"
           component={MyDrawer}
-          options={{ headerShown: false }}
+          options={{ headerShown: false ,
+            headerBackTitleVisible: false,}}
         />
 
-        
+
       </Stack.Navigator>
     </NavigationContainer>
   );

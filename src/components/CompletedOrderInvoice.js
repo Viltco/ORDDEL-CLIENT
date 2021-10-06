@@ -109,7 +109,7 @@ function CompletedOrderInvoice({ navigation, route }) {
       })
       .catch((error) => console.log("Something went wrong", error));
   };
-  
+
 
 
   const reorder=()=>{
@@ -127,7 +127,7 @@ function CompletedOrderInvoice({ navigation, route }) {
           })
             .then(async (response) => {
               let data = await response.json();
-      
+
               console.log(response)
               console.log("Create",data )
               // console.log("status code",response.status)
@@ -143,7 +143,7 @@ function CompletedOrderInvoice({ navigation, route }) {
               .then((responseJson) => {
                 console.log("OrderBoxDetail:", responseJson.order);
                 // setBoxData(responseJson.order);
-                
+
                 dispatch(
                   cartActions.reorder(responseJson.order.order_products)
                 )
@@ -171,17 +171,17 @@ function CompletedOrderInvoice({ navigation, route }) {
                   //   address:invoiceData.delivery_person_address
                   // })
                   // setButtonLoading(false);
-                  
+
               } else {
                 console.log("execption: ",data.message);
                 alert(data.message);
                 setButtonLoading(false);
                 // Toast.show(data.message, Toast.LONG);
                 // setResMessage(data.message)
-             
+
               }
-            
-      
+
+
               // code that can access both here
             })
             .catch((error) => console.log("Something went wrong", error));
@@ -194,7 +194,7 @@ function CompletedOrderInvoice({ navigation, route }) {
               .then((responseJson) => {
                 console.log("OrderBoxDetail:", responseJson.order);
                 // setBoxData(responseJson.order);
-                
+
                 dispatch(
                   cartActions.reorder(responseJson.order.order_products)
                 )
@@ -213,12 +213,12 @@ function CompletedOrderInvoice({ navigation, route }) {
                 // setIsLoading(false);
               })
               .catch((error) => console.error(error));
-          
+
         }
-       
-    
-    
-    
+
+
+
+
       }
 
 
@@ -242,7 +242,7 @@ function CompletedOrderInvoice({ navigation, route }) {
 
             })
             .catch((error) => console.error(error));
-} 
+}
 
 
 
@@ -288,12 +288,12 @@ function CompletedOrderInvoice({ navigation, route }) {
           dispatch(ApiDataAction.SetOrderBoxId(responseJson.order_box));
 
         }
-        
+
       })
       .catch((error) => console.error(error));
     }
 
-    
+
   }, [orderId]);
   // console.log("Order Box Id:",OrderBoxId);
   // console.log("Order Box Id:",boxDetail);
@@ -333,18 +333,18 @@ function CompletedOrderInvoice({ navigation, route }) {
 
 <View style={{marginLeft:Platform.OS=="android"?0:0,width:"35%"}}>
 
- <Image source={RiderImage==null||RiderImage==""?require('../assets/profilelogo.png'):{uri:RiderImage}} 
- style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,borderRadius:60}}  
+ <Image source={RiderImage==null||RiderImage==""?require('../assets/profilelogo.png'):{uri:RiderImage}}
+ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,borderRadius:60}}
  />
- 
+
 </View>
 
 <View style={{paddingLeft:Platform.OS=="android"?5:0,width:"65%"}}>
 
  <Text style={{color:Colors.themeColor,fontSize:12}}>Delivery Person:</Text>
 
- 
- 
+
+
  <Text style={{fontSize:14,fontWeight:'bold'}}>{invoiceData.delivery_person_name}</Text>
  <Text style={{fontSize:12,color:'#666666'}}>{invoiceData.delivery_person_address}</Text>
 
@@ -363,7 +363,7 @@ function CompletedOrderInvoice({ navigation, route }) {
 
 
 
-      
+
 </Card>
 
 <Card style={{padding:10,marginLeft:10,width:'50%',backgroundColor:'#e6e6e6',elevation:0,borderRadius:7}}>
@@ -371,8 +371,8 @@ function CompletedOrderInvoice({ navigation, route }) {
 
 <View style={{marginLeft:Platform.OS=="android"?0:0,width:"35%"}}>
 
-<Image source={clientImage==null||clientImage==""?require('../assets/profilelogo.png'):{uri:clientImage}} 
-style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,borderRadius:60}}  
+<Image source={clientImage==null||clientImage==""?require('../assets/profilelogo.png'):{uri:clientImage}}
+style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,borderRadius:60}}
 />
 
 </View>
@@ -397,8 +397,8 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
 
 
 
-  
-           
+
+
        </Card>
        </View>
 
@@ -459,7 +459,7 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
 <Text style={{color:Colors.themeColor,width:"24%",fontWeight:'bold',textAlign:"right",fontSize:14}}>£ {parseFloat(invoiceData.total_amount).toFixed(2)}</Text>
 
 </View>
-             
+
             </View>
 
             <View style={{ padding: 10 }}></View>
@@ -498,7 +498,7 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
               }}
             >
 
-              
+
 
             {/* <View
                 style={{
@@ -508,7 +508,7 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                   borderColor: Colors.textGreyColor,
                   borderWidth: 5,
                   marginTop: "3%",
-                  
+
                   marginBottom: 10,
                 }}
               >
@@ -529,17 +529,16 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
 
 {/* //=================== NEW UPDATION=======================// */}
 
-<View
+{/* <View
                 style={{
-                  // height: 120,
-                  // width: '33%',
+
                   height: 110,
                  width: 110,
                   borderRadius: 120,
                   borderColor: Colors.textGreyColor,
                   borderWidth: 5,
                   marginTop: "3%",
-                  
+
                   marginBottom: 10,
                 }}
               >
@@ -554,29 +553,29 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                     margin:'2%'
                   }}
                 >
-                
+
                 Date & Time
-                  {/* {boxData.order_delivery_datetime} */}
+
                 </Text>
                 <Text
                   style={{
                     textAlign: "center",
                     color: Colors.themeColor,
-                
+
                     fontWeight: "bold",
                     fontSize: 12,
                     margin:'2%'
                   }}
                 >
-                
+
                   {invoiceData?.order_delivery_datetime?.split(" ")[0]}
-                  {/* {boxData.order_delivery_datetime} */}
+
                 </Text>
                 <Text
                   style={{
                     textAlign: "center",
                     color: Colors.themeColor,
-                    //marginTop: "35%",
+
                     fontWeight: "bold",
                     fontSize: 12,
                     margin:'2%'
@@ -584,7 +583,77 @@ style={{ width:Platform.OS=='ios'? 50:50,height:Platform.OS=='ios'? 50:50,border
                 >
                   {invoiceData?.order_delivery_datetime?.split(" ")[1]}
                 </Text>
+              </View> */}
+
+
+{/*  ------------------------------  ---------------------------- */}
+<View
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 100,
+                  borderColor: Colors.textGreyColor,
+                  borderWidth: 5,
+                  marginTop: "3%",
+                  marginBottom: 12,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    marginTop: "12%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%',
+
+                  }}
+                >
+
+                Delivery
+
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "20%",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                    margin:'2%',
+
+                  }}
+                >
+                Date & Time
+
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    //marginTop: "35%",
+                    //fontWeight: "bold",
+                    fontSize: Platform.OS == "android" ? 12 : 11,
+                  }}
+                >
+                  {invoiceData?.order_delivery_datetime?.split(" ")[0]}
+                </Text>
+
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: Colors.themeColor,
+                    fontSize: 12,
+                  }}
+                >
+                  {invoiceData?.order_delivery_datetime?.split(" ")[1]}
+                </Text>
+
+
               </View>
+
+
+
 
 
               <View style={{ alignSelf: "center", marginLeft: "5%" }}>
